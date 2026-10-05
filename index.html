@@ -20,16 +20,32 @@
             position: relative;
         }
 
-        /* BACKGROUND VIDEO */
-        .bg-video {
+        /* LOCAL BACKGROUND VIDEO & OVERLAY */
+        .bg-video-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .bg-video {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(3, 4, 8, 0.75);
+            backdrop-filter: blur(4px);
             z-index: -1;
-            opacity: 0.35;
         }
 
         /* LOADING ANIMATION */
@@ -72,8 +88,8 @@
 
         /* GLASS CARDS & HOVER EFFECTS */
         .glass-card {
-            background: rgba(13, 17, 23, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(13, 17, 23, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(12px);
             border-radius: 20px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -200,7 +216,6 @@
             }
         }
 
-        /* Dynamic Stagger for Animation */
         .cmd-item:nth-child(1) { animation-delay: 0.1s; }
         .cmd-item:nth-child(2) { animation-delay: 0.15s; }
         .cmd-item:nth-child(3) { animation-delay: 0.2s; }
@@ -220,7 +235,15 @@
 </head>
 <body>
 
-    <!-- BACKGROUND AUDIO (AUTOMATIC ON SITE OPEN) -->
+    <!-- BACKGROUND VIDEO & DIMMED OVERLAY -->
+    <div class="bg-video-container">
+        <video autoplay loop muted playsinline class="bg-video">
+            <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="bg-overlay"></div>
+
+    <!-- BACKGROUND AUTOMATIC SONG -->
     <audio id="bgAudio" loop autoplay>
         <source src="song.mp3" type="audio/mpeg">
     </audio>
@@ -275,14 +298,26 @@
                 </a>
             </div>
 
-            <!-- ZORO BANNER VIDEO WITH AUDIO TOGGLE OPTION -->
-            <div class="glass-card p-2 overflow-hidden rounded-2xl relative group cursor-pointer" onclick="toggleBannerAudio()">
-                <video id="bannerVideo" autoplay loop muted playsinline class="w-full h-auto rounded-xl object-cover">
-                    <source src="https://tmpfiles.org/dl/wEAmfXCzLCpg/1791194276239.mp4" type="video/mp4">
-                </video>
-                <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
-                    <i id="bannerSoundIcon" class="fas fa-volume-mute"></i>
-                    <span class="text-[10px]">Tap for Audio</span>
+            <!-- ZORO BANNER VIDEO & YOUTUBE TOGGLE -->
+            <div class="glass-card p-2 overflow-hidden rounded-2xl relative space-y-2">
+                <div class="relative cursor-pointer" onclick="toggleBannerAudio()">
+                    <video id="bannerVideo" autoplay loop muted playsinline class="w-full h-48 rounded-xl object-cover">
+                        <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1 px-2.5">
+                        <i id="bannerSoundIcon" class="fas fa-volume-mute text-[10px]"></i>
+                        <span class="text-[9px]">Tap Sound</span>
+                    </div>
+                </div>
+
+                <!-- YOUTUBE OPTION BUTTON -->
+                <button onclick="openYouTube()" class="w-full bg-red-600/80 hover:bg-red-600 text-white text-xs py-2 rounded-xl flex items-center justify-center gap-2 font-semibold border border-red-500/30">
+                    <i class="fab fa-youtube"></i> Watch on YouTube
+                </button>
+
+                <!-- EMBEDDED YOUTUBE CONTAINER (HIDDEN INITIALLY) -->
+                <div id="youtubeEmbed" class="hidden pt-2">
+                    <iframe class="w-full h-48 rounded-xl border border-white/10" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
         </section>
@@ -304,7 +339,6 @@
                     </button>
                 </div>
 
-                <!-- DISPLAY PAIR CODE -->
                 <div id="pairResult" class="hidden pt-3 border-t border-white/10 text-center">
                     <span class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1">Your Pairing Code</span>
                     <div class="bg-black/80 border border-blue-500/30 rounded-xl py-3 px-4 text-xl font-mono text-sky-400 font-bold tracking-widest" id="codeDisplay">
@@ -463,10 +497,10 @@
             </div>
         </section>
 
-        <!-- DEVELOPER PROFILE -->
+        <!-- DEVELOPER PROFILE WITH NEW IMAGE -->
         <section>
             <div class="glass-card p-8 text-center">
-                <img src="https://tmpfiles.org/dl/wrAhfNScx34D/1791193564793.jpg" alt="Adithyan Profile" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-lg">
+                <img src="https://files.catbox.moe/5tnppp.jpg" alt="Adithyan Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-xl">
                 <div class="text-[10px] text-gray-400 tracking-widest font-semibold mb-2 uppercase">MEET THE DEVELOPER</div>
                 <h3 class="text-2xl font-extrabold mb-3">Adithyan</h3>
                 <p class="text-gray-400 text-xs leading-relaxed mb-6">
@@ -495,7 +529,17 @@
     </footer>
 
     <script>
-        // Toggle Pair Code Box
+        // Automatic Audio play trigger
+        window.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById('bgAudio');
+            audio.play().catch(() => {
+                // If browser blocks initial auto-play, play on first user tap
+                document.body.addEventListener('click', () => {
+                    audio.play();
+                }, { once: true });
+            });
+        });
+
         function togglePairing() {
             const section = document.getElementById('pairingSection');
             section.classList.toggle('hidden');
@@ -504,7 +548,6 @@
             }
         }
 
-        // Generate Dummy/API Pair Code
         function generatePairCode() {
             const num = document.getElementById('phoneNum').value;
             if(!num) {
@@ -514,13 +557,11 @@
             const resultBox = document.getElementById('pairResult');
             const codeDisplay = document.getElementById('codeDisplay');
             
-            // Random Code Generator for UI preview
             const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
             codeDisplay.innerText = randomCode;
             resultBox.classList.remove('hidden');
         }
 
-        // Background Audio Toggle
         function toggleAudio() {
             const audio = document.getElementById('bgAudio');
             const icon = document.getElementById('audioIcon');
@@ -533,26 +574,22 @@
             }
         }
 
-        // Banner Video Audio Toggle
         function toggleBannerAudio() {
             const video = document.getElementById('bannerVideo');
             const icon = document.getElementById('bannerSoundIcon');
             if (video.muted) {
                 video.muted = false;
-                icon.className = 'fas fa-volume-up';
+                icon.className = 'fas fa-volume-up text-sky-400';
             } else {
                 video.muted = true;
-                icon.className = 'fas fa-volume-mute';
+                icon.className = 'fas fa-volume-mute text-gray-400';
             }
         }
 
-        // Auto-play Audio on first touch/click if blocked by browser
-        window.addEventListener('click', () => {
-            const audio = document.getElementById('bgAudio');
-            if(audio.paused) {
-                audio.play().catch(() => {});
-            }
-        }, { once: true });
+        function openYouTube() {
+            const ytEmbed = document.getElementById('youtubeEmbed');
+            ytEmbed.classList.toggle('hidden');
+        }
     </script>
 </body>
 </html>
