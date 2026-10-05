@@ -294,7 +294,7 @@
                 </a>
             </div>
 
-            <!-- ZORO BANNER VIDEO (PERFECT SMOOTH NO LAG) -->
+            <!-- ZORO BANNER VIDEO -->
             <div class="glass-card p-2 overflow-hidden rounded-2xl relative cursor-pointer" onclick="toggleBannerVideo()">
                 <video id="bannerVideo" autoplay loop muted playsinline preload="auto" class="w-full h-48 rounded-xl object-cover">
                     <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
@@ -441,7 +441,7 @@
             <div class="glass-card p-4 text-left">
                 <div class="flex gap-1.5 mb-4 border-b border-white/10 pb-3 items-center">
                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
-                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500">zoro - bot commands</div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                     <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                     <span class="text-[10px] text-gray-400 font-mono ml-2">zoro - bot commands</span>
                 </div>
@@ -493,7 +493,7 @@
         <i class="fas fa-comment-alt"></i> Chat with AI
     </div>
 
-    <!-- AI CHAT INTERFACE MODAL -->
+    <!-- AI CHAT INTERFACE MODAL (HIDDEN BY DEFAULT) -->
     <div id="aiChatModal" class="hidden">
         <div class="bg-blue-600 px-4 py-3 flex justify-between items-center text-white">
             <div class="flex items-center gap-2 text-xs font-bold">
@@ -505,12 +505,11 @@
         </div>
         <div id="chatMessages" class="flex-1 p-3 overflow-y-auto space-y-3 text-xs text-gray-200">
             <div class="bg-gray-800 p-2.5 rounded-xl max-w-[85%]">
-                ഹലോ! ഞാൻ **ZORO MD AI** ആണ്. ഈ വെബ്‌‌സൈറ്റിനെക്കുറിച്ചോ ZORO MD ബോട്ടിന്റെ കമാൻഡുകൾ, പെയറിംഗ് കോഡ്, ഫീച്ചറുകൾ എന്നിവയെക്കുറിച്ച് എന്തും എന്നോട് ചോദിക്കാം!
+                Hello! I am ZORO MD AI Assistant. Feel free to ask me anything about ZORO MD commands, features, pairing codes, or the website!
             </div>
         </div>
         <div class="p-3 bg-gray-900 border-t border-gray-800 flex gap-2">
-            കമാൻഡ് ടൈപ്പ് ചെയ്യുക...
-            <input type="text" id="chatInput" placeholder="Ask about ZORO MD..." class="flex-1 bg-black/50 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" onkeypress="handleChatPress(event)">
+            <input type="text" id="chatInput" placeholder="Type a message..." class="flex-1 bg-black/50 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" onkeypress="handleChatPress(event)">
             <button onclick="sendChatMessage()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded-lg text-xs">
                 <i class="fas fa-paper-plane"></i>
             </button>
@@ -567,7 +566,7 @@
             }
         }
 
-        // AI Chat Toggle & Logic
+        // AI Chat Toggle & Logic (Only opens when button is clicked)
         function toggleAiChat() {
             const modal = document.getElementById('aiChatModal');
             modal.classList.toggle('hidden');
@@ -593,20 +592,20 @@
             input.value = '';
             msgContainer.scrollTop = msgContainer.scrollHeight;
 
-            // Bot Response Simulation based on ZORO MD context
+            // Bot Response in English (Triggers only on reply)
             setTimeout(() => {
                 const botMsg = document.createElement('div');
                 botMsg.className = 'bg-gray-800 p-2.5 rounded-xl max-w-[85%]';
                 
                 const lowerText = text.toLowerCase();
                 if (lowerText.includes('pair') || lowerText.includes('code') || lowerText.includes('connect')) {
-                    botMsg.innerText = "പെയറിംഗ് കോഡ് എടുക്കാൻ വെബ്‌സൈറ്റിന്റെ മുകളിലുള്ള 'Get pair code' എന്ന ബട്ടൺ ക്ലിക്ക് ചെയ്ത് നിങ്ങളുടെ വാട്സാപ്പ് നമ്പർ നൽകുക!";
+                    botMsg.innerText = "To get your pair code, click the 'Get pair code' button at the top of the website and enter your WhatsApp phone number with the country code.";
                 } else if (lowerText.includes('command') || lowerText.includes('menu')) {
-                    botMsg.innerText = "ZORO MD-യിൽ .menu, .alive, .song, .movie, .ai തുടങ്ങിയ നിരവധി കമാൻഡുകൾ ലഭ്യമാണ്.";
+                    botMsg.innerText = "ZORO MD provides powerful commands like .menu, .alive, .song, .movie, .ai, and many more!";
                 } else if (lowerText.includes('creator') || lowerText.includes('developer') || lowerText.includes('adithyan')) {
-                    botMsg.innerText = "ഈ വെബ്‌സൈറ്റും ZORO MD ബോജും ഡെവലപ്പ് ചെയ്തിരിക്കുന്നത് ആദിത്യൻ (Adithyan) ആണ്!";
+                    botMsg.innerText = "This website and the ZORO MD bot were created by Adithyan!";
                 } else {
-                    botMsg.innerText = "ശരിയാണ്! ZORO MD എന്നത് അഡ്വാൻസ്ഡ് വാട്സാപ്പ് ഓട്ടോമേഷൻ ബോട്ട് ആണ്. കൂടുതൽ സഹായത്തിന് താഴെയുള്ള സപ്പോർട്ട് ഗ്രൂപ്പിൽ ജോയിൻ ചെയ്യാം.";
+                    botMsg.innerText = "ZORO MD is an advanced WhatsApp automation bot. For more assistance, feel free to join our support group from the community section below.";
                 }
 
                 msgContainer.appendChild(botMsg);
