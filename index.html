@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE">
+    <meta name="google-site-verification" content="TEoq1XLpseK7Zl8eebYkY2z1MWEq6q4eaRqG_50Iv4A">
     <title>ZORO MD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -186,7 +186,7 @@
             backdrop-filter: blur(12px);
             border-radius: 20px;
             z-index: 100;
-            display: none; /* ഉറപ്പായും വെബ്ബ് ഓപ്പൺ ആകുമ്പോൾ കാണില്ല */
+            display: none;
             flex-direction: column;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             overflow: hidden;
@@ -544,7 +544,6 @@
             }
         }
 
-        // AI Chat Toggle Function (മാറിവരുന്ന രീതിയിൽ സജ്ജമാക്കിയിരിക്കുന്നു)
         function toggleAiChat() {
             const modal = document.getElementById('aiChatModal');
             if (modal.style.display === 'flex') {
@@ -573,7 +572,6 @@
             input.value = '';
             msgContainer.scrollTop = msgContainer.scrollHeight;
 
-            // English Bot Reply
             setTimeout(() => {
                 const botMsg = document.createElement('div');
                 botMsg.className = 'bg-gray-800 p-2.5 rounded-xl max-w-[85%]';
