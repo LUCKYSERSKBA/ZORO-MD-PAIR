@@ -14,13 +14,13 @@
         }
 
         body {
-            background-color: #030408;
+            background-color: #000000;
             color: #ffffff;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* BACKGROUND VIDEO & OVERLAY */
+        /* BACKGROUND VIDEO (NO EXTRA OVERLAYS) */
         .bg-video {
             position: fixed;
             top: 0;
@@ -28,21 +28,11 @@
             width: 100vw;
             height: 100vh;
             object-fit: cover;
-            z-index: -2;
-            opacity: 0.35;
-        }
-
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle at 50% 50%, rgba(3, 4, 8, 0.5) 0%, rgba(3, 4, 8, 0.95) 100%);
             z-index: -1;
+            opacity: 0.7;
         }
 
-        /* SCREENSHOT 1: INITIAL LOADING SCREEN */
+        /* SCREENSHOT 1: LOADING SCREEN */
         #loader {
             position: fixed;
             inset: 0;
@@ -82,9 +72,9 @@
 
         /* SCREENSHOT 2: GLASS CARDS & GLOWING ICONS */
         .tech-card {
-            background: rgba(13, 17, 23, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
+            background: rgba(13, 17, 23, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 16px;
             padding: 24px 16px;
             display: flex;
@@ -96,8 +86,8 @@
         }
 
         .tech-card:hover {
-            border-color: rgba(37, 99, 235, 0.4);
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.15);
+            border-color: rgba(37, 99, 235, 0.5);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
             transform: translateY(-3px);
         }
 
@@ -107,7 +97,6 @@
             filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
         }
 
-        /* BUTTONS */
         .btn-blue {
             background: #0070f3;
             color: #ffffff;
@@ -126,7 +115,6 @@
             box-shadow: 0 0 15px rgba(0, 112, 243, 0.4);
         }
 
-        /* FLOATING PAIRING BUTTON (SCREENSHOT 2 STYLE) */
         .floating-btn {
             position: fixed;
             bottom: 24px;
@@ -158,11 +146,9 @@
     <video autoplay loop muted playsinline class="bg-video">
         <source src="bg-video.mp4" type="video/mp4">
     </video>
-    <div class="bg-overlay"></div>
 
-    <!-- SCREENSHOT 1: LOADING SCREEN WITH LOGO -->
+    <!-- LOADING SCREEN -->
     <div id="loader">
-        <!-- SVG Logo matching Screenshot 1 -->
         <svg class="w-16 h-16 text-sky-400 mb-4 animate-pulse" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M30 20 L50 40 L70 20" />
             <path d="M20 50 L40 70 L20 90" />
@@ -175,80 +161,98 @@
         </div>
     </div>
 
-    <!-- NAVBAR (SCREENSHOT 2 STYLE) -->
-    <header class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/5">
-        <div class="font-extrabold text-sm tracking-wider uppercase">ZORO MD</div>
+    <!-- NAVBAR -->
+    <header class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10">
+        <div class="font-extrabold text-sm tracking-wider uppercase text-blue-400">ZORO MD</div>
         <a href="https://github.com/A-d-i-t-h-y-a-n-x-d" target="_blank" class="btn-blue">
             <i class="fab fa-github"></i> GitHub
         </a>
     </header>
 
-    <!-- MAIN CONTENT AREA -->
+    <!-- MAIN CONTENT -->
     <main class="max-w-4xl mx-auto px-6 pt-12 pb-24">
         
         <div class="text-center mb-12">
-            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
-                Built with the best technologies
+            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4">
+                ZORO <span class="text-blue-500">MD</span>
             </h1>
-            <p class="text-gray-400 text-xs md:text-sm">
-                Fast, reliable and powered by custom Baileys automation.
+            <p class="text-gray-300 text-xs md:text-sm max-w-xl mx-auto">
+                Advanced WhatsApp automation powered by custom Baileys and multi-device support.
             </p>
         </div>
 
-        <!-- SCREENSHOT 2: GRID OF CARDS -->
+        <!-- TECH CARDS GRID -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
             <div class="tech-card">
                 <i class="fas fa-file-code"></i>
-                <span class="text-xs font-semibold text-gray-300">JavaScript/ES6+</span>
+                <span class="text-xs font-semibold text-gray-200">JavaScript/ES6+</span>
             </div>
             <div class="tech-card">
                 <i class="fab fa-node-js"></i>
-                <span class="text-xs font-semibold text-gray-300">Node.js</span>
+                <span class="text-xs font-semibold text-gray-200">Node.js</span>
             </div>
             <div class="tech-card">
                 <i class="fas fa-comments"></i>
-                <span class="text-xs font-semibold text-gray-300">WA Bots</span>
+                <span class="text-xs font-semibold text-gray-200">WA Bots</span>
             </div>
             <div class="tech-card">
                 <i class="fas fa-database"></i>
-                <span class="text-xs font-semibold text-gray-300">MongoDB</span>
+                <span class="text-xs font-semibold text-gray-200">MongoDB</span>
             </div>
             <div class="tech-card">
                 <i class="fab fa-react"></i>
-                <span class="text-xs font-semibold text-gray-300">React</span>
+                <span class="text-xs font-semibold text-gray-200">React</span>
             </div>
             <div class="tech-card">
                 <i class="fas fa-cube"></i>
-                <span class="text-xs font-semibold text-gray-300">Flask</span>
+                <span class="text-xs font-semibold text-gray-200">Flask</span>
             </div>
             <div class="tech-card">
                 <i class="fas fa-cloud"></i>
-                <span class="text-xs font-semibold text-gray-300">Cloud APIs</span>
+                <span class="text-xs font-semibold text-gray-200">Cloud APIs</span>
             </div>
             <div class="tech-card">
                 <i class="fas fa-paint-brush"></i>
-                <span class="text-xs font-semibold text-gray-300">UI/UX</span>
+                <span class="text-xs font-semibold text-gray-200">UI/UX</span>
             </div>
         </div>
 
-        <!-- KOYEB EMBEDDED PAIRING SECTION (HIDDEN LINK) -->
+        <!-- HIDDEN KOYEB PAIRING PORTAL -->
         <section id="pairingSection" class="hidden my-8">
-            <div class="bg-black/80 border border-blue-500/30 backdrop-blur-xl p-4 rounded-2xl relative shadow-2xl">
+            <div class="bg-black/90 border border-blue-500/40 backdrop-blur-xl p-4 rounded-2xl relative shadow-2xl">
                 <div class="flex justify-between items-center mb-3 px-2">
                     <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">Pairing Portal</span>
                     <button onclick="togglePairing()" class="text-gray-400 hover:text-white text-xs"><i class="fas fa-times"></i> Close</button>
                 </div>
-                <!-- Embedded Koyeb Pairing Page -->
                 <iframe src="https://tall-nollie-20-863aede6.koyeb.app/" class="w-full h-[450px] rounded-xl border border-white/10 bg-black"></iframe>
+            </div>
+        </section>
+
+        <!-- DEVELOPER PROFILE -->
+        <section class="max-w-md mx-auto my-12">
+            <div class="tech-card p-8 text-center">
+                <img src="https://i.ibb.co/6P1R3jL/zoro-logo.jpg" alt="Adithyan" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-blue-500/50 object-cover shadow-xl">
+                <div class="text-[10px] text-blue-400 uppercase tracking-widest font-bold mb-1">MEET THE DEVELOPER</div>
+                <h3 class="text-2xl font-bold mb-2">Adithyan</h3>
+                <p class="text-gray-400 text-xs mb-6">
+                    Full Stack Developer and creator of ZORO MD automation systems.
+                </p>
+                <a href="https://github.com/A-d-i-t-h-y-a-n-x-d" target="_blank" class="btn-blue">
+                    <i class="fab fa-github"></i> GitHub Profile
+                </a>
             </div>
         </section>
 
     </main>
 
-    <!-- FLOATING PAIRING BUTTON (LIKE SUPPORT AI BUTTON IN SCREENSHOT 2) -->
+    <!-- FLOATING PAIR CODE BUTTON -->
     <button onclick="togglePairing()" class="floating-btn">
         <i class="fas fa-key"></i> Get Pair Code
     </button>
+
+    <footer class="text-center text-xs text-gray-500 pb-12">
+        Copyright © 2026 ZORO MD. Created by Adithyan.
+    </footer>
 
     <script>
         function togglePairing() {
