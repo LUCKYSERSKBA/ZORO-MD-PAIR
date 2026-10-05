@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,17 +11,16 @@
         
         * {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        html, body {
-            scroll-behavior: smooth;
-            background: #030408;
+        body {
+            background: transparent;
             color: #ffffff;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* BACKGROUND VIDEO & OVERLAY */
+        /* GITHUB BACKGROUND VIDEO */
         .bg-video-container {
             position: fixed;
             top: 0;
@@ -30,24 +29,12 @@
             height: 100vh;
             z-index: -2;
             overflow: hidden;
-            transform: translateZ(0);
         }
 
         .bg-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.6) contrast(1.1);
-        }
-
-        /* GRADIENT OVERLAY */
-        .bg-overlay {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(3, 4, 8, 0.4) 0%, rgba(3, 4, 8, 0.85) 100%),
-                        linear-gradient(to bottom, rgba(3, 4, 8, 0.5), rgba(3, 4, 8, 0.95));
-            z-index: -1;
-            pointer-events: none;
         }
 
         /* LOADING ANIMATION */
@@ -60,7 +47,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            animation: fadeOut 0.6s ease 2s forwards;
+            animation: fadeOut 0.8s ease 2.5s forwards;
         }
 
         @keyframes fadeOut {
@@ -81,154 +68,32 @@
             height: 100%;
             background: #2563eb;
             box-shadow: 0 0 10px #2563eb;
-            animation: load 1.8s ease forwards;
+            animation: load 2s ease forwards;
         }
 
         @keyframes load {
             to { width: 100%; }
         }
 
-        /* TEXT ANIMATION & GLOW EFFECTS */
-        .glow-text {
-            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #2563eb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
-        }
-
-        .shine-badge {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .shine-badge::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(60deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: rotate(30deg);
-            animation: shineതീർച്ചയായും! മുൻപ് ഉണ്ടായിരുന്ന എല്ലാ **ഓവർലേ ഇഫക്റ്റുകളും (Glow/Overlay), ബാക്ക്ഗ്രൗണ്ട് അനിമേഷനുകളും, സ്റ്റൈലിഷ് ടെക്സ്റ്റ് അനിമേഷനുകളും** തിരികെ കൊണ്ടുവന്നിട്ടുണ്ട്. 
-
-കൂടാതെ ഓഡിയോ പ്ലേബാക്കിനായി രണ്ടു കാര്യങ്ങളും ഒരേസമയം ഉൾപ്പെടുത്തിയിട്ടുണ്ട്:
-1. **ഓഡിയോ പ്ലേ/പോസ് ബട്ടൺ (Audio Control Button):** നെവ്ബാറിൽ ഓഡിയോ പ്ലേ ചെയ്യാനും പോസ് ചെയ്യാനും സൗകര്യപ്രദമായ ബട്ടൺ നൽകി.
-2. **സ്ക്രോൾ ഓട്ടോപ്ലേ (Scroll Autoplay):** വെബ്‌സൈറ്റിൽ യൂസർ ജസ്റ്റ് ഒന്ന് സ്ക്രോൾ ചെയ്താൽ ഉടൻ തന്നെ ഓഡിയോ പ്ലേ ആകുന്ന വിധത്തിൽ ലളിതമായ സ്ക്രിപ്റ്റ് സെറ്റ് ചെയ്തിട്ടുണ്ട്.
-
-അപ്ഡേറ്റ് ചെയ്ത പുതിയ HTML കോഡ് താഴെ നൽകുന്നു:
-
-```html
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZORO BETA MD</title>
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-    <link href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css)" rel="stylesheet">
-    <style>
-        @import url('[https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap)');
-        
-        * {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
-            scroll-behavior: smooth;
-            background: #030408;
-            color: #ffffff;
-            overflow-x: hidden;
-        }
-
-        /* HARDWARE ACCELERATED BG VIDEO & OVERLAY */
-        .bg-video-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2;
-            overflow: hidden;
-            transform: translateZ(0);
-        }
-
-        .bg-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.6) contrast(1.1);
-        }
-
-        .bg-overlay {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.15) 0%, rgba(3, 4, 8, 0.85) 100%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* LOADING ANIMATION */
-        #loader {
-            position: fixed;
-            inset: 0;
-            background: #030408;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            animation: fadeOut 0.6s ease 2s forwards;
-        }
-
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
-        }
-
-        .loader-bar {
-            width: 160px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 25px;
-        }
-
-        .loader-progress {
-            width: 0%;
-            height: 100%;
-            background: #2563eb;
-            box-shadow: 0 0 12px #2563eb;
-            animation: load 1.8s ease forwards;
-        }
-
-        @keyframes load {
-            to { width: 100%; }
-        }
-
-        /* GLOW & GLASS CARDS */
+        /* CLEAR GLASS CARDS */
         .glass-card {
-            background: rgba(13, 17, 23, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(13, 17, 23, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
             border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-            will-change: transform;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-card:hover {
-            border-color: rgba(37, 99, 235, 0.6);
+            border-color: rgba(37, 99, 235, 0.5);
+            box-shadow: 0 0 25px rgba(37, 99, 235, 0.2);
             transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.2);
         }
 
         .tech-card {
-            background: rgba(13, 17, 23, 0.55);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(13, 17, 23, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(6px);
             border-radius: 16px;
             padding: 20px 16px;
             display: flex;
@@ -236,27 +101,23 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         .tech-card:hover {
-            border-color: rgba(56, 189, 248, 0.5);
-            transform: translateY(-3px);
+            border-color: rgba(37, 99, 235, 0.5);
+            transform: translateY(-2px);
         }
 
         .tech-card i {
             font-size: 26px;
             color: #38bdf8;
-            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.4));
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
         }
 
-        /* ANIMATED TEXT & BUTTONS */
-        .text-glow {
-            text-shadow: 0 0 20px rgba(37, 99, 235, 0.6);
-        }
-
+        /* BUTTONS */
         .btn-blue {
-            background: linear-gradient(135deg, #0070f3 0%, #1e40af 100%);
+            background: #0070f3;
             color: #ffffff;
             border-radius: 9999px;
             padding: 12px 24px;
@@ -266,13 +127,13 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(0, 112, 243, 0.3);
-            transition: transform 0.2s ease, opacity 0.2s ease;
+            transition: all 0.2s ease;
             width: 100%;
         }
 
-        .btn-blue:active {
-            transform: scale(0.98);
+        .btn-blue:hover {
+            background: #0051a8;
+            box-shadow: 0 0 15px rgba(0, 112, 243, 0.4);
         }
 
         .btn-outline {
@@ -287,15 +148,16 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: background 0.2s ease, transform 0.2s ease;
+            transition: all 0.2s ease;
             width: 100%;
         }
 
-        .btn-outline:active {
+        .btn-outline:hover {
             background: rgba(255, 255, 255, 0.15);
-            transform: scale(0.98);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
+        /* FLOATING BUTTON */
         .floating-btn {
             position: fixed;
             bottom: 24px;
@@ -309,9 +171,10 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 20px rgba(0, 112, 243, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 112, 243, 0.4);
             z-index: 50;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .cmd-grid {
@@ -321,8 +184,8 @@
         }
 
         .cmd-item {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 12px;
             padding: 12px;
             text-align: center;
@@ -333,13 +196,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.05);
         }
 
+        /* TYPING CURSOR */
         .cursor {
             display: inline-block;
-            width: 6px;
-            height: 14px;
+            width: 8px;
+            height: 15px;
             background-color: #38bdf8;
             margin-left: 4px;
             animation: blink 0.7s infinite;
@@ -353,15 +216,14 @@
 </head>
 <body>
 
-    <!-- GITHUB BACKGROUND VIDEO & OVERLAY -->
+    <!-- GITHUB BACKGROUND VIDEO -->
     <div class="bg-video-container">
         <video autoplay loop muted playsinline class="bg-video">
             <source src="bg-video.mp4" type="video/mp4">
         </video>
     </div>
-    <div class="bg-overlay"></div>
 
-    <!-- AUDIO ELEMENT -->
+    <!-- BACKGROUND SONG WITH AUTOPLAY -->
     <audio id="bgAudio" loop preload="auto">
         <source src="song.mp3" type="audio/mpeg">
     </audio>
@@ -380,31 +242,22 @@
         </div>
     </div>
 
-    <!-- NAVBAR WITH AUDIO CONTROL BUTTON -->
-    <header class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10 backdrop-blur-md sticky top-0 z-40">
-        <div class="font-bold text-base tracking-wider text-white uppercase text-glow">ZORO MD</div>
-        
-        <div class="flex items-center gap-3">
-            <!-- AUDIO TOGGLE BUTTON -->
-            <button id="audioBtn" onclick="toggleAudio()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 transition-all">
-                <i id="audioIcon" class="fas fa-music text-sky-400"></i>
-                <span id="audioText">Play Music</span>
-            </button>
-
-            <a href="[https://github.com/Xion-Xer/ZORO-MD.git](https://github.com/Xion-Xer/ZORO-MD.git)" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
-                GitHub
-            </a>
-        </div>
+    <!-- NAVBAR -->
+    <header class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10">
+        <div class="font-bold text-base tracking-wider text-white uppercase">ZORO MD</div>
+        <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
+            GitHub
+        </a>
     </header>
 
     <main class="max-w-md mx-auto px-5 pt-8 pb-24 space-y-16">
 
         <!-- HERO SECTION -->
         <section class="text-center">
-            <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400 text-xs font-semibold mb-4 backdrop-blur-sm">
+            <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-semibold mb-4">
                 Available now — PRO
             </div>
-            <h1 class="text-4xl font-extrabold tracking-tight mb-3 text-glow">
+            <h1 class="text-4xl font-extrabold tracking-tight mb-3">
                 ZORO <span class="text-blue-500">BETA MD</span>
             </h1>
             <p class="text-gray-300 text-xs leading-relaxed mb-6">
@@ -415,15 +268,15 @@
                 <button onclick="togglePairing()" class="btn-blue">
                     Get pair code
                 </button>
-                <a href="[https://github.com/Xion-Xer/ZORO-MD.git](https://github.com/Xion-Xer/ZORO-MD.git)" target="_blank" class="btn-outline">
+                <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-outline">
                     Get the repo
                 </a>
             </div>
 
-            <!-- ZORO BANNER VIDEO -->
+            <!-- ZORO BANNER VIDEO (PERFECT SMOOTH NO LAG) -->
             <div class="glass-card p-2 overflow-hidden rounded-2xl relative cursor-pointer" onclick="toggleBannerVideo()">
                 <video id="bannerVideo" autoplay loop muted playsinline preload="auto" class="w-full h-48 rounded-xl object-cover">
-                    <source src="[https://files.catbox.moe/n1p774.mp4](https://files.catbox.moe/n1p774.mp4)" type="video/mp4">
+                    <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
                 </video>
                 <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
                     <i id="bannerStatusIcon" class="fas fa-play text-[10px]"></i>
@@ -463,27 +316,27 @@
             <h2 class="text-2xl font-bold tracking-tight">Built with the best.</h2>
             <div class="grid grid-cols-2 gap-4">
                 <div class="tech-card">
-                    <i class="fas fa-code"></i>
+                    <i class="fas fa-code text-sky-400"></i>
                     <span class="text-xs font-medium">JavaScript/ES6+</span>
                 </div>
                 <div class="tech-card">
-                    <i class="fab fa-node-js"></i>
+                    <i class="fab fa-node-js text-sky-400"></i>
                     <span class="text-xs font-medium">Node.js</span>
                 </div>
                 <div class="tech-card">
-                    <i class="fas fa-comment"></i>
+                    <i class="fas fa-comment text-sky-400"></i>
                     <span class="text-xs font-medium">WA Bots</span>
                 </div>
                 <div class="tech-card">
-                    <i class="fas fa-database"></i>
+                    <i class="fas fa-database text-sky-400"></i>
                     <span class="text-xs font-medium">MongoDB</span>
                 </div>
                 <div class="tech-card">
-                    <i class="fab fa-react"></i>
+                    <i class="fab fa-react text-sky-400"></i>
                     <span class="text-xs font-medium">React</span>
                 </div>
                 <div class="tech-card">
-                    <i class="fas fa-cube"></i>
+                    <i class="fas fa-cube text-sky-400"></i>
                     <span class="text-xs font-medium">Flask</span>
                 </div>
             </div>
@@ -583,10 +436,10 @@
                 Thousands of users. One conversation.
             </p>
             <div class="space-y-3 pt-2">
-                <a href="[https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd](https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd)" target="_blank" class="btn-blue">
+                <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-blue">
                     <i class="fas fa-comment"></i> Support group
                 </a>
-                <a href="[https://whatsapp.com/channel/0029Vb7pgsF4tRrkS5CECe24](https://whatsapp.com/channel/0029Vb7pgsF4tRrkS5CECe24)" target="_blank" class="btn-outline">
+                <a href="https://whatsapp.com/channel/0029Vb7pgsF4tRrkS5CECe24" target="_blank" class="btn-outline">
                     <i class="fas fa-broadcast-tower"></i> Join channel
                 </a>
             </div>
@@ -595,17 +448,17 @@
         <!-- DEVELOPER PROFILE -->
         <section>
             <div class="glass-card p-8 text-center">
-                <img src="[https://files.catbox.moe/5tnppp.jpg](https://files.catbox.moe/5tnppp.jpg)" alt="Adithyan Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-xl">
+                <img src="https://files.catbox.moe/5tnppp.jpg" alt="Adithyan Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-xl">
                 <div class="text-[10px] text-gray-400 tracking-widest font-semibold mb-2 uppercase">MEET THE DEVELOPER</div>
                 <h3 class="text-2xl font-extrabold mb-3">Adithyan</h3>
                 <p class="text-gray-300 text-xs leading-relaxed mb-6">
                     Full Stack Developer and creator of ZORO BETA MD. On a mission to simplify communication through advanced automation — made for everyone.
                 </p>
                 <div class="space-y-3">
-                    <a href="[https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd](https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd)" target="_blank" class="btn-blue">
+                    <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-blue">
                         <i class="fas fa-comment"></i> Contact me
                     </a>
-                    <a href="[https://github.com/Xion-Xer/ZORO-MD.git](https://github.com/Xion-Xer/ZORO-MD.git)" target="_blank" class="btn-outline">
+                    <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-outline">
                         <i class="fab fa-github"></i> GitHub
                     </a>
                 </div>
@@ -615,7 +468,7 @@
     </main>
 
     <!-- FLOATING SUPPORT BUTTON -->
-    <a href="[https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd](https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd)" target="_blank" class="floating-btn">
+    <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="floating-btn">
         <i class="fas fa-comment-alt"></i> Support AI
     </a>
 
@@ -626,58 +479,29 @@
     <script>
         const bgAudio = document.getElementById('bgAudio');
         const bannerVideo = document.getElementById('bannerVideo');
-        const audioBtn = document.getElementById('audioBtn');
-        const audioIcon = document.getElementById('audioIcon');
-        const audioText = document.getElementById('audioText');
 
-        // AUDIO TOGGLE & SCROLL TRIGGER
-        function playAudio() {
-            if (bgAudio.paused) {
-                bgAudio.play().then(() => {
-                    updateAudioUI(true);
-                    removeAudioTriggers();
-                }).catch(() => {});
-            }
+        // Autoplay logic for Background Audio
+        function triggerAudio() {
+            bgAudio.play().then(() => {
+                document.removeEventListener('click', triggerAudio);
+                document.removeEventListener('touchstart', triggerAudio);
+                document.removeEventListener('scroll', triggerAudio);
+            }).catch(() => {});
         }
 
-        function toggleAudio() {
-            if (bgAudio.paused) {
-                bgAudio.play().then(() => {
-                    updateAudioUI(true);
-                    removeAudioTriggers();
-                }).catch(() => {});
-            } else {
-                bgAudio.pause();
-                updateAudioUI(false);
-            }
-        }
-
-        function updateAudioUI(isPlaying) {
-            if (isPlaying) {
-                audioIcon.className = "fas fa-pause text-sky-400 animate-pulse";
-                audioText.innerText = "Pause Music";
-            } else {
-                audioIcon.className = "fas fa-music text-sky-400";
-                audioText.innerText = "Play Music";
-            }
-        }
-
-        function removeAudioTriggers() {
-            window.removeEventListener('scroll', playAudio);
-            window.removeEventListener('click', playAudio);
-            window.removeEventListener('touchstart', playAudio);
-        }
-
-        window.addEventListener('load', () => {
-            // SCROLL AUTOPLAY: Triggers as soon as user scrolls just a bit
-            window.addEventListener('scroll', playAudio, { passive: true });
-            window.addEventListener('click', playAudio, { passive: true });
-            window.addEventListener('touchstart', playAudio, { passive: true });
+        window.addEventListener('DOMContentLoaded', () => {
+            // Attempt autoplay
+            triggerAudio();
+            
+            // Backup triggers for mobile browsers
+            document.addEventListener('click', triggerAudio, { once: true });
+            document.addEventListener('touchstart', triggerAudio, { once: true });
+            document.addEventListener('scroll', triggerAudio, { once: true });
 
             startTypingCommands();
         });
 
-        // Banner Video Toggle
+        // Banner Video Toggle (Muted and Smooth Play/Pause)
         function toggleBannerVideo() {
             const icon = document.getElementById('bannerStatusIcon');
             const text = document.getElementById('bannerStatusText');
@@ -715,7 +539,7 @@
             resultBox.classList.remove('hidden');
         }
 
-        /* TYPING ANIMATION */
+        /* AUTOMATIC TYPING COMMANDS ANIMATION */
         const commands = [
             ".alive", ".menu", ".movie", ".song",
             ".fb", ".tiktok", ".vv", ".apk",
@@ -738,11 +562,11 @@
 
                 for (let char of cmd) {
                     typedSpan.innerText += char;
-                    await new Promise(r => setTimeout(r, 50));
+                    await new Promise(r => setTimeout(r, 60));
                 }
                 
                 cursorSpan.remove();
-                await new Promise(r => setTimeout(r, 80));
+                await new Promise(r => setTimeout(r, 100));
             }
         }
     </script>
