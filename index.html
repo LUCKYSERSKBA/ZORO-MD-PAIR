@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZORO MD | Official Web Pair</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --accent: #ff0055;
+            --bg-dark: #07090e;
+            --card-bg: rgba(13, 18, 30, 0.75);
+            --border-glow: rgba(0, 242, 254, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            background: radial-gradient(circle at 50% 50%, #0d1527 0%, #07090e 100%);
+        }
+
+        /* Dynamic Grid Background Animation */
+        .bg-grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(to right, rgba(0, 242, 254, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 242, 254, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: rotate(15deg);
+            animation: gridMove 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0) rotate(15deg); }
+            100% { transform: translateY(-40px) rotate(15deg); }
+        }
+
+        /* Glowing Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 1;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 242, 254, 0.2);
+            top: 10%;
+            left: 15%;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+
+        .orb-2 {
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 0, 85, 0.15);
+            bottom: 10%;
+            right: 15%;
+            animation: float 6s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-30px) scale(1.1); }
+        }
+
+        /* Main Container Card */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 450px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 35px 28px;
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.15), inset 0 0 15px rgba(0, 242, 254, 0.05);
+            text-align: center;
+        }
+
+        /* Profile & Header Section */
+        .profile-section {
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 20px var(--primary);
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .brand-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.7);
+            letter-spacing: 2px;
+        }
+
+        .owner-tag {
+            font-size: 0.9rem;
+            color: #a0aec0;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        .owner-tag span {
+            color: #fff;
+            border-bottom: 1px dashed var(--primary);
+        }
+
+        /* Input Form */
+        .form-group {
+            margin: 25px 0 18px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: var(--primary);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: block;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 14px 14px 45px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            background: rgba(5, 8, 15, 0.85);
+            color: #fff;
+            font-size: 1.05rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #07090e;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.7);
+        }
+
+        /* Pairing Code Box */
+        .code-box {
+            margin-top: 22px;
+            padding: 18px;
+            background: rgba(4, 7, 13, 0.7);
+            border: 1px dashed rgba(0, 242, 254, 0.4);
+            border-radius: 14px;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .code-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.7rem;
+            letter-spacing: 4px;
+            color: #38bdf8;
+            font-weight: 700;
+        }
+
+        /* Footer & Social Links */
+        .footer-tools {
+            margin-top: 25px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+
+        .social-btn:hover {
+            background: rgba(225, 48, 108, 0.2);
+            border-color: #e1306c;
+            color: #e1306c;
+            box-shadow: 0 0 10px rgba(225, 48, 108, 0.4);
+        }
+
+        .music-btn {
+            background: rgba(0, 242, 254, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .music-btn:hover {
+            background: var(--primary);
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+        <!-- Profile / Brand Info -->
+        <div class="profile-section">
+            <div class="avatar">
+                <i class="fa-solid fa-robot" style="font-size: 2.2rem; color: var(--primary);"></i>
+            </div>
+            <div class="brand-name">ZORO MD</div>
+            <div class="owner-tag">Created by <span>Adithyan</span></div>
+        </div>
+
+        <!-- Input Form -->
+        <form id="pairForm">
+            <div class="form-group">
+                <label for="phone">Enter WhatsApp Number</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-phone"></i>
+                    <input type="text" id="phone" placeholder="919876543210" required>
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">GENERATE PAIRING CODE</button>
+        </form>
+
+        <!-- Code Result Box -->
+        <div class="code-box">
+            <div class="code-text" id="codeResult">WAITING...</div>
+        </div>
+
+        <!-- Footer Section (Instagram & Audio) -->
+        <div class="footer-tools">
+            <a href="https://www.instagram.com/aadhi.x._______________?stkn=MWd5a21oeGtpZzNqYw==" target="_blank" class="social-btn">
+                <i class="fa-brands fa-instagram" style="color: #e1306c; font-size: 1.1rem;"></i> Instagram
+            </a>
+
+            <button class="music-btn" id="musicToggle" onclick="toggleAudio()">
+                <i class="fa-solid fa-music"></i> <span id="musicText">PLAY</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Background Audio (Loads local song.mp3) -->
+    <audio id="bgMusic" loop src="song.mp3"></audio>
+
+    <script>
+        // 🔗 Integrated Koyeb Backend Link
+        const KOYEB_BACKEND_URL = "https://tall-nollie-20-863aede6.koyeb.app";
+
+        document.getElementById('pairForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const phone = document.getElementById('phone').value.trim();
+            const resultBox = document.getElementById('codeResult');
+
+            resultBox.style.color = "#38bdf8";
+            resultBox.innerText = "GENERATING...";
+
+            try {
+                const response = await fetch(`${KOYEB_BACKEND_URL}/code?phone=${phone}`);
+                const data = await response.json();
+
+                if (data.code) {
+                    resultBox.style.color = "#00ff88";
+                    resultBox.innerText = data.code;
+                } else {
+                    resultBox.style.color = "#ff4757";
+                    resultBox.innerText = "ERROR!";
+                }
+            } catch (err) {
+                resultBox.style.color = "#ff4757";
+                resultBox.innerText = "OFFLINE!";
+            }
+        });
+
+        // Audio Controls
+        const music = document.getElementById('bgMusic');
+        const musicText = document.getElementById('musicText');
+
+        function toggleAudio() {
+            if (music.paused) {
+                music.play();
+                musicText.innerText = "PAUSE";
+            } else {
+                music.pause();
+                musicText.innerText = "PLAY";
+            }
+        }
+    </script>
+</body>
+</html>
