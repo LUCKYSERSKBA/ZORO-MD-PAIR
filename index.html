@@ -14,13 +14,13 @@
         }
 
         body {
-            background-color: #030408;
+            background: transparent;
             color: #ffffff;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* LOCAL BACKGROUND VIDEO (bg-video.mp4) & OVERLAY */
+        /* DIRECT GITHUB BACKGROUND VIDEO */
         .bg-video-container {
             position: fixed;
             top: 0;
@@ -35,17 +35,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(3, 4, 8, 0.75);
-            backdrop-filter: blur(4px);
-            z-index: -1;
         }
 
         /* LOADING ANIMATION */
@@ -86,11 +75,11 @@
             to { width: 100%; }
         }
 
-        /* GLASS CARDS & HOVER EFFECTS */
+        /* CLEAR GLASS CARDS */
         .glass-card {
-            background: rgba(13, 17, 23, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(12px);
+            background: rgba(13, 17, 23, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
             border-radius: 20px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -102,9 +91,9 @@
         }
 
         .tech-card {
-            background: rgba(13, 17, 23, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(13, 17, 23, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(6px);
             border-radius: 16px;
             padding: 20px 16px;
             display: flex;
@@ -148,8 +137,8 @@
         }
 
         .btn-outline {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
             border-radius: 9999px;
             padding: 12px 24px;
@@ -164,8 +153,8 @@
         }
 
         .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
         /* FLOATING BUTTON */
@@ -194,10 +183,9 @@
             gap: 10px;
         }
 
-        /* COMMAND ANIMATION (DROP DOWN FADE) */
         .cmd-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 12px;
             padding: 12px;
             text-align: center;
@@ -235,15 +223,14 @@
 </head>
 <body>
 
-    <!-- LOCAL BACKGROUND VIDEO (bg-video.mp4) & DIMMED OVERLAY -->
+    <!-- GITHUB BACKGROUND VIDEO -->
     <div class="bg-video-container">
         <video autoplay loop muted playsinline class="bg-video">
             <source src="bg-video.mp4" type="video/mp4">
         </video>
     </div>
-    <div class="bg-overlay"></div>
 
-    <!-- LOCAL AUTOMATIC BACKGROUND SONG (song.mp3) -->
+    <!-- GITHUB BACKGROUND SONG -->
     <audio id="bgAudio" loop autoplay>
         <source src="song.mp3" type="audio/mpeg">
     </audio>
@@ -274,13 +261,13 @@
 
         <!-- HERO SECTION -->
         <section class="text-center">
-            <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold mb-4">
+            <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-semibold mb-4">
                 Available now — PRO
             </div>
             <h1 class="text-4xl font-extrabold tracking-tight mb-3">
                 ZORO <span class="text-blue-500">BETA MD</span>
             </h1>
-            <p class="text-gray-400 text-xs leading-relaxed mb-6">
+            <p class="text-gray-300 text-xs leading-relaxed mb-6">
                 Advanced WhatsApp automation powered by intelligent commands. Expanded features, multi-device support, and helpful updates all around.
             </p>
 
@@ -293,12 +280,12 @@
                 </a>
             </div>
 
-            <!-- ZORO BANNER VIDEO (CATBOX LINK) -->
+            <!-- ZORO BANNER VIDEO -->
             <div class="glass-card p-2 overflow-hidden rounded-2xl relative cursor-pointer" onclick="toggleBannerAudio()">
                 <video id="bannerVideo" autoplay loop muted playsinline class="w-full h-48 rounded-xl object-cover">
                     <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
                 </video>
-                <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
+                <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
                     <i id="bannerSoundIcon" class="fas fa-volume-mute text-[10px]"></i>
                     <span class="text-[10px]">Tap for Audio</span>
                 </div>
@@ -307,16 +294,16 @@
 
         <!-- PAIRING CODE GENERATOR SECTION -->
         <section id="pairingSection" class="hidden">
-            <div class="glass-card p-6 border-blue-500/40 relative shadow-2xl space-y-4">
+            <div class="glass-card p-6 border-blue-500/50 relative shadow-2xl space-y-4">
                 <div class="flex justify-between items-center mb-1">
                     <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">Pair Code Generator</span>
                     <button onclick="togglePairing()" class="text-gray-400 hover:text-white text-xs"><i class="fas fa-times"></i> Close</button>
                 </div>
                 
-                <p class="text-gray-400 text-xs">Enter your WhatsApp number with country code to generate your pairing code.</p>
+                <p class="text-gray-300 text-xs">Enter your WhatsApp number with country code to generate your pairing code.</p>
                 
                 <div class="space-y-3">
-                    <input type="text" id="phoneNum" placeholder="e.g. 919876543210" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500">
+                    <input type="text" id="phoneNum" placeholder="e.g. 919876543210" class="w-full bg-black/60 border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500">
                     <button onclick="generatePairCode()" class="btn-blue">
                         Generate Code
                     </button>
@@ -324,7 +311,7 @@
 
                 <div id="pairResult" class="hidden pt-3 border-t border-white/10 text-center">
                     <span class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1">Your Pairing Code</span>
-                    <div class="bg-black/80 border border-blue-500/30 rounded-xl py-3 px-4 text-xl font-mono text-sky-400 font-bold tracking-widest" id="codeDisplay">
+                    <div class="bg-black/80 border border-blue-500/40 rounded-xl py-3 px-4 text-xl font-mono text-sky-400 font-bold tracking-widest" id="codeDisplay">
                         ABCD-1234
                     </div>
                 </div>
@@ -367,22 +354,22 @@
             <h2 class="text-2xl font-bold tracking-tight">A new standard.</h2>
             <div class="grid grid-cols-2 gap-4">
                 <div class="glass-card p-6 flex flex-col items-center justify-center">
-                    <i class="fas fa-users text-lg text-gray-400 mb-2"></i>
+                    <i class="fas fa-users text-lg text-gray-300 mb-2"></i>
                     <span class="text-2xl font-extrabold">50K+</span>
                     <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">ACTIVE USERS</span>
                 </div>
                 <div class="glass-card p-6 flex flex-col items-center justify-center">
-                    <i class="fas fa-comment-dots text-lg text-gray-400 mb-2"></i>
+                    <i class="fas fa-comment-dots text-lg text-gray-300 mb-2"></i>
                     <span class="text-2xl font-extrabold">10M+</span>
                     <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">MESSAGES SENT</span>
                 </div>
                 <div class="glass-card p-6 flex flex-col items-center justify-center">
-                    <i class="fas fa-server text-lg text-gray-400 mb-2"></i>
+                    <i class="fas fa-server text-lg text-gray-300 mb-2"></i>
                     <span class="text-2xl font-extrabold">99.9%</span>
                     <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">SERVER UPTIME</span>
                 </div>
                 <div class="glass-card p-6 flex flex-col items-center justify-center">
-                    <i class="fas fa-stethoscope text-lg text-gray-400 mb-2"></i>
+                    <i class="fas fa-stethoscope text-lg text-gray-300 mb-2"></i>
                     <span class="text-2xl font-extrabold">PRO</span>
                     <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">CURRENT VERSION</span>
                 </div>
@@ -393,39 +380,39 @@
         <section class="space-y-6">
             <div class="text-center">
                 <h2 class="text-2xl font-bold tracking-tight mb-1">Powerful features.</h2>
-                <p class="text-gray-400 text-xs">Everything you need. Nothing you don't.</p>
+                <p class="text-gray-300 text-xs">Everything you need. Nothing you don't.</p>
             </div>
 
             <div class="space-y-4">
                 <div class="glass-card p-5">
                     <i class="fas fa-th-large text-xl text-white mb-3"></i>
                     <h3 class="font-bold text-sm mb-1">Movies & TV</h3>
-                    <p class="text-gray-400 text-xs">Download subtitled movies directly.</p>
+                    <p class="text-gray-300 text-xs">Download subtitled movies directly.</p>
                 </div>
                 <div class="glass-card p-5">
                     <i class="fas fa-eye-slash text-xl text-white mb-3"></i>
                     <h3 class="font-bold text-sm mb-1">Privacy Pro</h3>
-                    <p class="text-gray-400 text-xs">View Once recovery and Anti-Delete system.</p>
+                    <p class="text-gray-300 text-xs">View Once recovery and Anti-Delete system.</p>
                 </div>
                 <div class="glass-card p-5">
                     <i class="fas fa-download text-xl text-white mb-3"></i>
                     <h3 class="font-bold text-sm mb-1">Downloader</h3>
-                    <p class="text-gray-400 text-xs">TikTok, FB, Insta & YouTube support.</p>
+                    <p class="text-gray-300 text-xs">TikTok, FB, Insta & YouTube support.</p>
                 </div>
                 <div class="glass-card p-5">
                     <i class="fas fa-comment text-xl text-blue-400 mb-3"></i>
                     <h3 class="font-bold text-sm text-blue-400 mb-1">AI Chat</h3>
-                    <p class="text-gray-400 text-xs">General-purpose AI assistant for any topic.</p>
+                    <p class="text-gray-300 text-xs">General-purpose AI assistant for any topic.</p>
                 </div>
                 <div class="glass-card p-5">
                     <i class="fas fa-user-friends text-xl text-white mb-3"></i>
                     <h3 class="font-bold text-sm mb-1">Group Tools</h3>
-                    <p class="text-gray-400 text-xs">Full admin control and member management.</p>
+                    <p class="text-gray-300 text-xs">Full admin control and member management.</p>
                 </div>
                 <div class="glass-card p-5">
                     <i class="fas fa-music text-xl text-white mb-3"></i>
                     <h3 class="font-bold text-sm mb-1">Music Hub</h3>
-                    <p class="text-gray-400 text-xs">MP3 Songs with lyrics and album art.</p>
+                    <p class="text-gray-300 text-xs">MP3 Songs with lyrics and album art.</p>
                 </div>
             </div>
         </section>
@@ -434,7 +421,7 @@
         <section class="space-y-6 text-center">
             <div>
                 <h2 class="text-2xl font-bold tracking-tight mb-1">Just type a command.</h2>
-                <p class="text-gray-400 text-xs">A familiar terminal. An entirely new feeling.</p>
+                <p class="text-gray-300 text-xs">A familiar terminal. An entirely new feeling.</p>
             </div>
 
             <div class="glass-card p-4 text-left">
@@ -442,7 +429,7 @@
                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                     <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                     <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-                    <span class="text-[10px] text-gray-500 font-mono ml-2">zoro - bot</span>
+                    <span class="text-[10px] text-gray-400 font-mono ml-2">zoro - bot</span>
                 </div>
                 <div class="cmd-grid">
                     <div class="cmd-item">.alive</div>
@@ -467,7 +454,7 @@
         <!-- JOIN THE COMMUNITY -->
         <section class="glass-card p-8 text-center space-y-4">
             <h2 class="text-2xl font-bold tracking-tight">Join the community.</h2>
-            <p class="text-gray-400 text-xs max-w-xs mx-auto">
+            <p class="text-gray-300 text-xs max-w-xs mx-auto">
                 Thousands of users. One conversation.
             </p>
             <div class="space-y-3 pt-2">
@@ -486,7 +473,7 @@
                 <img src="https://files.catbox.moe/5tnppp.jpg" alt="Adithyan Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-xl">
                 <div class="text-[10px] text-gray-400 tracking-widest font-semibold mb-2 uppercase">MEET THE DEVELOPER</div>
                 <h3 class="text-2xl font-extrabold mb-3">Adithyan</h3>
-                <p class="text-gray-400 text-xs leading-relaxed mb-6">
+                <p class="text-gray-300 text-xs leading-relaxed mb-6">
                     Full Stack Developer and creator of ZORO BETA MD. On a mission to simplify communication through advanced automation — made for everyone.
                 </p>
                 <div class="space-y-3">
@@ -507,17 +494,17 @@
         <i class="fas fa-comment-alt"></i> Support AI
     </a>
 
-    <footer class="border-t border-white/10 py-8 text-center text-xs text-gray-500 space-y-2">
+    <footer class="border-t border-white/10 py-8 text-center text-xs text-gray-400 space-y-2">
         <p>Copyright © 2026 ZORO MD. Created by Adithyan.</p>
     </footer>
 
     <script>
         // Automatic Audio play trigger for song.mp3
         window.addEventListener('DOMContentLoaded', () => {
-            const audio = document.getElementById('bgAudio');
-            audio.play().catch(() => {
+            const bgAudio = document.getElementById('bgAudio');
+            bgAudio.play().catch(() => {
                 document.body.addEventListener('click', () => {
-                    audio.play();
+                    bgAudio.play();
                 }, { once: true });
             });
         });
@@ -544,14 +531,19 @@
             resultBox.classList.remove('hidden');
         }
 
+        /* TOGGLE VIDEO AUDIO & PAUSE BACKGROUND SONG */
         function toggleBannerAudio() {
-            const video = document.getElementById('bannerVideo');
+            const bannerVideo = document.getElementById('bannerVideo');
+            const bgAudio = document.getElementById('bgAudio');
             const icon = document.getElementById('bannerSoundIcon');
-            if (video.muted) {
-                video.muted = false;
+
+            if (bannerVideo.muted) {
+                bannerVideo.muted = false;
+                bgAudio.pause(); // Stop background mp3 when banner video sound is ON
                 icon.className = 'fas fa-volume-up text-sky-400';
             } else {
-                video.muted = true;
+                bannerVideo.muted = true;
+                bgAudio.play(); // Resume background mp3 when banner video is MUTED
                 icon.className = 'fas fa-volume-mute text-gray-400';
             }
         }
