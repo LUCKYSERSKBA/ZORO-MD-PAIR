@@ -20,7 +20,7 @@
             position: relative;
         }
 
-        /* DIRECT GITHUB BACKGROUND VIDEO */
+        /* GITHUB BACKGROUND VIDEO */
         .bg-video-container {
             position: fixed;
             top: 0;
@@ -191,34 +191,27 @@
             text-align: center;
             font-family: monospace;
             font-size: 13px;
-            color: #e2e8f0;
-            animation: dropDown 0.6s ease forwards;
-            opacity: 0;
-            transform: translateY(-15px);
+            color: #38bdf8;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        @keyframes dropDown {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* TYPING CURSOR */
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background-color: #38bdf8;
+            margin-left: 4px;
+            animation: blink 0.7s infinite;
         }
 
-        .cmd-item:nth-child(1) { animation-delay: 0.1s; }
-        .cmd-item:nth-child(2) { animation-delay: 0.15s; }
-        .cmd-item:nth-child(3) { animation-delay: 0.2s; }
-        .cmd-item:nth-child(4) { animation-delay: 0.25s; }
-        .cmd-item:nth-child(5) { animation-delay: 0.3s; }
-        .cmd-item:nth-child(6) { animation-delay: 0.35s; }
-        .cmd-item:nth-child(7) { animation-delay: 0.4s; }
-        .cmd-item:nth-child(8) { animation-delay: 0.45s; }
-        .cmd-item:nth-child(9) { animation-delay: 0.5s; }
-        .cmd-item:nth-child(10) { animation-delay: 0.55s; }
-        .cmd-item:nth-child(11) { animation-delay: 0.6s; }
-        .cmd-item:nth-child(12) { animation-delay: 0.65s; }
-        .cmd-item:nth-child(13) { animation-delay: 0.7s; }
-        .cmd-item:nth-child(14) { animation-delay: 0.75s; }
-        .cmd-item:nth-child(15) { animation-delay: 0.8s; }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -231,7 +224,7 @@
     </div>
 
     <!-- GITHUB BACKGROUND SONG -->
-    <audio id="bgAudio" loop autoplay>
+    <audio id="bgAudio" loop autoplay preload="auto">
         <source src="song.mp3" type="audio/mpeg">
     </audio>
 
@@ -287,7 +280,7 @@
                 </video>
                 <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
                     <i id="bannerSoundIcon" class="fas fa-volume-mute text-[10px]"></i>
-                    <span class="text-[10px]">Tap for Audio</span>
+                    <span class="text-[10px]" id="bannerSoundText">Tap for Audio</span>
                 </div>
             </div>
         </section>
@@ -417,7 +410,7 @@
             </div>
         </section>
 
-        <!-- COMMAND TERMINAL -->
+        <!-- COMMAND TERMINAL (WITH AUTO TYPING ANIMATION) -->
         <section class="space-y-6 text-center">
             <div>
                 <h2 class="text-2xl font-bold tracking-tight mb-1">Just type a command.</h2>
@@ -429,24 +422,10 @@
                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                     <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                     <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-                    <span class="text-[10px] text-gray-400 font-mono ml-2">zoro - bot</span>
+                    <span class="text-[10px] text-gray-400 font-mono ml-2">zoro - bot commands</span>
                 </div>
-                <div class="cmd-grid">
-                    <div class="cmd-item">.alive</div>
-                    <div class="cmd-item">.menu</div>
-                    <div class="cmd-item">.movie</div>
-                    <div class="cmd-item">.song</div>
-                    <div class="cmd-item">.fb</div>
-                    <div class="cmd-item">.tiktok</div>
-                    <div class="cmd-item">.vv</div>
-                    <div class="cmd-item">.apk</div>
-                    <div class="cmd-item">.image</div>
-                    <div class="cmd-item">.logo</div>
-                    <div class="cmd-item">.video</div>
-                    <div class="cmd-item">.anime</div>
-                    <div class="cmd-item">.jid</div>
-                    <div class="cmd-item">.pin</div>
-                    <div class="cmd-item">.join</div>
+                <div class="cmd-grid" id="cmdGrid">
+                    <!-- Commands will auto type here -->
                 </div>
             </div>
         </section>
@@ -499,15 +478,43 @@
     </footer>
 
     <script>
-        // Automatic Audio play trigger for song.mp3
-        window.addEventListener('DOMContentLoaded', () => {
-            const bgAudio = document.getElementById('bgAudio');
-            bgAudio.play().catch(() => {
-                document.body.addEventListener('click', () => {
-                    bgAudio.play();
-                }, { once: true });
+        const bgAudio = document.getElementById('bgAudio');
+        const bannerVideo = document.getElementById('bannerVideo');
+
+        // Play background song immediately on site load
+        function playBgAudio() {
+            bgAudio.play().then(() => {
+                document.removeEventListener('click', playBgAudio);
+                document.removeEventListener('touchstart', playBgAudio);
+            }).catch(() => {
+                // Autoplay blocked handling
             });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            playBgAudio();
+            document.addEventListener('click', playBgAudio, { once: true });
+            document.addEventListener('touchstart', playBgAudio, { once: true });
+            startTypingCommands();
         });
+
+        /* TOGGLE BANNER VIDEO AUDIO AND PAUSE/RESUME BG SONG */
+        function toggleBannerAudio() {
+            const icon = document.getElementById('bannerSoundIcon');
+            const soundText = document.getElementById('bannerSoundText');
+
+            if (bannerVideo.muted) {
+                bannerVideo.muted = false;
+                bgAudio.pause(); // Pause background song when video audio starts
+                icon.className = 'fas fa-volume-up text-sky-400';
+                soundText.innerText = 'Audio On';
+            } else {
+                bannerVideo.muted = true;
+                bgAudio.play(); // Resume background song when video audio mutes
+                icon.className = 'fas fa-volume-mute text-gray-400';
+                soundText.innerText = 'Tap for Audio';
+            }
+        }
 
         function togglePairing() {
             const section = document.getElementById('pairingSection');
@@ -531,20 +538,34 @@
             resultBox.classList.remove('hidden');
         }
 
-        /* TOGGLE VIDEO AUDIO & PAUSE BACKGROUND SONG */
-        function toggleBannerAudio() {
-            const bannerVideo = document.getElementById('bannerVideo');
-            const bgAudio = document.getElementById('bgAudio');
-            const icon = document.getElementById('bannerSoundIcon');
+        /* AUTOMATIC TYPING COMMANDS ANIMATION */
+        const commands = [
+            ".alive", ".menu", ".movie", ".song",
+            ".fb", ".tiktok", ".vv", ".apk",
+            ".image", ".logo", ".video", ".anime",
+            ".jid", ".pin", ".join", ".ai"
+        ];
 
-            if (bannerVideo.muted) {
-                bannerVideo.muted = false;
-                bgAudio.pause(); // Stop background mp3 when banner video sound is ON
-                icon.className = 'fas fa-volume-up text-sky-400';
-            } else {
-                bannerVideo.muted = true;
-                bgAudio.play(); // Resume background mp3 when banner video is MUTED
-                icon.className = 'fas fa-volume-mute text-gray-400';
+        async function startTypingCommands() {
+            const grid = document.getElementById('cmdGrid');
+            grid.innerHTML = ''; // clear grid
+
+            for (let cmd of commands) {
+                let box = document.createElement('div');
+                box.className = 'cmd-item';
+                box.innerHTML = '<span class="typed-text"></span><span class="cursor"></span>';
+                grid.appendChild(box);
+
+                let typedSpan = box.querySelector('.typed-text');
+                let cursorSpan = box.querySelector('.cursor');
+
+                for (let char of cmd) {
+                    typedSpan.innerText += char;
+                    await new Promise(r => setTimeout(r, 60)); // typing speed
+                }
+                
+                cursorSpan.remove(); // Remove blinking cursor after command is typed
+                await new Promise(r => setTimeout(r, 100)); // gap between commands
             }
         }
     </script>
