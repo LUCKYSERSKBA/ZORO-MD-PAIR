@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZORO MD</title>
+    <title>ZORO BETA MD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -21,7 +21,7 @@
             overflow-x: hidden;
         }
 
-        /* HARDWARE ACCELERATED BG VIDEO */
+        /* BACKGROUND VIDEO & OVERLAY */
         .bg-video-container {
             position: fixed;
             top: 0;
@@ -37,6 +37,17 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            filter: brightness(0.6) contrast(1.1);
+        }
+
+        /* GRADIENT OVERLAY */
+        .bg-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(3, 4, 8, 0.4) 0%, rgba(3, 4, 8, 0.85) 100%),
+                        linear-gradient(to bottom, rgba(3, 4, 8, 0.5), rgba(3, 4, 8, 0.95));
+            z-index: -1;
+            pointer-events: none;
         }
 
         /* LOADING ANIMATION */
@@ -77,26 +88,147 @@
             to { width: 100%; }
         }
 
-        /* ULTRA SMOOTH CARDS */
+        /* TEXT ANIMATION & GLOW EFFECTS */
+        .glow-text {
+            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #2563eb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+        }
+
+        .shine-badge {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shine-badge::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(60deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(30deg);
+            animation: shineതീർച്ചയായും! മുൻപ് ഉണ്ടായിരുന്ന എല്ലാ **ഓവർലേ ഇഫക്റ്റുകളും (Glow/Overlay), ബാക്ക്ഗ്രൗണ്ട് അനിമേഷനുകളും, സ്റ്റൈലിഷ് ടെക്സ്റ്റ് അനിമേഷനുകളും** തിരികെ കൊണ്ടുവന്നിട്ടുണ്ട്. 
+
+കൂടാതെ ഓഡിയോ പ്ലേബാക്കിനായി രണ്ടു കാര്യങ്ങളും ഒരേസമയം ഉൾപ്പെടുത്തിയിട്ടുണ്ട്:
+1. **ഓഡിയോ പ്ലേ/പോസ് ബട്ടൺ (Audio Control Button):** നെവ്ബാറിൽ ഓഡിയോ പ്ലേ ചെയ്യാനും പോസ് ചെയ്യാനും സൗകര്യപ്രദമായ ബട്ടൺ നൽകി.
+2. **സ്ക്രോൾ ഓട്ടോപ്ലേ (Scroll Autoplay):** വെബ്‌സൈറ്റിൽ യൂസർ ജസ്റ്റ് ഒന്ന് സ്ക്രോൾ ചെയ്താൽ ഉടൻ തന്നെ ഓഡിയോ പ്ലേ ആകുന്ന വിധത്തിൽ ലളിതമായ സ്ക്രിപ്റ്റ് സെറ്റ് ചെയ്തിട്ടുണ്ട്.
+
+അപ്ഡേറ്റ് ചെയ്ത പുതിയ HTML കോഡ് താഴെ നൽകുന്നു:
+
+```html
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZORO BETA MD</title>
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <link href="[https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css](https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css)" rel="stylesheet">
+    <style>
+        @import url('[https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap)');
+        
+        * {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            scroll-behavior: smooth;
+            background: #030408;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* HARDWARE ACCELERATED BG VIDEO & OVERLAY */
+        .bg-video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+            transform: translateZ(0);
+        }
+
+        .bg-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6) contrast(1.1);
+        }
+
+        .bg-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.15) 0%, rgba(3, 4, 8, 0.85) 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* LOADING ANIMATION */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #030408;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeOut 0.6s ease 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        .loader-bar {
+            width: 160px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 25px;
+        }
+
+        .loader-progress {
+            width: 0%;
+            height: 100%;
+            background: #2563eb;
+            box-shadow: 0 0 12px #2563eb;
+            animation: load 1.8s ease forwards;
+        }
+
+        @keyframes load {
+            to { width: 100%; }
+        }
+
+        /* GLOW & GLASS CARDS */
         .glass-card {
-            background: rgba(13, 17, 23, 0.6);
+            background: rgba(13, 17, 23, 0.65);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 20px;
-            transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), border-color 0.2s ease;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
             will-change: transform;
         }
 
         .glass-card:hover {
-            border-color: rgba(37, 99, 235, 0.5);
-            transform: translateY(-2px);
+            border-color: rgba(37, 99, 235, 0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(37, 99, 235, 0.2);
         }
 
         .tech-card {
-            background: rgba(13, 17, 23, 0.5);
+            background: rgba(13, 17, 23, 0.55);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px);
             border-radius: 16px;
             padding: 20px 16px;
             display: flex;
@@ -104,22 +236,27 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
         .tech-card:hover {
-            border-color: rgba(37, 99, 235, 0.5);
-            transform: translateY(-2px);
+            border-color: rgba(56, 189, 248, 0.5);
+            transform: translateY(-3px);
         }
 
         .tech-card i {
             font-size: 26px;
             color: #38bdf8;
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.4));
         }
 
-        /* BUTTONS */
+        /* ANIMATED TEXT & BUTTONS */
+        .text-glow {
+            text-shadow: 0 0 20px rgba(37, 99, 235, 0.6);
+        }
+
         .btn-blue {
-            background: #0070f3;
+            background: linear-gradient(135deg, #0070f3 0%, #1e40af 100%);
             color: #ffffff;
             border-radius: 9999px;
             padding: 12px 24px;
@@ -129,12 +266,13 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: opacity 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 112, 243, 0.3);
+            transition: transform 0.2s ease, opacity 0.2s ease;
             width: 100%;
         }
 
         .btn-blue:active {
-            opacity: 0.8;
+            transform: scale(0.98);
         }
 
         .btn-outline {
@@ -149,12 +287,13 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: background 0.2s ease;
+            transition: background 0.2s ease, transform 0.2s ease;
             width: 100%;
         }
 
         .btn-outline:active {
             background: rgba(255, 255, 255, 0.15);
+            transform: scale(0.98);
         }
 
         .floating-btn {
@@ -170,7 +309,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 20px rgba(0, 112, 243, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 112, 243, 0.5);
             z-index: 50;
             cursor: pointer;
         }
@@ -194,6 +333,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: inset 0 0 10px rgba(56, 189, 248, 0.05);
         }
 
         .cursor {
@@ -213,12 +353,13 @@
 </head>
 <body>
 
-    <!-- GITHUB BACKGROUND VIDEO -->
+    <!-- GITHUB BACKGROUND VIDEO & OVERLAY -->
     <div class="bg-video-container">
         <video autoplay loop muted playsinline class="bg-video">
             <source src="bg-video.mp4" type="video/mp4">
         </video>
     </div>
+    <div class="bg-overlay"></div>
 
     <!-- AUDIO ELEMENT -->
     <audio id="bgAudio" loop preload="auto">
@@ -239,22 +380,31 @@
         </div>
     </div>
 
-    <!-- NAVBAR -->
-    <header class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10">
-        <div class="font-bold text-base tracking-wider text-white uppercase">ZORO MD</div>
-        <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
-            GitHub
-        </a>
+    <!-- NAVBAR WITH AUDIO CONTROL BUTTON -->
+    <header class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10 backdrop-blur-md sticky top-0 z-40">
+        <div class="font-bold text-base tracking-wider text-white uppercase text-glow">ZORO MD</div>
+        
+        <div class="flex items-center gap-3">
+            <!-- AUDIO TOGGLE BUTTON -->
+            <button id="audioBtn" onclick="toggleAudio()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 transition-all">
+                <i id="audioIcon" class="fas fa-music text-sky-400"></i>
+                <span id="audioText">Play Music</span>
+            </button>
+
+            <a href="[https://github.com/Xion-Xer/ZORO-MD.git](https://github.com/Xion-Xer/ZORO-MD.git)" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
+                GitHub
+            </a>
+        </div>
     </header>
 
     <main class="max-w-md mx-auto px-5 pt-8 pb-24 space-y-16">
 
         <!-- HERO SECTION -->
         <section class="text-center">
-            <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-semibold mb-4">
+            <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400 text-xs font-semibold mb-4 backdrop-blur-sm">
                 Available now — PRO
             </div>
-            <h1 class="text-4xl font-extrabold tracking-tight mb-3">
+            <h1 class="text-4xl font-extrabold tracking-tight mb-3 text-glow">
                 ZORO <span class="text-blue-500">BETA MD</span>
             </h1>
             <p class="text-gray-300 text-xs leading-relaxed mb-6">
@@ -265,7 +415,7 @@
                 <button onclick="togglePairing()" class="btn-blue">
                     Get pair code
                 </button>
-                <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-outline">
+                <a href="[https://github.com/Xion-Xer/ZORO-MD.git](https://github.com/Xion-Xer/ZORO-MD.git)" target="_blank" class="btn-outline">
                     Get the repo
                 </a>
             </div>
@@ -273,7 +423,7 @@
             <!-- ZORO BANNER VIDEO -->
             <div class="glass-card p-2 overflow-hidden rounded-2xl relative cursor-pointer" onclick="toggleBannerVideo()">
                 <video id="bannerVideo" autoplay loop muted playsinline preload="auto" class="w-full h-48 rounded-xl object-cover">
-                    <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
+                    <source src="[https://files.catbox.moe/n1p774.mp4](https://files.catbox.moe/n1p774.mp4)" type="video/mp4">
                 </video>
                 <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
                     <i id="bannerStatusIcon" class="fas fa-play text-[10px]"></i>
@@ -433,10 +583,10 @@
                 Thousands of users. One conversation.
             </p>
             <div class="space-y-3 pt-2">
-                <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-blue">
+                <a href="[https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd](https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd)" target="_blank" class="btn-blue">
                     <i class="fas fa-comment"></i> Support group
                 </a>
-                <a href="https://whatsapp.com/channel/0029Vb7pgsF4tRrkS5CECe24" target="_blank" class="btn-outline">
+                <a href="[https://whatsapp.com/channel/0029Vb7pgsF4tRrkS5CECe24](https://whatsapp.com/channel/0029Vb7pgsF4tRrkS5CECe24)" target="_blank" class="btn-outline">
                     <i class="fas fa-broadcast-tower"></i> Join channel
                 </a>
             </div>
@@ -445,17 +595,17 @@
         <!-- DEVELOPER PROFILE -->
         <section>
             <div class="glass-card p-8 text-center">
-                <img src="https://files.catbox.moe/5tnppp.jpg" alt="Adithyan Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-xl">
+                <img src="[https://files.catbox.moe/5tnppp.jpg](https://files.catbox.moe/5tnppp.jpg)" alt="Adithyan Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-xl">
                 <div class="text-[10px] text-gray-400 tracking-widest font-semibold mb-2 uppercase">MEET THE DEVELOPER</div>
                 <h3 class="text-2xl font-extrabold mb-3">Adithyan</h3>
                 <p class="text-gray-300 text-xs leading-relaxed mb-6">
                     Full Stack Developer and creator of ZORO BETA MD. On a mission to simplify communication through advanced automation — made for everyone.
                 </p>
                 <div class="space-y-3">
-                    <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-blue">
+                    <a href="[https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd](https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd)" target="_blank" class="btn-blue">
                         <i class="fas fa-comment"></i> Contact me
                     </a>
-                    <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-outline">
+                    <a href="[https://github.com/Xion-Xer/ZORO-MD.git](https://github.com/Xion-Xer/ZORO-MD.git)" target="_blank" class="btn-outline">
                         <i class="fab fa-github"></i> GitHub
                     </a>
                 </div>
@@ -465,7 +615,7 @@
     </main>
 
     <!-- FLOATING SUPPORT BUTTON -->
-    <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="floating-btn">
+    <a href="[https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd](https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd)" target="_blank" class="floating-btn">
         <i class="fas fa-comment-alt"></i> Support AI
     </a>
 
@@ -476,13 +626,39 @@
     <script>
         const bgAudio = document.getElementById('bgAudio');
         const bannerVideo = document.getElementById('bannerVideo');
+        const audioBtn = document.getElementById('audioBtn');
+        const audioIcon = document.getElementById('audioIcon');
+        const audioText = document.getElementById('audioText');
 
-        // SMART AUTOPLAY (Starts instantly on any tiny interaction/scroll)
+        // AUDIO TOGGLE & SCROLL TRIGGER
         function playAudio() {
             if (bgAudio.paused) {
                 bgAudio.play().then(() => {
+                    updateAudioUI(true);
                     removeAudioTriggers();
                 }).catch(() => {});
+            }
+        }
+
+        function toggleAudio() {
+            if (bgAudio.paused) {
+                bgAudio.play().then(() => {
+                    updateAudioUI(true);
+                    removeAudioTriggers();
+                }).catch(() => {});
+            } else {
+                bgAudio.pause();
+                updateAudioUI(false);
+            }
+        }
+
+        function updateAudioUI(isPlaying) {
+            if (isPlaying) {
+                audioIcon.className = "fas fa-pause text-sky-400 animate-pulse";
+                audioText.innerText = "Pause Music";
+            } else {
+                audioIcon.className = "fas fa-music text-sky-400";
+                audioText.innerText = "Play Music";
             }
         }
 
@@ -490,18 +666,13 @@
             window.removeEventListener('scroll', playAudio);
             window.removeEventListener('click', playAudio);
             window.removeEventListener('touchstart', playAudio);
-            window.removeEventListener('mousemove', playAudio);
         }
 
         window.addEventListener('load', () => {
-            // Attempt standard autoplay
-            bgAudio.play().catch(() => {
-                // If blocked, listen to gentle user interactions
-                window.addEventListener('scroll', playAudio, { passive: true });
-                window.addEventListener('click', playAudio, { passive: true });
-                window.addEventListener('touchstart', playAudio, { passive: true });
-                window.addEventListener('mousemove', playAudio, { passive: true });
-            });
+            // SCROLL AUTOPLAY: Triggers as soon as user scrolls just a bit
+            window.addEventListener('scroll', playAudio, { passive: true });
+            window.addEventListener('click', playAudio, { passive: true });
+            window.addEventListener('touchstart', playAudio, { passive: true });
 
             startTypingCommands();
         });
