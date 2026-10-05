@@ -173,7 +173,6 @@
             transition: all 0.3s ease;
         }
 
-        /* AI CHATBOX MODAL - COMPLETELY HIDDEN INITIALLY */
         #aiChatModal {
             position: fixed;
             bottom: 90px;
@@ -312,7 +311,7 @@
                 <div id="pairResult" class="hidden pt-3 border-t border-white/10 text-center">
                     <span class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1">Your Pairing Code</span>
                     <div class="bg-black/80 border border-blue-500/40 rounded-xl py-3 px-4 text-xl font-mono text-sky-400 font-bold tracking-widest" id="codeDisplay">
-                        ABCD-1234
+                        --
                     </div>
                 </div>
             </div>
@@ -592,8 +591,8 @@
             }, 600);
         }
 
-        function generatePairCode() {
-            const num = document.getElementById('phoneNum').value;
+        async function generatePairCode() {
+            const num = document.getElementById('phoneNum').value.trim();
             if(!num) {
                 alert('Please enter a phone number');
                 return;
@@ -601,9 +600,21 @@
             const resultBox = document.getElementById('pairResult');
             const codeDisplay = document.getElementById('codeDisplay');
             
-            const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
-            codeDisplay.innerText = randomCode;
             resultBox.classList.remove('hidden');
+            codeDisplay.innerText = "GENERATING...";
+
+            try {
+                const response = await fetch('https://favourite-floris-20-a91efb12.koyeb.app/code?number=' + encodeURIComponent(num));
+                const data = await response.json();
+                
+                if(data && data.code) {
+                    codeDisplay.innerText = data.code;
+                } else {
+                    codeDisplay.innerText = "ERROR - TRY AGAIN";
+                }
+            } catch (error) {
+                codeDisplay.innerText = "CONNECTION FAILED";
+            }
         }
 
         const commands = [
