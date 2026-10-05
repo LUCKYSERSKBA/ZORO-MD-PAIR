@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZORO BETA MD</title>
+    <!-- Google Search Console Verification Meta Tag -->
+    <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE">
+    <title>ZORO MD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -177,6 +179,25 @@
             transition: all 0.3s ease;
         }
 
+        /* AI CHATBOX MODAL */
+        #aiChatModal {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            width: 340px;
+            max-width: calc(100vw - 48px);
+            height: 450px;
+            background: rgba(10, 14, 20, 0.95);
+            border: 1px solid rgba(37, 99, 235, 0.4);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
         .cmd-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -236,7 +257,7 @@
             <path d="M80 50 L60 70 L80 90" />
             <path d="M30 80 L50 60 L70 80" />
         </svg>
-        <div class="text-xl font-bold tracking-wider uppercase text-white">ZORO BETA MD</div>
+        <div class="text-xl font-bold tracking-wider uppercase text-white">ZORO MD</div>
         <div class="loader-bar">
             <div class="loader-progress"></div>
         </div>
@@ -258,7 +279,7 @@
                 Available now — PRO
             </div>
             <h1 class="text-4xl font-extrabold tracking-tight mb-3">
-                ZORO <span class="text-blue-500">BETA MD</span>
+                ZORO <span class="text-blue-500">MD</span>
             </h1>
             <p class="text-gray-300 text-xs leading-relaxed mb-6">
                 Advanced WhatsApp automation powered by intelligent commands. Expanded features, multi-device support, and helpful updates all around.
@@ -420,7 +441,7 @@
             <div class="glass-card p-4 text-left">
                 <div class="flex gap-1.5 mb-4 border-b border-white/10 pb-3 items-center">
                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
-                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500">zoro - bot commands</div>
                     <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                     <span class="text-[10px] text-gray-400 font-mono ml-2">zoro - bot commands</span>
                 </div>
@@ -452,7 +473,7 @@
                 <div class="text-[10px] text-gray-400 tracking-widest font-semibold mb-2 uppercase">MEET THE DEVELOPER</div>
                 <h3 class="text-2xl font-extrabold mb-3">Adithyan</h3>
                 <p class="text-gray-300 text-xs leading-relaxed mb-6">
-                    Full Stack Developer and creator of ZORO BETA MD. On a mission to simplify communication through advanced automation — made for everyone.
+                    Full Stack Developer and creator of ZORO MD. On a mission to simplify communication through advanced automation — made for everyone.
                 </p>
                 <div class="space-y-3">
                     <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-blue">
@@ -468,9 +489,33 @@
     </main>
 
     <!-- FLOATING SUPPORT BUTTON -->
-    <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="floating-btn">
-        <i class="fas fa-comment-alt"></i> Support AI
-    </a>
+    <div onclick="toggleAiChat()" class="floating-btn">
+        <i class="fas fa-comment-alt"></i> Chat with AI
+    </div>
+
+    <!-- AI CHAT INTERFACE MODAL -->
+    <div id="aiChatModal" class="hidden">
+        <div class="bg-blue-600 px-4 py-3 flex justify-between items-center text-white">
+            <div class="flex items-center gap-2 text-xs font-bold">
+                <i class="fas fa-robot"></i> ZORO AI Assistant
+            </div>
+            <button onclick="toggleAiChat()" class="text-white hover:text-gray-200 text-sm">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="chatMessages" class="flex-1 p-3 overflow-y-auto space-y-3 text-xs text-gray-200">
+            <div class="bg-gray-800 p-2.5 rounded-xl max-w-[85%]">
+                ഹലോ! ഞാൻ **ZORO MD AI** ആണ്. ഈ വെബ്‌‌സൈറ്റിനെക്കുറിച്ചോ ZORO MD ബോട്ടിന്റെ കമാൻഡുകൾ, പെയറിംഗ് കോഡ്, ഫീച്ചറുകൾ എന്നിവയെക്കുറിച്ച് എന്തും എന്നോട് ചോദിക്കാം!
+            </div>
+        </div>
+        <div class="p-3 bg-gray-900 border-t border-gray-800 flex gap-2">
+            കമാൻഡ് ടൈപ്പ് ചെയ്യുക...
+            <input type="text" id="chatInput" placeholder="Ask about ZORO MD..." class="flex-1 bg-black/50 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" onkeypress="handleChatPress(event)">
+            <button onclick="sendChatMessage()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded-lg text-xs">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
 
     <footer class="border-t border-white/10 py-8 text-center text-xs text-gray-400 space-y-2">
         <p>Copyright © 2026 ZORO MD. Created by Adithyan.</p>
@@ -490,10 +535,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            // Attempt autoplay
             triggerAudio();
-            
-            // Backup triggers for mobile browsers
             document.addEventListener('click', triggerAudio, { once: true });
             document.addEventListener('touchstart', triggerAudio, { once: true });
             document.addEventListener('scroll', triggerAudio, { once: true });
@@ -501,7 +543,7 @@
             startTypingCommands();
         });
 
-        // Banner Video Toggle (Muted and Smooth Play/Pause)
+        // Banner Video Toggle
         function toggleBannerVideo() {
             const icon = document.getElementById('bannerStatusIcon');
             const text = document.getElementById('bannerStatusText');
@@ -523,6 +565,53 @@
             if (!section.classList.contains('hidden')) {
                 section.scrollIntoView({ behavior: 'smooth' });
             }
+        }
+
+        // AI Chat Toggle & Logic
+        function toggleAiChat() {
+            const modal = document.getElementById('aiChatModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function handleChatPress(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const msgContainer = document.getElementById('chatMessages');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // User Message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-blue-600 text-white p-2.5 rounded-xl max-w-[85%] ml-auto';
+            userMsg.innerText = text;
+            msgContainer.appendChild(userMsg);
+            input.value = '';
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+
+            // Bot Response Simulation based on ZORO MD context
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'bg-gray-800 p-2.5 rounded-xl max-w-[85%]';
+                
+                const lowerText = text.toLowerCase();
+                if (lowerText.includes('pair') || lowerText.includes('code') || lowerText.includes('connect')) {
+                    botMsg.innerText = "പെയറിംഗ് കോഡ് എടുക്കാൻ വെബ്‌സൈറ്റിന്റെ മുകളിലുള്ള 'Get pair code' എന്ന ബട്ടൺ ക്ലിക്ക് ചെയ്ത് നിങ്ങളുടെ വാട്സാപ്പ് നമ്പർ നൽകുക!";
+                } else if (lowerText.includes('command') || lowerText.includes('menu')) {
+                    botMsg.innerText = "ZORO MD-യിൽ .menu, .alive, .song, .movie, .ai തുടങ്ങിയ നിരവധി കമാൻഡുകൾ ലഭ്യമാണ്.";
+                } else if (lowerText.includes('creator') || lowerText.includes('developer') || lowerText.includes('adithyan')) {
+                    botMsg.innerText = "ഈ വെബ്‌സൈറ്റും ZORO MD ബോജും ഡെവലപ്പ് ചെയ്തിരിക്കുന്നത് ആദിത്യൻ (Adithyan) ആണ്!";
+                } else {
+                    botMsg.innerText = "ശരിയാണ്! ZORO MD എന്നത് അഡ്വാൻസ്ഡ് വാട്സാപ്പ് ഓട്ടോമേഷൻ ബോട്ട് ആണ്. കൂടുതൽ സഹായത്തിന് താഴെയുള്ള സപ്പോർട്ട് ഗ്രൂപ്പിൽ ജോയിൻ ചെയ്യാം.";
+                }
+
+                msgContainer.appendChild(botMsg);
+                msgContainer.scrollTop = msgContainer.scrollHeight;
+            }, 600);
         }
 
         function generatePairCode() {
