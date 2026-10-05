@@ -292,7 +292,7 @@
             </div>
         </section>
 
-        <!-- PAIRING SECTION (HIDDEN INITIALLY) -->
+        <!-- PAIRING SECTION -->
         <section id="pairingSection" class="hidden">
             <div class="glass-card p-6 border-blue-500/50 relative shadow-2xl space-y-4">
                 <div class="flex justify-between items-center mb-1">
@@ -592,7 +592,7 @@
             }, 600);
         }
 
-        // പെയറിംഗ് കോഡ് സുരക്ഷിതമായി ഫെച്ച് ചെയ്യാൻ സെറ്റ് ചെയ്ത ഫങ്ഷൻ
+        // കൊയാബ് ലിങ്ക് കറക്റ്റായി സെറ്റ് ചെയ്ത ഫങ്ഷൻ
         async function generatePairCode() {
             let num = document.getElementById('phoneNum').value.trim();
             if(!num) {
@@ -620,7 +620,6 @@
                     codeDisplay.innerHTML = `Unable to fetch automatically. <a href="${koyebUrl}" target="_blank" class="text-cyan-400 underline block mt-1">Click here to get code directly</a>`;
                 }
             } catch (error) {
-                // CORS തടസ്സം വന്നാൽ യൂസർക്ക് ഡയറക്റ്റ് കൊയാബ് ലിങ്ക് ഉപയോഗിക്കാൻ ഓപ്ഷൻ നൽകുന്നു
                 codeDisplay.innerHTML = `Click below to generate code:<br><a href="${koyebUrl}" target="_blank" class="inline-block mt-2 px-4 py-1.5 bg-blue-600 text-white rounded-xl text-xs font-bold shadow-lg">Open Pairing Page</a>`;
             }
         }
