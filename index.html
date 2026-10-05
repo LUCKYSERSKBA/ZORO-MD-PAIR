@@ -179,7 +179,7 @@
             transition: all 0.3s ease;
         }
 
-        /* AI CHATBOX MODAL */
+        /* AI CHATBOX MODAL - HIDDEN BY DEFAULT */
         #aiChatModal {
             position: fixed;
             bottom: 90px;
@@ -493,7 +493,7 @@
         <i class="fas fa-comment-alt"></i> Chat with AI
     </div>
 
-    <!-- AI CHAT INTERFACE MODAL (HIDDEN BY DEFAULT) -->
+    <!-- AI CHAT INTERFACE MODAL - CORRECTLY HIDDEN BY DEFAULT -->
     <div id="aiChatModal" class="hidden">
         <div class="bg-blue-600 px-4 py-3 flex justify-between items-center text-white">
             <div class="flex items-center gap-2 text-xs font-bold">
@@ -566,7 +566,7 @@
             }
         }
 
-        // AI Chat Toggle & Logic (Only opens when button is clicked)
+        // AI Chat Toggle & Logic
         function toggleAiChat() {
             const modal = document.getElementById('aiChatModal');
             modal.classList.toggle('hidden');
@@ -592,7 +592,7 @@
             input.value = '';
             msgContainer.scrollTop = msgContainer.scrollHeight;
 
-            // Bot Response in English (Triggers only on reply)
+            // Bot Response in English
             setTimeout(() => {
                 const botMsg = document.createElement('div');
                 botMsg.className = 'bg-gray-800 p-2.5 rounded-xl max-w-[85%]';
