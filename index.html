@@ -173,6 +173,7 @@
             transition: all 0.3s ease;
         }
 
+        /* AI CHATBOX MODAL - COMPLETELY HIDDEN INITIALLY */
         #aiChatModal {
             position: fixed;
             bottom: 90px;
@@ -292,7 +293,6 @@
             </div>
         </section>
 
-        <!-- PAIRING SECTION -->
         <section id="pairingSection" class="hidden">
             <div class="glass-card p-6 border-blue-500/50 relative shadow-2xl space-y-4">
                 <div class="flex justify-between items-center mb-1">
@@ -311,8 +311,8 @@
 
                 <div id="pairResult" class="hidden pt-3 border-t border-white/10 text-center">
                     <span class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1">Your Pairing Code</span>
-                    <div class="bg-black/80 border border-blue-500/40 rounded-xl py-3 px-4 text-sm font-mono text-sky-400 font-bold tracking-widest select-all break-all" id="codeDisplay">
-                        --
+                    <div class="bg-black/80 border border-blue-500/40 rounded-xl py-3 px-4 text-xl font-mono text-sky-400 font-bold tracking-widest" id="codeDisplay">
+                        ABCD-1234
                     </div>
                 </div>
             </div>
@@ -592,36 +592,18 @@
             }, 600);
         }
 
-        // കൊയാബ് ലിങ്ക് കറക്റ്റായി സെറ്റ് ചെയ്ത ഫങ്ഷൻ
-        async function generatePairCode() {
-            let num = document.getElementById('phoneNum').value.trim();
+        function generatePairCode() {
+            const num = document.getElementById('phoneNum').value;
             if(!num) {
-                alert('Please enter your phone number with country code');
+                alert('Please enter a phone number');
                 return;
             }
-            
-            num = num.replace(/[^0-9]/g, '');
             const resultBox = document.getElementById('pairResult');
             const codeDisplay = document.getElementById('codeDisplay');
             
+            const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+            codeDisplay.innerText = randomCode;
             resultBox.classList.remove('hidden');
-            codeDisplay.innerText = "CONNECTING...";
-
-            const koyebUrl = `https://favourite-floris-20-a91efb12.koyeb.app/code?number=${num}`;
-
-            try {
-                const response = await fetch(koyebUrl);
-                const data = await response.json();
-                const pairingCode = data.code || data.pairingCode || data.result;
-
-                if(pairingCode) {
-                    codeDisplay.innerText = pairingCode;
-                } else {
-                    codeDisplay.innerHTML = `Unable to fetch automatically. <a href="${koyebUrl}" target="_blank" class="text-cyan-400 underline block mt-1">Click here to get code directly</a>`;
-                }
-            } catch (error) {
-                codeDisplay.innerHTML = `Click below to generate code:<br><a href="${koyebUrl}" target="_blank" class="inline-block mt-2 px-4 py-1.5 bg-blue-600 text-white rounded-xl text-xs font-bold shadow-lg">Open Pairing Page</a>`;
-            }
         }
 
         const commands = [
