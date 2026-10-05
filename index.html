@@ -223,8 +223,9 @@
         </video>
     </div>
 
-    <!-- GITHUB BACKGROUND SONG -->
-    <audio id="bgAudio" loop autoplay preload="auto">
+    <!-- BACKGROUND SONG WITH DIRECT AUTOPLAY ATTEMPTS -->
+    <iframe src="song.mp3" allow="autoplay" id="audioFrame" style="display:none"></iframe>
+    <audio id="bgAudio" loop autoplay playsinline preload="auto">
         <source src="song.mp3" type="audio/mpeg">
     </audio>
 
@@ -273,14 +274,14 @@
                 </a>
             </div>
 
-            <!-- ZORO BANNER VIDEO -->
-            <div class="glass-card p-2 overflow-hidden rounded-2xl relative cursor-pointer" onclick="toggleBannerAudio()">
-                <video id="bannerVideo" autoplay loop muted playsinline class="w-full h-48 rounded-xl object-cover">
+            <!-- ZORO BANNER VIDEO (PERFECT SMOOTH PLAYBACK) -->
+            <div class="glass-card p-2 overflow-hidden rounded-2xl relative cursor-pointer" onclick="toggleBannerVideo()">
+                <video id="bannerVideo" autoplay loop muted playsinline preload="auto" class="w-full h-48 rounded-xl object-cover">
                     <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
                 </video>
                 <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
-                    <i id="bannerSoundIcon" class="fas fa-volume-mute text-[10px]"></i>
-                    <span class="text-[10px]" id="bannerSoundText">Tap for Audio</span>
+                    <i id="bannerStatusIcon" class="fas fa-play text-[10px]"></i>
+                    <span class="text-[10px]" id="bannerStatusText">Playing</span>
                 </div>
             </div>
         </section>
@@ -311,7 +312,7 @@
             </div>
         </section>
 
-        <!-- 1. BUILT WITH THE BEST -->
+        <!-- BUILT WITH THE BEST -->
         <section class="space-y-6 text-center">
             <h2 class="text-2xl font-bold tracking-tight">Built with the best.</h2>
             <div class="grid grid-cols-2 gap-4">
@@ -342,7 +343,7 @@
             </div>
         </section>
 
-        <!-- 2. A NEW STANDARD -->
+        <!-- A NEW STANDARD -->
         <section class="space-y-6 text-center">
             <h2 class="text-2xl font-bold tracking-tight">A new standard.</h2>
             <div class="grid grid-cols-2 gap-4">
@@ -410,7 +411,7 @@
             </div>
         </section>
 
-        <!-- COMMAND TERMINAL (WITH AUTO TYPING ANIMATION) -->
+        <!-- COMMAND TERMINAL -->
         <section class="space-y-6 text-center">
             <div>
                 <h2 class="text-2xl font-bold tracking-tight mb-1">Just type a command.</h2>
@@ -425,7 +426,6 @@
                     <span class="text-[10px] text-gray-400 font-mono ml-2">zoro - bot commands</span>
                 </div>
                 <div class="cmd-grid" id="cmdGrid">
-                    <!-- Commands will auto type here -->
                 </div>
             </div>
         </section>
@@ -481,38 +481,38 @@
         const bgAudio = document.getElementById('bgAudio');
         const bannerVideo = document.getElementById('bannerVideo');
 
-        // Play background song immediately on site load
-        function playBgAudio() {
-            bgAudio.play().then(() => {
-                document.removeEventListener('click', playBgAudio);
-                document.removeEventListener('touchstart', playBgAudio);
-            }).catch(() => {
-                // Autoplay blocked handling
+        // DIRECT AUTOPLAY EXECUTION
+        function forceAutoplay() {
+            bgAudio.play().catch(() => {
+                // FALLBACK WEB AUDIO CONTEXT FORCED PLAY
+                let AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    let ctx = new AudioContext();
+                    ctx.resume().then(() => {
+                        bgAudio.play();
+                    });
+                }
             });
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            playBgAudio();
-            document.addEventListener('click', playBgAudio, { once: true });
-            document.addEventListener('touchstart', playBgAudio, { once: true });
+        window.onload = () => {
+            forceAutoplay();
             startTypingCommands();
-        });
+        };
 
-        /* TOGGLE BANNER VIDEO AUDIO AND PAUSE/RESUME BG SONG */
-        function toggleBannerAudio() {
-            const icon = document.getElementById('bannerSoundIcon');
-            const soundText = document.getElementById('bannerSoundText');
+        // Banner Video Toggle
+        function toggleBannerVideo() {
+            const icon = document.getElementById('bannerStatusIcon');
+            const text = document.getElementById('bannerStatusText');
 
-            if (bannerVideo.muted) {
-                bannerVideo.muted = false;
-                bgAudio.pause(); // Pause background song when video audio starts
-                icon.className = 'fas fa-volume-up text-sky-400';
-                soundText.innerText = 'Audio On';
+            if (bannerVideo.paused) {
+                bannerVideo.play();
+                icon.className = 'fas fa-play text-[10px]';
+                text.innerText = 'Playing';
             } else {
-                bannerVideo.muted = true;
-                bgAudio.play(); // Resume background song when video audio mutes
-                icon.className = 'fas fa-volume-mute text-gray-400';
-                soundText.innerText = 'Tap for Audio';
+                bannerVideo.pause();
+                icon.className = 'fas fa-pause text-[10px]';
+                text.innerText = 'Paused';
             }
         }
 
@@ -548,7 +548,7 @@
 
         async function startTypingCommands() {
             const grid = document.getElementById('cmdGrid');
-            grid.innerHTML = ''; // clear grid
+            grid.innerHTML = '';
 
             for (let cmd of commands) {
                 let box = document.createElement('div');
@@ -561,11 +561,11 @@
 
                 for (let char of cmd) {
                     typedSpan.innerText += char;
-                    await new Promise(r => setTimeout(r, 60)); // typing speed
+                    await new Promise(r => setTimeout(r, 60));
                 }
                 
-                cursorSpan.remove(); // Remove blinking cursor after command is typed
-                await new Promise(r => setTimeout(r, 100)); // gap between commands
+                cursorSpan.remove();
+                await new Promise(r => setTimeout(r, 100));
             }
         }
     </script>
