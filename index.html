@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZORO MD - Advanced WhatsApp Bot</title>
+    <title>ZORO BETA MD</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -14,13 +14,13 @@
         }
 
         body {
-            background-color: #000000;
+            background-color: #030408;
             color: #ffffff;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* BACKGROUND VIDEO */
+        /* LOCAL BACKGROUND VIDEO */
         .bg-video {
             position: fixed;
             top: 0;
@@ -29,10 +29,10 @@
             height: 100vh;
             object-fit: cover;
             z-index: -1;
-            opacity: 0.55;
+            opacity: 0.45;
         }
 
-        /* 1. OPENING LOADER */
+        /* 1. LOADING ANIMATION */
         #loader {
             position: fixed;
             inset: 0;
@@ -114,15 +114,16 @@
         .btn-blue {
             background: #0070f3;
             color: #ffffff;
-            border-radius: 12px;
-            padding: 10px 20px;
-            font-size: 13px;
+            border-radius: 9999px;
+            padding: 12px 24px;
+            font-size: 14px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             transition: all 0.2s ease;
+            width: 100%;
         }
 
         .btn-blue:hover {
@@ -131,25 +132,27 @@
         }
 
         .btn-outline {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: #ffffff;
-            border-radius: 12px;
-            padding: 10px 20px;
-            font-size: 13px;
+            border-radius: 9999px;
+            padding: 12px 24px;
+            font-size: 14px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             transition: all 0.2s ease;
+            width: 100%;
         }
 
         .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.3);
         }
 
+        /* FLOATING SUPPORT BUTTON */
         .floating-btn {
             position: fixed;
             bottom: 24px;
@@ -171,6 +174,23 @@
 
         .floating-btn:hover {
             transform: scale(1.05);
+        }
+
+        .cmd-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .cmd-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 13px;
+            color: #e2e8f0;
         }
     </style>
 </head>
@@ -195,45 +215,44 @@
         </div>
     </div>
 
-    <!-- 2. HEADER / NAVBAR -->
-    <header class="max-w-5xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10">
-        <div class="font-extrabold text-lg tracking-wider text-blue-400 uppercase">ZORO MD</div>
-        <a href="https://github.com/A-d-i-t-h-y-a-n-x-d" target="_blank" class="btn-blue !rounded-full !py-2 !px-5 text-xs">
-            <i class="fab fa-github"></i> GitHub
+    <!-- NAVBAR / HEADER -->
+    <header class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10">
+        <div class="font-bold text-base tracking-wider text-white uppercase">ZORO MD</div>
+        <a href="https://github.com/A-d-i-t-h-y-a-n-x-d" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
+            GitHub
         </a>
     </header>
 
-    <main class="max-w-4xl mx-auto px-6 pt-10 pb-24 space-y-20">
+    <main class="max-w-md mx-auto px-5 pt-8 pb-24 space-y-16">
 
-        <!-- 3. HERO & BANNER SECTION -->
-        <section class="text-center pt-4">
+        <!-- HERO SECTION -->
+        <section class="text-center">
             <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold mb-4">
                 Available now — PRO
             </div>
-            <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-4">
+            <h1 class="text-4xl font-extrabold tracking-tight mb-3">
                 ZORO <span class="text-blue-500">BETA MD</span>
             </h1>
-            <p class="text-gray-300 text-xs md:text-sm max-w-xl mx-auto leading-relaxed mb-8">
+            <p class="text-gray-400 text-xs leading-relaxed mb-6">
                 Advanced WhatsApp automation powered by intelligent commands. Expanded features, multi-device support, and helpful updates all around.
             </p>
 
-            <!-- 4. MAIN ACTION BUTTONS (PAIRED CARDS/ACTIONS) -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto mb-10">
-                <button onclick="togglePairing()" class="btn-blue w-full">
-                    <i class="fas fa-key text-xs"></i> Get pair code
+            <div class="space-y-3 mb-8">
+                <button onclick="togglePairing()" class="btn-blue">
+                    Get pair code
                 </button>
-                <a href="https://github.com/A-d-i-t-h-y-a-n-x-d" target="_blank" class="btn-outline w-full">
-                    <i class="fas fa-code-branch text-xs"></i> Get the repo
+                <a href="https://github.com/A-d-i-t-h-y-a-n-x-d" target="_blank" class="btn-outline">
+                    Get the repo
                 </a>
             </div>
 
-            <!-- HERO BANNER IMAGE -->
-            <div class="glass-card p-3 max-w-2xl mx-auto overflow-hidden">
-                <img src="https://i.ibb.co/6P1R3jL/zoro-logo.jpg" alt="Zoro MD Banner" class="w-full h-auto rounded-xl object-cover">
+            <!-- CUSTOM HERO BANNER IMAGE -->
+            <div class="glass-card p-2 overflow-hidden rounded-2xl">
+                <img src="YOUR_IMAGE_URL_HERE" alt="ZORO MD Banner" class="w-full h-auto rounded-xl object-cover">
             </div>
         </section>
 
-        <!-- KOYEB EMBEDDED PAIRING PORTAL (HIDDEN DIRECT URL) -->
+        <!-- KOYEB EMBEDDED PAIRING PORTAL -->
         <section id="pairingSection" class="hidden">
             <div class="bg-black/90 border border-blue-500/40 backdrop-blur-xl p-4 rounded-2xl relative shadow-2xl">
                 <div class="flex justify-between items-center mb-3 px-2">
@@ -244,140 +263,194 @@
             </div>
         </section>
 
-        <!-- 5. POWERFUL FEATURES -->
+        <!-- SCREENSHOT 1: A NEW STANDARD (STATS GRID) -->
+        <section class="space-y-6 text-center">
+            <h2 class="text-2xl font-bold tracking-tight">A new standard.</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="glass-card p-6 flex flex-col items-center justify-center">
+                    <i class="fas fa-users text-lg text-gray-400 mb-2"></i>
+                    <span class="text-2xl font-extrabold">50K+</span>
+                    <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">ACTIVE USERS</span>
+                </div>
+                <div class="glass-card p-6 flex flex-col items-center justify-center">
+                    <i class="fas fa-comment-dots text-lg text-gray-400 mb-2"></i>
+                    <span class="text-2xl font-extrabold">10M+</span>
+                    <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">MESSAGES SENT</span>
+                </div>
+                <div class="glass-card p-6 flex flex-col items-center justify-center">
+                    <i class="fas fa-server text-lg text-gray-400 mb-2"></i>
+                    <span class="text-2xl font-extrabold">99.9%</span>
+                    <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">SERVER UPTIME</span>
+                </div>
+                <div class="glass-card p-6 flex flex-col items-center justify-center">
+                    <i class="fas fa-stethoscope text-lg text-gray-400 mb-2"></i>
+                    <span class="text-2xl font-extrabold">PRO</span>
+                    <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">CURRENT VERSION</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREENSHOT 2: BUILT WITH THE BEST (TECH CARDS) -->
+        <section class="space-y-6 text-center">
+            <h2 class="text-2xl font-bold tracking-tight">Built with the best.</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="tech-card">
+                    <i class="fas fa-code text-sky-400"></i>
+                    <span class="text-xs font-medium">JavaScript/ES6+</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fab fa-node-js text-sky-400"></i>
+                    <span class="text-xs font-medium">Node.js</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-comment text-sky-400"></i>
+                    <span class="text-xs font-medium">WA Bots</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-database text-sky-400"></i>
+                    <span class="text-xs font-medium">MongoDB</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fab fa-react text-sky-400"></i>
+                    <span class="text-xs font-medium">React</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-cube text-sky-400"></i>
+                    <span class="text-xs font-medium">Flask</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREENSHOT 3, 4, 5: POWERFUL FEATURES -->
         <section class="space-y-6">
             <div class="text-center">
-                <h2 class="text-2xl font-bold tracking-tight mb-2">Powerful Features</h2>
-                <p class="text-gray-400 text-xs">Everything you need for seamless automation.</p>
+                <h2 class="text-2xl font-bold tracking-tight mb-1">Powerful features.</h2>
+                <p class="text-gray-400 text-xs">Everything you need. Nothing you don't.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="glass-card p-6">
-                    <i class="fas fa-bolt text-2xl text-blue-400 mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1">Ultra Fast</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">Lightning-fast response speeds powered by lightweight Node.js backends.</p>
+
+            <div class="space-y-4">
+                <!-- Movies & TV -->
+                <div class="glass-card p-5">
+                    <i class="fas fa-th-large text-xl text-white mb-3"></i>
+                    <h3 class="font-bold text-sm mb-1">Movies & TV</h3>
+                    <p class="text-gray-400 text-xs">Download subtitled movies directly.</p>
                 </div>
-                <div class="glass-card p-6">
-                    <i class="fas fa-shield-alt text-2xl text-blue-400 mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1">Multi-Device</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">Stable WhatsApp Baileys integration ensuring continuous connection.</p>
+
+                <!-- Privacy Pro -->
+                <div class="glass-card p-5">
+                    <i class="fas fa-eye-slash text-xl text-white mb-3"></i>
+                    <h3 class="font-bold text-sm mb-1">Privacy Pro</h3>
+                    <p class="text-gray-400 text-xs">View Once recovery and Anti-Delete system.</p>
                 </div>
-                <div class="glass-card p-6">
-                    <i class="fas fa-cogs text-2xl text-blue-400 mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1">Fully Customizable</h3>
-                    <p class="text-gray-400 text-xs leading-relaxed">Easy settings and modular setup for personalized usage.</p>
+
+                <!-- Downloader -->
+                <div class="glass-card p-5">
+                    <i class="fas fa-download text-xl text-white mb-3"></i>
+                    <h3 class="font-bold text-sm mb-1">Downloader</h3>
+                    <p class="text-gray-400 text-xs">TikTok, FB, Insta & YouTube support.</p>
+                </div>
+
+                <!-- AI Chat -->
+                <div class="glass-card p-5">
+                    <i class="fas fa-comment text-xl text-blue-400 mb-3"></i>
+                    <h3 class="font-bold text-sm text-blue-400 mb-1">AI Chat</h3>
+                    <p class="text-gray-400 text-xs">General-purpose AI assistant for any topic.</p>
+                </div>
+
+                <!-- Group Tools -->
+                <div class="glass-card p-5">
+                    <i class="fas fa-user-friends text-xl text-white mb-3"></i>
+                    <h3 class="font-bold text-sm mb-1">Group Tools</h3>
+                    <p class="text-gray-400 text-xs">Full admin control and member management.</p>
+                </div>
+
+                <!-- Music Hub -->
+                <div class="glass-card p-5">
+                    <i class="fas fa-music text-xl text-white mb-3"></i>
+                    <h3 class="font-bold text-sm mb-1">Music Hub</h3>
+                    <p class="text-gray-400 text-xs">MP3 Songs with lyrics and album art.</p>
                 </div>
             </div>
         </section>
 
-        <!-- 6. JUST TYPE COMMANDS -->
-        <section class="glass-card p-8">
-            <div class="text-center max-w-md mx-auto mb-6">
-                <h2 class="text-2xl font-bold tracking-tight mb-2">Just Type Commands</h2>
-                <p class="text-gray-400 text-xs">Simple prefixes to control your bot effortlessly.</p>
+        <!-- SCREENSHOT 6: JUST TYPE A COMMAND TERMINAL -->
+        <section class="space-y-6 text-center">
+            <div>
+                <h2 class="text-2xl font-bold tracking-tight mb-1">Just type a command.</h2>
+                <p class="text-gray-400 text-xs">A familiar terminal. An entirely new feeling.</p>
             </div>
-            <div class="bg-black/60 rounded-xl p-4 border border-white/5 font-mono text-xs text-blue-300 space-y-2 max-w-md mx-auto">
-                <div class="flex justify-between border-b border-white/5 pb-2">
-                    <span>.menu</span>
-                    <span class="text-gray-500">Show all commands</span>
+
+            <div class="glass-card p-4 text-left">
+                <div class="flex gap-1.5 mb-4 border-b border-white/10 pb-3 items-center">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    <span class="text-[10px] text-gray-500 font-mono ml-2">zoro - bot</span>
                 </div>
-                <div class="flex justify-between border-b border-white/5 pb-2">
-                    <span>.ping</span>
-                    <span class="text-gray-500">Check bot speed</span>
-                </div>
-                <div class="flex justify-between border-b border-white/5 pb-2">
-                    <span>.song [name]</span>
-                    <span class="text-gray-500">Download music</span>
-                </div>
-                <div class="flex justify-between">
-                    <span>.alive</span>
-                    <span class="text-gray-500">Check bot status</span>
+                <div class="cmd-grid">
+                    <div class="cmd-item">.alive</div>
+                    <div class="cmd-item">.menu</div>
+                    <div class="cmd-item">.movie</div>
+                    <div class="cmd-item">.song</div>
+                    <div class="cmd-item">.fb</div>
+                    <div class="cmd-item">.tiktok</div>
+                    <div class="cmd-item">.vv</div>
+                    <div class="cmd-item">.apk</div>
+                    <div class="cmd-item">.image</div>
+                    <div class="cmd-item">.logo</div>
+                    <div class="cmd-item">.video</div>
+                    <div class="cmd-item">.anime</div>
+                    <div class="cmd-item">.jid</div>
+                    <div class="cmd-item">.pin</div>
+                    <div class="cmd-item">.join</div>
                 </div>
             </div>
         </section>
 
-        <!-- 7. SHIP YOURSELF & TECH STACK -->
-        <section class="space-y-6">
-            <div class="text-center">
-                <h2 class="text-2xl font-bold tracking-tight mb-2">Built With The Best</h2>
-                <p class="text-gray-400 text-xs">Ship your self-hosted instance in minutes.</p>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="tech-card">
-                    <i class="fas fa-file-code"></i>
-                    <span class="text-xs font-semibold text-gray-200">JavaScript/ES6+</span>
-                </div>
-                <div class="tech-card">
-                    <i class="fab fa-node-js"></i>
-                    <span class="text-xs font-semibold text-gray-200">Node.js</span>
-                </div>
-                <div class="tech-card">
-                    <i class="fas fa-comments"></i>
-                    <span class="text-xs font-semibold text-gray-200">WA Bots</span>
-                </div>
-                <div class="tech-card">
-                    <i class="fas fa-database"></i>
-                    <span class="text-xs font-semibold text-gray-200">MongoDB</span>
-                </div>
-                <div class="tech-card">
-                    <i class="fab fa-react"></i>
-                    <span class="text-xs font-semibold text-gray-200">React</span>
-                </div>
-                <div class="tech-card">
-                    <i class="fas fa-cube"></i>
-                    <span class="text-xs font-semibold text-gray-200">Flask</span>
-                </div>
-                <div class="tech-card">
-                    <i class="fas fa-cloud"></i>
-                    <span class="text-xs font-semibold text-gray-200">Cloud APIs</span>
-                </div>
-                <div class="tech-card">
-                    <i class="fas fa-paint-brush"></i>
-                    <span class="text-xs font-semibold text-gray-200">UI/UX</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- 8. JOIN THE COMMUNITY -->
+        <!-- SCREENSHOT 7: JOIN THE COMMUNITY -->
         <section class="glass-card p-8 text-center space-y-4">
-            <h2 class="text-2xl font-bold tracking-tight">Join The Community</h2>
-            <p class="text-gray-400 text-xs max-w-md mx-auto">
-                Stay updated with upcoming features, bug fixes, and community support.
+            <h2 class="text-2xl font-bold tracking-tight">Join the community.</h2>
+            <p class="text-gray-400 text-xs max-w-xs mx-auto">
+                Thousands of users. One conversation.
             </p>
-            <div class="flex justify-center gap-4 pt-2">
-                <a href="#" class="btn-blue">
-                    <i class="fab fa-whatsapp"></i> WhatsApp Group
-                </a>
-                <a href="#" class="btn-outline">
-                    <i class="fab fa-telegram"></i> Telegram Channel
-                </a>
+            <div class="space-y-3 pt-2">
+                <button class="btn-blue">
+                    <i class="fas fa-comment"></i> Support group
+                </button>
+                <button class="btn-outline">
+                    <i class="fas fa-broadcast-tower"></i> Join channel
+                </button>
             </div>
         </section>
 
-        <!-- 9. MEET THE DEVELOPER PROFILE -->
-        <section class="max-w-md mx-auto">
+        <!-- SCREENSHOT 8: MEET THE DEVELOPER PROFILE -->
+        <section>
             <div class="glass-card p-8 text-center">
-                <img src="https://i.ibb.co/6P1R3jL/zoro-logo.jpg" alt="Adithyan" class="w-24 h-24 rounded-full mx-auto mb-4 border-2 border-blue-500/50 object-cover shadow-xl">
-                <div class="text-[10px] text-blue-400 uppercase tracking-widest font-bold mb-1">MEET THE DEVELOPER</div>
-                <h3 class="text-2xl font-bold mb-2">Adithyan</h3>
-                <p class="text-gray-400 text-xs mb-6">
-                    Full Stack Developer and creator of ZORO MD automation systems.
+                <img src="YOUR_IMAGE_URL_HERE" alt="Adithyan Profile" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-lg">
+                <div class="text-[10px] text-gray-400 tracking-widest font-semibold mb-2 uppercase">MEET THE DEVELOPER</div>
+                <h3 class="text-2xl font-extrabold mb-3">Adithyan</h3>
+                <p class="text-gray-400 text-xs leading-relaxed mb-6">
+                    Full Stack Developer and creator of ZORO MD. On a mission to simplify communication through advanced automation — made for everyone.
                 </p>
-                <a href="https://github.com/A-d-i-t-h-y-a-n-x-d" target="_blank" class="btn-blue">
-                    <i class="fab fa-github"></i> GitHub Profile
-                </a>
+                <div class="space-y-3">
+                    <button class="btn-blue">
+                        <i class="fas fa-comment"></i> Contact me
+                    </button>
+                    <a href="https://github.com/A-d-i-t-h-y-a-n-x-d" target="_blank" class="btn-outline">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <!-- FLOATING GET PAIR CODE BUTTON -->
-    <button onclick="togglePairing()" class="floating-btn">
-        <i class="fas fa-key"></i> Get Pair Code
+    <!-- FLOATING SUPPORT AI BUTTON -->
+    <button class="floating-btn">
+        <i class="fas fa-comment-alt"></i> Support AI
     </button>
 
-    <!-- 10. FOOTER & SUPPORT -->
     <footer class="border-t border-white/10 py-8 text-center text-xs text-gray-500 space-y-2">
-        <p>Support & Help Available 24/7</p>
         <p>Copyright © 2026 ZORO MD. Created by Adithyan.</p>
     </footer>
 
