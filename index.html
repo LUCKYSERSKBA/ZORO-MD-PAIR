@@ -20,7 +20,7 @@
             position: relative;
         }
 
-        /* LOCAL BACKGROUND VIDEO */
+        /* BACKGROUND VIDEO */
         .bg-video {
             position: fixed;
             top: 0;
@@ -29,10 +29,10 @@
             height: 100vh;
             object-fit: cover;
             z-index: -1;
-            opacity: 0.45;
+            opacity: 0.35;
         }
 
-        /* 1. LOADING ANIMATION */
+        /* LOADING ANIMATION */
         #loader {
             position: fixed;
             inset: 0;
@@ -152,7 +152,7 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* FLOATING SUPPORT BUTTON */
+        /* FLOATING BUTTON */
         .floating-btn {
             position: fixed;
             bottom: 24px;
@@ -172,16 +172,13 @@
             transition: all 0.3s ease;
         }
 
-        .floating-btn:hover {
-            transform: scale(1.05);
-        }
-
         .cmd-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
 
+        /* COMMAND ANIMATION (DROP DOWN FADE) */
         .cmd-item {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -191,17 +188,44 @@
             font-family: monospace;
             font-size: 13px;
             color: #e2e8f0;
+            animation: dropDown 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(-15px);
         }
+
+        @keyframes dropDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Dynamic Stagger for Animation */
+        .cmd-item:nth-child(1) { animation-delay: 0.1s; }
+        .cmd-item:nth-child(2) { animation-delay: 0.15s; }
+        .cmd-item:nth-child(3) { animation-delay: 0.2s; }
+        .cmd-item:nth-child(4) { animation-delay: 0.25s; }
+        .cmd-item:nth-child(5) { animation-delay: 0.3s; }
+        .cmd-item:nth-child(6) { animation-delay: 0.35s; }
+        .cmd-item:nth-child(7) { animation-delay: 0.4s; }
+        .cmd-item:nth-child(8) { animation-delay: 0.45s; }
+        .cmd-item:nth-child(9) { animation-delay: 0.5s; }
+        .cmd-item:nth-child(10) { animation-delay: 0.55s; }
+        .cmd-item:nth-child(11) { animation-delay: 0.6s; }
+        .cmd-item:nth-child(12) { animation-delay: 0.65s; }
+        .cmd-item:nth-child(13) { animation-delay: 0.7s; }
+        .cmd-item:nth-child(14) { animation-delay: 0.75s; }
+        .cmd-item:nth-child(15) { animation-delay: 0.8s; }
     </style>
 </head>
 <body>
 
-    <!-- LOCAL BACKGROUND VIDEO -->
-    <video autoplay loop muted playsinline class="bg-video">
-        <source src="bg-video.mp4" type="video/mp4">
-    </video>
+    <!-- BACKGROUND AUDIO (AUTOMATIC ON SITE OPEN) -->
+    <audio id="bgAudio" loop autoplay>
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
 
-    <!-- 1. OPENING LOADER -->
+    <!-- LOADER -->
     <div id="loader">
         <svg class="w-16 h-16 text-sky-400 mb-4 animate-pulse" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M30 20 L50 40 L70 20" />
@@ -215,12 +239,17 @@
         </div>
     </div>
 
-    <!-- NAVBAR / HEADER -->
+    <!-- NAVBAR -->
     <header class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10">
         <div class="font-bold text-base tracking-wider text-white uppercase">ZORO MD</div>
-        <a href="https://github.com/A-d-i-t-h-y-a-n-x-d" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
-            GitHub
-        </a>
+        <div class="flex items-center gap-3">
+            <button onclick="toggleAudio()" class="text-xs px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/10">
+                <i id="audioIcon" class="fas fa-music text-sky-400"></i>
+            </button>
+            <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
+                GitHub
+            </a>
+        </div>
     </header>
 
     <main class="max-w-md mx-auto px-5 pt-8 pb-24 space-y-16">
@@ -241,29 +270,51 @@
                 <button onclick="togglePairing()" class="btn-blue">
                     Get pair code
                 </button>
-                <a href="https://github.com/A-d-i-t-h-y-a-n-x-d" target="_blank" class="btn-outline">
+                <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-outline">
                     Get the repo
                 </a>
             </div>
 
-            <!-- CUSTOM HERO BANNER IMAGE -->
-            <div class="glass-card p-2 overflow-hidden rounded-2xl">
-                <img src="YOUR_IMAGE_URL_HERE" alt="ZORO MD Banner" class="w-full h-auto rounded-xl object-cover">
+            <!-- ZORO BANNER VIDEO WITH AUDIO TOGGLE OPTION -->
+            <div class="glass-card p-2 overflow-hidden rounded-2xl relative group cursor-pointer" onclick="toggleBannerAudio()">
+                <video id="bannerVideo" autoplay loop muted playsinline class="w-full h-auto rounded-xl object-cover">
+                    <source src="https://tmpfiles.org/dl/wEAmfXCzLCpg/1791194276239.mp4" type="video/mp4">
+                </video>
+                <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
+                    <i id="bannerSoundIcon" class="fas fa-volume-mute"></i>
+                    <span class="text-[10px]">Tap for Audio</span>
+                </div>
             </div>
         </section>
 
-        <!-- KOYEB EMBEDDED PAIRING PORTAL -->
+        <!-- PAIRING CODE GENERATOR SECTION -->
         <section id="pairingSection" class="hidden">
-            <div class="bg-black/90 border border-blue-500/40 backdrop-blur-xl p-4 rounded-2xl relative shadow-2xl">
-                <div class="flex justify-between items-center mb-3 px-2">
-                    <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">Pairing Portal</span>
+            <div class="glass-card p-6 border-blue-500/40 relative shadow-2xl space-y-4">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">Pair Code Generator</span>
                     <button onclick="togglePairing()" class="text-gray-400 hover:text-white text-xs"><i class="fas fa-times"></i> Close</button>
                 </div>
-                <iframe src="https://tall-nollie-20-863aede6.koyeb.app/" class="w-full h-[450px] rounded-xl border border-white/10 bg-black"></iframe>
+                
+                <p class="text-gray-400 text-xs">Enter your WhatsApp number with country code to generate your pairing code.</p>
+                
+                <div class="space-y-3">
+                    <input type="text" id="phoneNum" placeholder="e.g. 919876543210" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500">
+                    <button onclick="generatePairCode()" class="btn-blue">
+                        Generate Code
+                    </button>
+                </div>
+
+                <!-- DISPLAY PAIR CODE -->
+                <div id="pairResult" class="hidden pt-3 border-t border-white/10 text-center">
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1">Your Pairing Code</span>
+                    <div class="bg-black/80 border border-blue-500/30 rounded-xl py-3 px-4 text-xl font-mono text-sky-400 font-bold tracking-widest" id="codeDisplay">
+                        ABCD-1234
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- 1. BUILT WITH THE BEST (TECH CARDS) - FIRST SECTION -->
+        <!-- 1. BUILT WITH THE BEST -->
         <section class="space-y-6 text-center">
             <h2 class="text-2xl font-bold tracking-tight">Built with the best.</h2>
             <div class="grid grid-cols-2 gap-4">
@@ -294,7 +345,7 @@
             </div>
         </section>
 
-        <!-- 2. A NEW STANDARD (STATS GRID) - SECOND SECTION -->
+        <!-- 2. A NEW STANDARD -->
         <section class="space-y-6 text-center">
             <h2 class="text-2xl font-bold tracking-tight">A new standard.</h2>
             <div class="grid grid-cols-2 gap-4">
@@ -329,42 +380,31 @@
             </div>
 
             <div class="space-y-4">
-                <!-- Movies & TV -->
                 <div class="glass-card p-5">
                     <i class="fas fa-th-large text-xl text-white mb-3"></i>
                     <h3 class="font-bold text-sm mb-1">Movies & TV</h3>
                     <p class="text-gray-400 text-xs">Download subtitled movies directly.</p>
                 </div>
-
-                <!-- Privacy Pro -->
                 <div class="glass-card p-5">
                     <i class="fas fa-eye-slash text-xl text-white mb-3"></i>
                     <h3 class="font-bold text-sm mb-1">Privacy Pro</h3>
                     <p class="text-gray-400 text-xs">View Once recovery and Anti-Delete system.</p>
                 </div>
-
-                <!-- Downloader -->
                 <div class="glass-card p-5">
                     <i class="fas fa-download text-xl text-white mb-3"></i>
                     <h3 class="font-bold text-sm mb-1">Downloader</h3>
                     <p class="text-gray-400 text-xs">TikTok, FB, Insta & YouTube support.</p>
                 </div>
-
-                <!-- AI Chat -->
                 <div class="glass-card p-5">
                     <i class="fas fa-comment text-xl text-blue-400 mb-3"></i>
                     <h3 class="font-bold text-sm text-blue-400 mb-1">AI Chat</h3>
                     <p class="text-gray-400 text-xs">General-purpose AI assistant for any topic.</p>
                 </div>
-
-                <!-- Group Tools -->
                 <div class="glass-card p-5">
                     <i class="fas fa-user-friends text-xl text-white mb-3"></i>
                     <h3 class="font-bold text-sm mb-1">Group Tools</h3>
                     <p class="text-gray-400 text-xs">Full admin control and member management.</p>
                 </div>
-
-                <!-- Music Hub -->
                 <div class="glass-card p-5">
                     <i class="fas fa-music text-xl text-white mb-3"></i>
                     <h3 class="font-bold text-sm mb-1">Music Hub</h3>
@@ -373,7 +413,7 @@
             </div>
         </section>
 
-        <!-- JUST TYPE A COMMAND TERMINAL -->
+        <!-- COMMAND TERMINAL -->
         <section class="space-y-6 text-center">
             <div>
                 <h2 class="text-2xl font-bold tracking-tight mb-1">Just type a command.</h2>
@@ -414,29 +454,29 @@
                 Thousands of users. One conversation.
             </p>
             <div class="space-y-3 pt-2">
-                <button class="btn-blue">
+                <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-blue">
                     <i class="fas fa-comment"></i> Support group
-                </button>
-                <button class="btn-outline">
+                </a>
+                <a href="https://whatsapp.com/channel/0029Vb7pgsF4tRrkS5CECe24" target="_blank" class="btn-outline">
                     <i class="fas fa-broadcast-tower"></i> Join channel
-                </button>
+                </a>
             </div>
         </section>
 
-        <!-- MEET THE DEVELOPER PROFILE -->
+        <!-- DEVELOPER PROFILE -->
         <section>
             <div class="glass-card p-8 text-center">
-                <img src="YOUR_IMAGE_URL_HERE" alt="Adithyan Profile" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-lg">
+                <img src="https://tmpfiles.org/dl/wrAhfNScx34D/1791193564793.jpg" alt="Adithyan Profile" class="w-20 h-20 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-lg">
                 <div class="text-[10px] text-gray-400 tracking-widest font-semibold mb-2 uppercase">MEET THE DEVELOPER</div>
                 <h3 class="text-2xl font-extrabold mb-3">Adithyan</h3>
                 <p class="text-gray-400 text-xs leading-relaxed mb-6">
                     Full Stack Developer and creator of ZORO BETA MD. On a mission to simplify communication through advanced automation — made for everyone.
                 </p>
                 <div class="space-y-3">
-                    <button class="btn-blue">
+                    <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-blue">
                         <i class="fas fa-comment"></i> Contact me
-                    </button>
-                    <a href="https://github.com/A-d-i-t-h-y-a-n-x-d" target="_blank" class="btn-outline">
+                    </a>
+                    <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-outline">
                         <i class="fab fa-github"></i> GitHub
                     </a>
                 </div>
@@ -445,16 +485,17 @@
 
     </main>
 
-    <!-- FLOATING SUPPORT AI BUTTON -->
-    <button class="floating-btn">
+    <!-- FLOATING SUPPORT BUTTON -->
+    <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="floating-btn">
         <i class="fas fa-comment-alt"></i> Support AI
-    </button>
+    </a>
 
     <footer class="border-t border-white/10 py-8 text-center text-xs text-gray-500 space-y-2">
         <p>Copyright © 2026 ZORO MD. Created by Adithyan.</p>
     </footer>
 
     <script>
+        // Toggle Pair Code Box
         function togglePairing() {
             const section = document.getElementById('pairingSection');
             section.classList.toggle('hidden');
@@ -462,6 +503,56 @@
                 section.scrollIntoView({ behavior: 'smooth' });
             }
         }
+
+        // Generate Dummy/API Pair Code
+        function generatePairCode() {
+            const num = document.getElementById('phoneNum').value;
+            if(!num) {
+                alert('Please enter a phone number');
+                return;
+            }
+            const resultBox = document.getElementById('pairResult');
+            const codeDisplay = document.getElementById('codeDisplay');
+            
+            // Random Code Generator for UI preview
+            const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+            codeDisplay.innerText = randomCode;
+            resultBox.classList.remove('hidden');
+        }
+
+        // Background Audio Toggle
+        function toggleAudio() {
+            const audio = document.getElementById('bgAudio');
+            const icon = document.getElementById('audioIcon');
+            if (audio.paused) {
+                audio.play();
+                icon.className = 'fas fa-music text-sky-400';
+            } else {
+                audio.pause();
+                icon.className = 'fas fa-volume-mute text-gray-400';
+            }
+        }
+
+        // Banner Video Audio Toggle
+        function toggleBannerAudio() {
+            const video = document.getElementById('bannerVideo');
+            const icon = document.getElementById('bannerSoundIcon');
+            if (video.muted) {
+                video.muted = false;
+                icon.className = 'fas fa-volume-up';
+            } else {
+                video.muted = true;
+                icon.className = 'fas fa-volume-mute';
+            }
+        }
+
+        // Auto-play Audio on first touch/click if blocked by browser
+        window.addEventListener('click', () => {
+            const audio = document.getElementById('bgAudio');
+            if(audio.paused) {
+                audio.play().catch(() => {});
+            }
+        }, { once: true });
     </script>
 </body>
 </html>
