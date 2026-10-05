@@ -20,7 +20,7 @@
             position: relative;
         }
 
-        /* LOCAL BACKGROUND VIDEO & OVERLAY */
+        /* LOCAL BACKGROUND VIDEO (bg-video.mp4) & OVERLAY */
         .bg-video-container {
             position: fixed;
             top: 0;
@@ -235,15 +235,15 @@
 </head>
 <body>
 
-    <!-- BACKGROUND VIDEO & DIMMED OVERLAY -->
+    <!-- LOCAL BACKGROUND VIDEO (bg-video.mp4) & DIMMED OVERLAY -->
     <div class="bg-video-container">
         <video autoplay loop muted playsinline class="bg-video">
-            <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
+            <source src="bg-video.mp4" type="video/mp4">
         </video>
     </div>
     <div class="bg-overlay"></div>
 
-    <!-- BACKGROUND AUTOMATIC SONG -->
+    <!-- LOCAL AUTOMATIC BACKGROUND SONG (song.mp3) -->
     <audio id="bgAudio" loop autoplay>
         <source src="song.mp3" type="audio/mpeg">
     </audio>
@@ -265,14 +265,9 @@
     <!-- NAVBAR -->
     <header class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10">
         <div class="font-bold text-base tracking-wider text-white uppercase">ZORO MD</div>
-        <div class="flex items-center gap-3">
-            <button onclick="toggleAudio()" class="text-xs px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/10">
-                <i id="audioIcon" class="fas fa-music text-sky-400"></i>
-            </button>
-            <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
-                GitHub
-            </a>
-        </div>
+        <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
+            GitHub
+        </a>
     </header>
 
     <main class="max-w-md mx-auto px-5 pt-8 pb-24 space-y-16">
@@ -298,26 +293,14 @@
                 </a>
             </div>
 
-            <!-- ZORO BANNER VIDEO & YOUTUBE TOGGLE -->
-            <div class="glass-card p-2 overflow-hidden rounded-2xl relative space-y-2">
-                <div class="relative cursor-pointer" onclick="toggleBannerAudio()">
-                    <video id="bannerVideo" autoplay loop muted playsinline class="w-full h-48 rounded-xl object-cover">
-                        <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
-                    </video>
-                    <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1 px-2.5">
-                        <i id="bannerSoundIcon" class="fas fa-volume-mute text-[10px]"></i>
-                        <span class="text-[9px]">Tap Sound</span>
-                    </div>
-                </div>
-
-                <!-- YOUTUBE OPTION BUTTON -->
-                <button onclick="openYouTube()" class="w-full bg-red-600/80 hover:bg-red-600 text-white text-xs py-2 rounded-xl flex items-center justify-center gap-2 font-semibold border border-red-500/30">
-                    <i class="fab fa-youtube"></i> Watch on YouTube
-                </button>
-
-                <!-- EMBEDDED YOUTUBE CONTAINER (HIDDEN INITIALLY) -->
-                <div id="youtubeEmbed" class="hidden pt-2">
-                    <iframe class="w-full h-48 rounded-xl border border-white/10" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <!-- ZORO BANNER VIDEO (CATBOX LINK) -->
+            <div class="glass-card p-2 overflow-hidden rounded-2xl relative cursor-pointer" onclick="toggleBannerAudio()">
+                <video id="bannerVideo" autoplay loop muted playsinline class="w-full h-48 rounded-xl object-cover">
+                    <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
+                </video>
+                <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
+                    <i id="bannerSoundIcon" class="fas fa-volume-mute text-[10px]"></i>
+                    <span class="text-[10px]">Tap for Audio</span>
                 </div>
             </div>
         </section>
@@ -497,7 +480,7 @@
             </div>
         </section>
 
-        <!-- DEVELOPER PROFILE WITH NEW IMAGE -->
+        <!-- DEVELOPER PROFILE -->
         <section>
             <div class="glass-card p-8 text-center">
                 <img src="https://files.catbox.moe/5tnppp.jpg" alt="Adithyan Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-xl">
@@ -529,11 +512,10 @@
     </footer>
 
     <script>
-        // Automatic Audio play trigger
+        // Automatic Audio play trigger for song.mp3
         window.addEventListener('DOMContentLoaded', () => {
             const audio = document.getElementById('bgAudio');
             audio.play().catch(() => {
-                // If browser blocks initial auto-play, play on first user tap
                 document.body.addEventListener('click', () => {
                     audio.play();
                 }, { once: true });
@@ -562,18 +544,6 @@
             resultBox.classList.remove('hidden');
         }
 
-        function toggleAudio() {
-            const audio = document.getElementById('bgAudio');
-            const icon = document.getElementById('audioIcon');
-            if (audio.paused) {
-                audio.play();
-                icon.className = 'fas fa-music text-sky-400';
-            } else {
-                audio.pause();
-                icon.className = 'fas fa-volume-mute text-gray-400';
-            }
-        }
-
         function toggleBannerAudio() {
             const video = document.getElementById('bannerVideo');
             const icon = document.getElementById('bannerSoundIcon');
@@ -584,11 +554,6 @@
                 video.muted = true;
                 icon.className = 'fas fa-volume-mute text-gray-400';
             }
-        }
-
-        function openYouTube() {
-            const ytEmbed = document.getElementById('youtubeEmbed');
-            ytEmbed.classList.toggle('hidden');
         }
     </script>
 </body>
