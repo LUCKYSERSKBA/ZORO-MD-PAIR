@@ -173,7 +173,6 @@
             transition: all 0.3s ease;
         }
 
-        /* AI CHATBOX MODAL - COMPLETELY HIDDEN INITIALLY */
         #aiChatModal {
             position: fixed;
             bottom: 90px;
@@ -254,7 +253,7 @@
     </div>
 
     <header class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10">
-        <div class="font-bold text-base tracking-wider text-white uppercase">ZORO MD</div>
+        <div class="font-bold text-base tracking-wider text-white uppercase">ISHAN</div>
         <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
             GitHub
         </a>
@@ -318,6 +317,7 @@
             </div>
         </section>
 
+        <!-- BUILT WITH THE BEST SECTION (WITH CLOUD APIS & UI/UX ADDED) -->
         <section class="space-y-6 text-center">
             <h2 class="text-2xl font-bold tracking-tight">Built with the best.</h2>
             <div class="grid grid-cols-2 gap-4">
@@ -345,6 +345,14 @@
                     <i class="fas fa-cube text-sky-400"></i>
                     <span class="text-xs font-medium">Flask</span>
                 </div>
+                <div class="tech-card">
+                    <i class="fas fa-cloud text-sky-400"></i>
+                    <span class="text-xs font-medium">Cloud APIs</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-paint-brush text-sky-400"></i>
+                    <span class="text-xs font-medium">UI/UX</span>
+                </div>
             </div>
         </section>
 
@@ -361,59 +369,10 @@
                     <span class="text-2xl font-extrabold">10M+</span>
                     <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">MESSAGES SENT</span>
                 </div>
-                <div class="glass-card p-6 flex flex-col items-center justify-center">
-                    <i class="fas fa-server text-lg text-gray-300 mb-2"></i>
-                    <span class="text-2xl font-extrabold">99.9%</span>
-                    <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">SERVER UPTIME</span>
-                </div>
-                <div class="glass-card p-6 flex flex-col items-center justify-center">
-                    <i class="fas fa-stethoscope text-lg text-gray-300 mb-2"></i>
-                    <span class="text-2xl font-extrabold">PRO</span>
-                    <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">CURRENT VERSION</span>
-                </div>
             </div>
         </section>
 
-        <section class="space-y-6">
-            <div class="text-center">
-                <h2 class="text-2xl font-bold tracking-tight mb-1">Powerful features.</h2>
-                <p class="text-gray-300 text-xs">Everything you need. Nothing you don't.</p>
-            </div>
-
-            <div class="space-y-4">
-                <div class="glass-card p-5">
-                    <i class="fas fa-th-large text-xl text-white mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1">Movies & TV</h3>
-                    <p class="text-gray-300 text-xs">Download subtitled movies directly.</p>
-                </div>
-                <div class="glass-card p-5">
-                    <i class="fas fa-eye-slash text-xl text-white mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1">Privacy Pro</h3>
-                    <p class="text-gray-300 text-xs">View Once recovery and Anti-Delete system.</p>
-                </div>
-                <div class="glass-card p-5">
-                    <i class="fas fa-download text-xl text-white mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1">Downloader</h3>
-                    <p class="text-gray-300 text-xs">TikTok, FB, Insta & YouTube support.</p>
-                </div>
-                <div class="glass-card p-5">
-                    <i class="fas fa-comment text-xl text-blue-400 mb-3"></i>
-                    <h3 class="font-bold text-sm text-blue-400 mb-1">AI Chat</h3>
-                    <p class="text-gray-300 text-xs">General-purpose AI assistant for any topic.</p>
-                </div>
-                <div class="glass-card p-5">
-                    <i class="fas fa-user-friends text-xl text-white mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1">Group Tools</h3>
-                    <p class="text-gray-300 text-xs">Full admin control and member management.</p>
-                </div>
-                <div class="glass-card p-5">
-                    <i class="fas fa-music text-xl text-white mb-3"></i>
-                    <h3 class="font-bold text-sm mb-1">Music Hub</h3>
-                    <p class="text-gray-300 text-xs">MP3 Songs with lyrics and album art.</p>
-                </div>
-            </div>
-        </section>
-
+        <!-- COMMANDS SECTION -->
         <section class="space-y-6 text-center">
             <div>
                 <h2 class="text-2xl font-bold tracking-tight mb-1">Just type a command.</h2>
@@ -432,6 +391,7 @@
             </div>
         </section>
 
+        <!-- COMMUNITY SECTION -->
         <section class="glass-card p-8 text-center space-y-4">
             <h2 class="text-2xl font-bold tracking-tight">Join the community.</h2>
             <p class="text-gray-300 text-xs max-w-xs mx-auto">
@@ -447,6 +407,7 @@
             </div>
         </section>
 
+        <!-- DEVELOPER SECTION -->
         <section>
             <div class="glass-card p-8 text-center">
                 <img src="https://files.catbox.moe/5tnppp.jpg" alt="Adithyan Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-xl">
@@ -592,18 +553,40 @@
             }, 600);
         }
 
-        function generatePairCode() {
-            const num = document.getElementById('phoneNum').value;
+        // 🔗 CONNECTED TO BOT-HOSTING.NET BACKEND API
+        async function generatePairCode() {
+            const numInput = document.getElementById('phoneNum');
+            const num = numInput.value.trim();
             if(!num) {
-                alert('Please enter a phone number');
+                alert('Please enter your WhatsApp phone number with country code!');
                 return;
             }
+
             const resultBox = document.getElementById('pairResult');
             const codeDisplay = document.getElementById('codeDisplay');
             
-            const randomCode = Math.random().toString(36).substring(2, 6).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
-            codeDisplay.innerText = randomCode;
             resultBox.classList.remove('hidden');
+            codeDisplay.innerText = "GENERATING...";
+            codeDisplay.style.color = "#38bdf8";
+
+            const BACKEND_URL = "https://jjd2yjefn7.apps.bot-hosting.cloud";
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/pair?phone=${encodeURIComponent(num)}`);
+                const data = await response.json();
+
+                if (data.code) {
+                    codeDisplay.innerText = data.code;
+                    codeDisplay.style.color = "#4ade80"; 
+                } else {
+                    codeDisplay.innerText = data.error || "FAILED TO GET CODE";
+                    codeDisplay.style.color = "#f43f5e"; 
+                }
+            } catch (err) {
+                console.error("Pairing API Error:", err);
+                codeDisplay.innerText = "SERVER ERROR!";
+                codeDisplay.style.color = "#f43f5e";
+            }
         }
 
         const commands = [
