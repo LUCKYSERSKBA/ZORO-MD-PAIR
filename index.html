@@ -8,15 +8,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
         
         * {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            user-select: none;
-        }
-
-        .font-serif-heading {
-            font-family: 'Playfair Display', serif;
         }
 
         body {
@@ -80,9 +75,9 @@
         }
 
         .glass-card {
-            background: rgba(13, 17, 23, 0.65);
+            background: rgba(13, 17, 23, 0.55);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(8px);
             border-radius: 20px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -90,6 +85,7 @@
         .glass-card:hover {
             border-color: rgba(37, 99, 235, 0.5);
             box-shadow: 0 0 25px rgba(37, 99, 235, 0.2);
+            transform: translateY(-3px);
         }
 
         .tech-card {
@@ -106,112 +102,89 @@
             transition: all 0.3s ease;
         }
 
+        .tech-card:hover {
+            border-color: rgba(37, 99, 235, 0.5);
+            transform: translateY(-2px);
+        }
+
         .tech-card i {
             font-size: 26px;
             color: #38bdf8;
             filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
         }
 
-        .btn-black {
-            background: #000000;
+        .btn-blue {
+            background: #0070f3;
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 9999px;
-            padding: 14px 24px;
-            font-size: 13px;
-            font-weight: 700;
-            display: flex;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             transition: all 0.2s ease;
             width: 100%;
-            letter-spacing: 1px;
         }
 
-        .btn-black:hover {
-            background: #111111;
-            border-color: rgba(255, 255, 255, 0.4);
+        .btn-blue:hover {
+            background: #0051a8;
+            box-shadow: 0 0 15px rgba(0, 112, 243, 0.4);
         }
 
         .btn-outline {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
             border-radius: 9999px;
-            padding: 14px 24px;
-            font-size: 13px;
-            font-weight: 700;
-            display: flex;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             transition: all 0.2s ease;
             width: 100%;
-            letter-spacing: 1px;
         }
 
-        /* 🎵 DRAGGABLE MUSIC WIDGET CONTROLLER */
-        #draggableMusicBar {
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .floating-btn {
             position: fixed;
-            bottom: 30px;
-            right: 20px;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            cursor: move;
-            touch-action: none;
-        }
-
-        .music-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: rgba(10, 10, 10, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
+            bottom: 24px;
+            right: 24px;
+            background: #0070f3;
             color: #fff;
+            padding: 12px 22px;
+            border-radius: 9999px;
+            font-size: 14px;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(0, 112, 243, 0.4);
+            z-index: 50;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .music-btn:hover {
-            background: #1e1e1e;
-            transform: scale(1.08);
-        }
-
-        .rotating-icon {
-            animation: spin 3s linear infinite;
-        }
-
-        @keyframes spin {
-            100% { transform: rotate(360deg); }
-        }
-
-        #musicMenu {
-            display: none;
-            flex-direction: column;
-            gap: 10px;
+            transition: all 0.3s ease;
         }
 
         #aiChatModal {
             position: fixed;
-            bottom: 80px;
-            left: 20px;
-            width: 320px;
-            max-width: calc(100vw - 40px);
-            height: 400px;
+            bottom: 90px;
+            right: 24px;
+            width: 340px;
+            max-width: calc(100vw - 48px);
+            height: 450px;
             background: rgba(10, 14, 20, 0.95);
             border: 1px solid rgba(37, 99, 235, 0.4);
             backdrop-filter: blur(12px);
             border-radius: 20px;
-            z-index: 95;
+            z-index: 100;
             display: none;
             flex-direction: column;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -238,6 +211,20 @@
             align-items: center;
             justify-content: center;
         }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background-color: #38bdf8;
+            margin-left: 4px;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -248,9 +235,8 @@
         </video>
     </div>
 
-    <!-- 🎧 AUDIO PLAYER (SUPPORTS MULTIPLE TRACKS) -->
     <audio id="bgAudio" loop preload="auto">
-        <source id="audioSource" src="song1.mp3" type="audio/mpeg">
+        <source src="song.mp3" type="audio/mpeg">
     </audio>
 
     <div id="loader">
@@ -260,115 +246,140 @@
             <path d="M80 50 L60 70 L80 90" />
             <path d="M30 80 L50 60 L70 80" />
         </svg>
-        <div class="text-xl font-bold tracking-wider uppercase text-white font-serif-heading">ZORO MD</div>
+        <div class="text-xl font-bold tracking-wider uppercase text-white">ZORO MD</div>
         <div class="loader-bar">
             <div class="loader-progress"></div>
         </div>
     </div>
 
-    <!-- HEADER SECTION -->
+    <!-- HEADER SECTION - UPDATED TO AADHIXD -->
     <header class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10">
-        <div class="font-bold text-base tracking-wider text-white uppercase font-serif-heading">AADHIXD</div>
-        <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-black !w-auto !py-1.5 !px-4 !text-xs">
+        <div class="font-bold text-base tracking-wider text-white uppercase">AADHIXD</div>
+        <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
             GitHub
         </a>
     </header>
 
-    <main class="max-w-md mx-auto px-4 pt-6 pb-24 space-y-8">
+    <main class="max-w-md mx-auto px-5 pt-8 pb-24 space-y-16">
 
-        <!-- WELCOME SECTION -->
-        <section class="text-center space-y-2">
-            <div class="text-[11px] uppercase tracking-widest text-gray-400 font-semibold">PAIRING WEB</div>
-            <h1 class="text-4xl font-normal tracking-tight font-serif-heading italic text-white">
-                WELCOME!
+        <section class="text-center">
+            <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-semibold mb-4">
+                Available now — PRO
+            </div>
+            <h1 class="text-4xl font-extrabold tracking-tight mb-3">
+                ZORO <span class="text-blue-500">MD</span>
             </h1>
-            <h2 class="text-2xl font-bold font-serif-heading uppercase tracking-wide text-white flex items-center justify-center gap-2">
-                ZORO MD <i class="fas fa-check-circle text-blue-500 text-lg"></i>
-            </h2>
-            <p class="text-gray-300 text-xs leading-relaxed max-w-xs mx-auto">
-                We are here to provide you with the best services that you deserve.
+            <p class="text-gray-300 text-xs leading-relaxed mb-6">
+                Advanced WhatsApp automation powered by intelligent commands. Expanded features, multi-device support, and helpful updates all around.
             </p>
-        </section>
 
-        <!-- 🌤️ MODULAR CARDS (BUNNY XMD EXACT LAYOUT) -->
-        <section class="grid grid-cols-2 gap-3">
-            <!-- TIME & DATE CARD -->
-            <div class="glass-card p-4 flex flex-col justify-center items-center text-center">
-                <div id="liveClock" class="text-lg font-mono font-bold text-white tracking-wider">00:00:00 AM</div>
-                <div id="liveDate" class="text-[10px] text-gray-400 font-bold tracking-widest uppercase mt-1">THU OCT 29</div>
+            <div class="space-y-3 mb-8">
+                <button onclick="togglePairing()" class="btn-blue">
+                    Get pair code
+                </button>
+                <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-outline">
+                    Get the repo
+                </a>
             </div>
 
-            <!-- KOLLAM WEATHER API CARD -->
-            <div class="glass-card p-3 flex items-center justify-center gap-3">
-                <div class="text-2xl text-yellow-400" id="weatherIcon">
-                    <i class="fas fa-cloud-sun"></i>
-                </div>
-                <div class="text-left">
-                    <div class="flex items-baseline gap-1">
-                        <span id="weatherTemp" class="text-2xl font-bold text-white">--°</span>
-                        <span class="text-[9px] text-gray-400 font-bold uppercase tracking-wider">KOLLAM</span>
-                    </div>
-                    <div class="flex items-center gap-2 text-[10px] text-gray-300 mt-0.5">
-                        <span><i class="fas fa-tint text-sky-400"></i> <span id="weatherHum">--%</span></span>
-                        <span><i class="fas fa-wind text-gray-400"></i> <span id="weatherWind">-- km/h</span></span>
-                    </div>
+            <div class="glass-card p-2 overflow-hidden rounded-2xl relative cursor-pointer" onclick="toggleBannerVideo()">
+                <video id="bannerVideo" autoplay loop muted playsinline preload="auto" class="w-full h-48 rounded-xl object-cover">
+                    <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
+                </video>
+                <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
+                    <i id="bannerStatusIcon" class="fas fa-play text-[10px]"></i>
+                    <span class="text-[10px]" id="bannerStatusText">Playing</span>
                 </div>
             </div>
         </section>
 
-        <!-- ACTION BUTTONS -->
-        <section class="space-y-3">
-            <button onclick="togglePairing()" class="btn-black">
-                CONNECT BOT <i class="fas fa-arrow-right text-xs"></i>
-            </button>
-            <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-outline">
-                BOT SUPPORT <i class="fas fa-comment text-xs"></i>
-            </a>
-        </section>
-
-        <!-- PAIRING CODE GENERATOR SECTION -->
         <section id="pairingSection" class="hidden">
             <div class="glass-card p-6 border-blue-500/50 relative shadow-2xl space-y-4">
                 <div class="flex justify-between items-center mb-1">
                     <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">Pair Code Generator</span>
                     <button onclick="togglePairing()" class="text-gray-400 hover:text-white text-xs"><i class="fas fa-times"></i> Close</button>
                 </div>
+                
                 <p class="text-gray-300 text-xs">Enter your WhatsApp number with country code to generate your pairing code.</p>
+                
                 <div class="space-y-3">
                     <input type="text" id="phoneNum" placeholder="e.g. 919876543210" class="w-full bg-black/60 border border-white/20 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500">
-                    <button onclick="generatePairCode()" class="btn-black">Generate Code</button>
+                    <button onclick="generatePairCode()" class="btn-blue">
+                        Generate Code
+                    </button>
                 </div>
+
                 <div id="pairResult" class="hidden pt-3 border-t border-white/10 text-center">
                     <span class="text-[10px] text-gray-400 uppercase tracking-widest block mb-1">Your Pairing Code</span>
-                    <div class="bg-black/80 border border-blue-500/40 rounded-xl py-3 px-4 text-xl font-mono text-sky-400 font-bold tracking-widest" id="codeDisplay">ABCD-1234</div>
+                    <div class="bg-black/80 border border-blue-500/40 rounded-xl py-3 px-4 text-xl font-mono text-sky-400 font-bold tracking-widest" id="codeDisplay">
+                        ABCD-1234
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- BANNER VIDEO CARD -->
-        <section class="glass-card p-2 overflow-hidden rounded-2xl relative cursor-pointer" onclick="toggleBannerVideo()">
-            <video id="bannerVideo" autoplay loop muted playsinline preload="auto" class="w-full h-44 rounded-xl object-cover">
-                <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
-            </video>
-            <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
-                <i id="bannerStatusIcon" class="fas fa-play text-[10px]"></i>
-                <span class="text-[10px]" id="bannerStatusText">Playing</span>
+        <!-- TECH STACK GRID (INCLUDES CLOUD APIs & UI/UX) -->
+        <section class="space-y-6 text-center">
+            <h2 class="text-2xl font-bold tracking-tight">Built with the best.</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="tech-card">
+                    <i class="fas fa-code text-sky-400"></i>
+                    <span class="text-xs font-medium">JavaScript/ES6+</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fab fa-node-js text-sky-400"></i>
+                    <span class="text-xs font-medium">Node.js</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-comment text-sky-400"></i>
+                    <span class="text-xs font-medium">WA Bots</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-database text-sky-400"></i>
+                    <span class="text-xs font-medium">MongoDB</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fab fa-react text-sky-400"></i>
+                    <span class="text-xs font-medium">React</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-cube text-sky-400"></i>
+                    <span class="text-xs font-medium">Flask</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-cloud text-sky-400"></i>
+                    <span class="text-xs font-medium">Cloud APIs</span>
+                </div>
+                <div class="tech-card">
+                    <i class="fas fa-paint-brush text-sky-400"></i>
+                    <span class="text-xs font-medium">UI/UX</span>
+                </div>
             </div>
         </section>
 
-        <!-- MAIN HEADING & DESCRIPTION -->
-        <section class="text-center space-y-3 pt-4">
-            <h2 class="text-3xl font-normal font-serif-heading tracking-tight uppercase leading-tight">
-                EVERYTHING YOUR WHATSAPP NEEDS, <span class="italic font-bold">ONE BOT.</span>
-            </h2>
-            <p class="text-gray-300 text-xs max-w-xs mx-auto leading-relaxed">
-                Link it once and use it in chats and groups. No app to install and no coding needed.
-            </p>
+        <section class="space-y-6 text-center">
+            <h2 class="text-2xl font-bold tracking-tight">A new standard.</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="glass-card p-6 flex flex-col items-center justify-center">
+                    <i class="fas fa-users text-lg text-gray-300 mb-2"></i>
+                    <span class="text-2xl font-extrabold">50K+</span>
+                    <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">ACTIVE USERS</span>
+                </div>
+                <div class="glass-card p-6 flex flex-col items-center justify-center">
+                    <i class="fas fa-comment-dots text-lg text-gray-300 mb-2"></i>
+                    <span class="text-2xl font-extrabold">10M+</span>
+                    <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">MESSAGES SENT</span>
+                </div>
+            </div>
         </section>
 
-        <!-- COMMANDS TERMINAL SECTION -->
-        <section class="space-y-4 text-center">
-            <h2 class="text-2xl font-bold tracking-tight font-serif-heading">Just type a command.</h2>
+        <!-- COMMANDS SECTION -->
+        <section class="space-y-6 text-center">
+            <div>
+                <h2 class="text-2xl font-bold tracking-tight mb-1">Just type a command.</h2>
+                <p class="text-gray-300 text-xs">A familiar terminal. An entirely new feeling.</p>
+            </div>
+
             <div class="glass-card p-4 text-left">
                 <div class="flex gap-1.5 mb-4 border-b border-white/10 pb-3 items-center">
                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
@@ -376,22 +387,42 @@
                     <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                     <span class="text-[10px] text-gray-400 font-mono ml-2">zoro - bot commands</span>
                 </div>
-                <div class="cmd-grid" id="cmdGrid"></div>
+                <div class="cmd-grid" id="cmdGrid">
+                </div>
+            </div>
+        </section>
+
+        <!-- COMMUNITY SECTION -->
+        <section class="glass-card p-8 text-center space-y-4">
+            <h2 class="text-2xl font-bold tracking-tight">Join the community.</h2>
+            <p class="text-gray-300 text-xs max-w-xs mx-auto">
+                Thousands of users. One conversation.
+            </p>
+            <div class="space-y-3 pt-2">
+                <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-blue">
+                    <i class="fas fa-comment"></i> Support group
+                </a>
+                <a href="https://whatsapp.com/channel/0029Vb7pgsF4tRrkS5CECe24" target="_blank" class="btn-outline">
+                    <i class="fas fa-broadcast-tower"></i> Join channel
+                </a>
             </div>
         </section>
 
         <!-- DEVELOPER SECTION -->
         <section>
-            <div class="glass-card p-6 text-center">
-                <img src="https://files.catbox.moe/5tnppp.jpg" alt="Adithyan Profile" class="w-20 h-20 rounded-full mx-auto mb-3 object-cover border-2 border-blue-500/50 shadow-xl">
-                <div class="text-[10px] text-gray-400 tracking-widest font-semibold mb-1 uppercase">MEET THE DEVELOPER</div>
-                <h3 class="text-2xl font-extrabold mb-2 font-serif-heading">Adithyan</h3>
-                <p class="text-gray-300 text-xs leading-relaxed mb-5">
+            <div class="glass-card p-8 text-center">
+                <img src="https://files.catbox.moe/5tnppp.jpg" alt="Adithyan Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-xl">
+                <div class="text-[10px] text-gray-400 tracking-widest font-semibold mb-2 uppercase">MEET THE DEVELOPER</div>
+                <h3 class="text-2xl font-extrabold mb-3">Adithyan</h3>
+                <p class="text-gray-300 text-xs leading-relaxed mb-6">
                     Full Stack Developer and creator of ZORO MD. On a mission to simplify communication through advanced automation — made for everyone.
                 </p>
-                <div class="space-y-2">
-                    <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-black">
+                <div class="space-y-3">
+                    <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-blue">
                         <i class="fas fa-comment"></i> Contact me
+                    </a>
+                    <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-outline">
+                        <i class="fab fa-github"></i> GitHub
                     </a>
                 </div>
             </div>
@@ -399,202 +430,60 @@
 
     </main>
 
-    <!-- 🎵 DRAGGABLE FLOATING MUSIC CONTROLLER -->
-    <div id="draggableMusicBar">
-        <div id="musicMenu">
-            <button class="music-btn" onclick="togglePlayPause()" title="Play/Pause">
-                <i id="playIcon" class="fas fa-play"></i>
-            </button>
-            <button class="music-btn" onclick="nextSong()" title="Next Song">
-                <i class="fas fa-step-forward"></i>
-            </button>
-            <button class="music-btn" onclick="prevSong()" title="Previous Song">
-                <i class="fas fa-step-backward"></i>
-            </button>
-            <button class="music-btn" onclick="setMute(true)" title="Mute Audio">
-                <i class="fas fa-volume-mute text-red-400"></i>
-            </button>
-            <button class="music-btn" onclick="setMute(false)" title="Unmute Audio">
-                <i class="fas fa-volume-up text-green-400"></i>
-            </button>
-        </div>
-        <button class="music-btn !w-12 !h-12 !bg-black !border-white/30" id="mainMusicToggle" onclick="toggleMusicMenu()">
-            <i id="mainMusicIcon" class="fas fa-music text-lg"></i>
-        </button>
+    <!-- FLOATING SUPPORT BUTTON -->
+    <div onclick="toggleAiChat()" class="floating-btn">
+        <i class="fas fa-comment-alt"></i> Chat with AI
     </div>
 
-    <footer class="border-t border-white/10 py-6 text-center text-xs text-gray-400">
+    <!-- AI CHAT INTERFACE MODAL -->
+    <div id="aiChatModal">
+        <div class="bg-blue-600 px-4 py-3 flex justify-between items-center text-white">
+            <div class="flex items-center gap-2 text-xs font-bold">
+                <i class="fas fa-robot"></i> ZORO AI Assistant
+            </div>
+            <button onclick="toggleAiChat()" class="text-white hover:text-gray-200 text-sm">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="chatMessages" class="flex-1 p-3 overflow-y-auto space-y-3 text-xs text-gray-200">
+            <div class="bg-gray-800 p-2.5 rounded-xl max-w-[85%]">
+                Hello! I am ZORO MD AI Assistant. Feel free to ask me anything about ZORO MD commands, features, pairing codes, or the website!
+            </div>
+        </div>
+        <div class="p-3 bg-gray-900 border-t border-gray-800 flex gap-2">
+            <input type="text" id="chatInput" placeholder="Type a message..." class="flex-1 bg-black/50 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" onkeypress="handleChatPress(event)">
+            <button onclick="sendChatMessage()" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded-lg text-xs">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <footer class="border-t border-white/10 py-8 text-center text-xs text-gray-400 space-y-2">
         <p>Copyright © 2026 ZORO MD. Created by Aadhixd.</p>
     </footer>
 
     <script>
-        // 🕒 LIVE CLOCK & DATE UPDATER
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('liveClock').innerText = now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            
-            const options = { weekday: 'short', month: 'short', day: '2-digit' };
-            document.getElementById('liveDate').innerText = now.toLocaleDateString('en-US', options).toUpperCase();
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        // 🌤️ KOLLAM LIVE WEATHER API (OPEN-METEO)
-        async function fetchKollamWeather() {
-            try {
-                // Kollam Coordinates: Lat 8.8932, Lon 76.6141
-                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=8.8932&longitude=76.6141&current_weather=true&relativehumidity_2m=true');
-                const data = await res.json();
-                
-                if (data && data.current_weather) {
-                    const temp = Math.round(data.current_weather.temperature);
-                    const wind = Math.round(data.current_weather.windspeed);
-                    
-                    document.getElementById('weatherTemp').innerText = `${temp}°`;
-                    document.getElementById('weatherWind').innerText = `${wind} km/h`;
-                    
-                    if (data.relativehumidity_2m) {
-                        document.getElementById('weatherHum').innerText = `${data.relativehumidity_2m}%`;
-                    } else {
-                        document.getElementById('weatherHum').innerText = `75%`;
-                    }
-
-                    // Dynamic Weather Icon based on Weather Code
-                    const code = data.current_weather.weathercode;
-                    const iconEl = document.getElementById('weatherIcon');
-                    if (code >= 51 && code <= 67) {
-                        iconEl.innerHTML = '<i class="fas fa-cloud-showers-heavy text-blue-400"></i>';
-                    } else if (code >= 1 && code <= 3) {
-                        iconEl.innerHTML = '<i class="fas fa-cloud-sun text-yellow-400"></i>';
-                    } else if (code === 0) {
-                        iconEl.innerHTML = '<i class="fas fa-sun text-yellow-500"></i>';
-                    } else {
-                        iconEl.innerHTML = '<i class="fas fa-cloud text-gray-300"></i>';
-                    }
-                }
-            } catch (e) {
-                console.error("Weather API Error:", e);
-                document.getElementById('weatherTemp').innerText = `29°`;
-                document.getElementById('weatherHum').innerText = `75%`;
-                document.getElementById('weatherWind').innerText = `2 km/h`;
-            }
-        }
-        fetchKollamWeather();
-        setInterval(fetchKollamWeather, 600000); // Auto Update every 10 mins
-
-        // 🎧 3-SONG PLAYLIST CONTROLLER
-        const playlist = ['song1.mp3', 'song2.mp3', 'song3.mp3'];
-        let currentTrack = 0;
         const bgAudio = document.getElementById('bgAudio');
-        const mainMusicIcon = document.getElementById('mainMusicIcon');
+        const bannerVideo = document.getElementById('bannerVideo');
 
-        function loadTrack(index) {
-            currentTrack = index;
-            bgAudio.src = playlist[currentTrack];
-            bgAudio.load();
-            if (!bgAudio.paused) {
-                bgAudio.play();
-            }
+        function triggerAudio() {
+            bgAudio.play().then(() => {
+                document.removeEventListener('click', triggerAudio);
+                document.removeEventListener('touchstart', triggerAudio);
+                document.removeEventListener('scroll', triggerAudio);
+            }).catch(() => {});
         }
 
-        function togglePlayPause() {
-            const playIcon = document.getElementById('playIcon');
-            if (bgAudio.paused) {
-                bgAudio.play().then(() => {
-                    playIcon.className = 'fas fa-pause';
-                    mainMusicIcon.classList.add('rotating-icon');
-                }).catch(() => {});
-            } else {
-                bgAudio.pause();
-                playIcon.className = 'fas fa-play';
-                mainMusicIcon.classList.remove('rotating-icon');
-            }
-        }
+        window.addEventListener('DOMContentLoaded', () => {
+            triggerAudio();
+            document.addEventListener('click', triggerAudio, { once: true });
+            document.addEventListener('touchstart', triggerAudio, { once: true });
+            document.addEventListener('scroll', triggerAudio, { once: true });
 
-        function nextSong() {
-            currentTrack = (currentTrack + 1) % playlist.length;
-            loadTrack(currentTrack);
-            bgAudio.play();
-            document.getElementById('playIcon').className = 'fas fa-pause';
-            mainMusicIcon.classList.add('rotating-icon');
-        }
-
-        function prevSong() {
-            currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
-            loadTrack(currentTrack);
-            bgAudio.play();
-            document.getElementById('playIcon').className = 'fas fa-pause';
-            mainMusicIcon.classList.add('rotating-icon');
-        }
-
-        function setMute(isMute) {
-            bgAudio.muted = isMute;
-        }
-
-        function toggleMusicMenu() {
-            const menu = document.getElementById('musicMenu');
-            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
-        }
-
-        // ✋ DRAGGABLE WIDGET LOGIC (TOUCH & MOUSE)
-        const dragBar = document.getElementById('draggableMusicBar');
-        let isDragging = false, currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
-
-        dragBar.addEventListener("touchstart", dragStart, false);
-        dragBar.addEventListener("touchend", dragEnd, false);
-        dragBar.addEventListener("touchmove", drag, false);
-
-        dragBar.addEventListener("mousedown", dragStart, false);
-        document.addEventListener("mouseup", dragEnd, false);
-        document.addEventListener("mousemove", drag, false);
-
-        function dragStart(e) {
-            if (e.target.closest('.music-btn')) return; // Ignore drag if button is clicked directly
-            if (e.type === "touchstart") {
-                initialX = e.touches[0].clientX - xOffset;
-                initialY = e.touches[0].clientY - yOffset;
-            } else {
-                initialX = e.clientX - xOffset;
-                initialY = e.clientY - yOffset;
-            }
-            isDragging = true;
-        }
-
-        function dragEnd() {
-            initialX = currentX;
-            initialY = currentY;
-            isDragging = false;
-        }
-
-        function drag(e) {
-            if (isDragging) {
-                e.preventDefault();
-                if (e.type === "touchmove") {
-                    currentX = e.touches[0].clientX - initialX;
-                    currentY = e.touches[0].clientY - initialY;
-                } else {
-                    currentX = e.clientX - initialX;
-                    currentY = e.clientY - initialY;
-                }
-                xOffset = currentX;
-                yOffset = currentY;
-                setTranslate(currentX, currentY, dragBar);
-            }
-        }
-
-        function setTranslate(xPos, yPos, el) {
-            el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-        }
-
-        // GENERAL WEBSITE LOGICS
-        function togglePairing() {
-            const section = document.getElementById('pairingSection');
-            section.classList.toggle('hidden');
-            if (!section.classList.contains('hidden')) section.scrollIntoView({ behavior: 'smooth' });
-        }
+            startTypingCommands();
+        });
 
         function toggleBannerVideo() {
-            const bannerVideo = document.getElementById('bannerVideo');
             const icon = document.getElementById('bannerStatusIcon');
             const text = document.getElementById('bannerStatusText');
 
@@ -609,45 +498,127 @@
             }
         }
 
+        function togglePairing() {
+            const section = document.getElementById('pairingSection');
+            section.classList.toggle('hidden');
+            if (!section.classList.contains('hidden')) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function toggleAiChat() {
+            const modal = document.getElementById('aiChatModal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'flex';
+            }
+        }
+
+        function handleChatPress(e) {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const msgContainer = document.getElementById('chatMessages');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-blue-600 text-white p-2.5 rounded-xl max-w-[85%] ml-auto';
+            userMsg.innerText = text;
+            msgContainer.appendChild(userMsg);
+            input.value = '';
+            msgContainer.scrollTop = msgContainer.scrollHeight;
+
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'bg-gray-800 p-2.5 rounded-xl max-w-[85%]';
+                
+                const lowerText = text.toLowerCase();
+                if (lowerText.includes('pair') || lowerText.includes('code') || lowerText.includes('connect')) {
+                    botMsg.innerText = "To get your pair code, click the 'Get pair code' button at the top of the website and enter your WhatsApp phone number with the country code.";
+                } else if (lowerText.includes('command') || lowerText.includes('menu')) {
+                    botMsg.innerText = "ZORO MD provides powerful commands like .menu, .alive, .song, .movie, .ai, and many more!";
+                } else if (lowerText.includes('creator') || lowerText.includes('developer') || lowerText.includes('adithyan')) {
+                    botMsg.innerText = "This website and the ZORO MD bot were created by Adithyan!";
+                } else {
+                    botMsg.innerText = "ZORO MD is an advanced WhatsApp automation bot. For more assistance, feel free to join our support group from the community section below.";
+                }
+
+                msgContainer.appendChild(botMsg);
+                msgContainer.scrollTop = msgContainer.scrollHeight;
+            }, 600);
+        }
+
+        // 🔗 CONNECTED TO BOT-HOSTING.NET BACKEND API
         async function generatePairCode() {
             const numInput = document.getElementById('phoneNum');
             const num = numInput.value.trim();
-            if(!num) { alert('Please enter your WhatsApp phone number!'); return; }
+            if(!num) {
+                alert('Please enter your WhatsApp phone number with country code!');
+                return;
+            }
 
             const resultBox = document.getElementById('pairResult');
             const codeDisplay = document.getElementById('codeDisplay');
+            
             resultBox.classList.remove('hidden');
             codeDisplay.innerText = "GENERATING...";
             codeDisplay.style.color = "#38bdf8";
 
+            const BACKEND_URL = "https://jjd2yjefn7.apps.bot-hosting.cloud";
+
             try {
-                const response = await fetch(`https://jjd2yjefn7.apps.bot-hosting.cloud/pair?phone=${encodeURIComponent(num)}`);
+                const response = await fetch(`${BACKEND_URL}/pair?phone=${encodeURIComponent(num)}`);
                 const data = await response.json();
+
                 if (data.code) {
                     codeDisplay.innerText = data.code;
-                    codeDisplay.style.color = "#4ade80";
+                    codeDisplay.style.color = "#4ade80"; 
                 } else {
                     codeDisplay.innerText = data.error || "FAILED TO GET CODE";
-                    codeDisplay.style.color = "#f43f5e";
+                    codeDisplay.style.color = "#f43f5e"; 
                 }
             } catch (err) {
+                console.error("Pairing API Error:", err);
                 codeDisplay.innerText = "SERVER ERROR!";
                 codeDisplay.style.color = "#f43f5e";
             }
         }
 
-        const commands = [".alive", ".menu", ".movie", ".song", ".fb", ".tiktok", ".vv", ".apk", ".image", ".logo", ".video", ".anime", ".jid", ".pin", ".join", ".ai"];
+        const commands = [
+            ".alive", ".menu", ".movie", ".song",
+            ".fb", ".tiktok", ".vv", ".apk",
+            ".image", ".logo", ".video", ".anime",
+            ".jid", ".pin", ".join", ".ai"
+        ];
+
         async function startTypingCommands() {
             const grid = document.getElementById('cmdGrid');
             grid.innerHTML = '';
+
             for (let cmd of commands) {
                 let box = document.createElement('div');
                 box.className = 'cmd-item';
-                box.innerText = cmd;
+                box.innerHTML = '<span class="typed-text"></span><span class="cursor"></span>';
                 grid.appendChild(box);
+
+                let typedSpan = box.querySelector('.typed-text');
+                let cursorSpan = box.querySelector('.cursor');
+
+                for (let char of cmd) {
+                    typedSpan.innerText += char;
+                    await new Promise(r => setTimeout(r, 60));
+                }
+                
+                cursorSpan.remove();
+                await new Promise(r => setTimeout(r, 100));
             }
         }
-        startTypingCommands();
     </script>
 </body>
 </html>
