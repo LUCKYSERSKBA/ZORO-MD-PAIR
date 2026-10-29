@@ -8,10 +8,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
         
         * {
             font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .font-serif-heading {
+            font-family: 'Playfair Display', serif;
         }
 
         body {
@@ -157,7 +161,7 @@
         .floating-btn {
             position: fixed;
             bottom: 24px;
-            right: 24px;
+            left: 24px;
             background: #0070f3;
             color: #fff;
             padding: 12px 22px;
@@ -173,13 +177,59 @@
             transition: all 0.3s ease;
         }
 
+        /* 🎵 MUSIC CONTROLLER SIDEBAR */
+        .music-widget-bar {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 90;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .music-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(13, 17, 23, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .music-btn:hover {
+            background: #0070f3;
+            border-color: #0070f3;
+            transform: scale(1.05);
+        }
+
+        #musicMenu {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         #aiChatModal {
             position: fixed;
-            bottom: 90px;
-            right: 24px;
+            bottom: 80px;
+            left: 24px;
             width: 340px;
             max-width: calc(100vw - 48px);
-            height: 450px;
+            height: 400px;
             background: rgba(10, 14, 20, 0.95);
             border: 1px solid rgba(37, 99, 235, 0.4);
             backdrop-filter: blur(12px);
@@ -246,53 +296,70 @@
             <path d="M80 50 L60 70 L80 90" />
             <path d="M30 80 L50 60 L70 80" />
         </svg>
-        <div class="text-xl font-bold tracking-wider uppercase text-white">ZORO MD</div>
+        <div class="text-xl font-bold tracking-wider uppercase text-white font-serif-heading">ZORO MD</div>
         <div class="loader-bar">
             <div class="loader-progress"></div>
         </div>
     </div>
 
-    <!-- HEADER SECTION - UPDATED TO AADHIXD -->
+    <!-- HEADER SECTION -->
     <header class="max-w-4xl mx-auto px-6 py-5 flex justify-between items-center border-b border-white/10">
-        <div class="font-bold text-base tracking-wider text-white uppercase">AADHIXD</div>
+        <div class="font-bold text-base tracking-wider text-white uppercase font-serif-heading">AADHIXD</div>
         <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-blue !w-auto !py-1.5 !px-4 !text-xs">
             GitHub
         </a>
     </header>
 
-    <main class="max-w-md mx-auto px-5 pt-8 pb-24 space-y-16">
+    <main class="max-w-md mx-auto px-5 pt-8 pb-24 space-y-12">
 
-        <section class="text-center">
-            <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-semibold mb-4">
-                Available now — PRO
-            </div>
-            <h1 class="text-4xl font-extrabold tracking-tight mb-3">
-                ZORO <span class="text-blue-500">MD</span>
+        <!-- WELCOME & STYLISH TITLE SECTION -->
+        <section class="text-center space-y-3">
+            <div class="text-xs uppercase tracking-widest text-gray-400 font-semibold">PAIRING WEB</div>
+            <h1 class="text-4xl font-normal tracking-tight font-serif-heading italic text-white">
+                WELCOME!
             </h1>
-            <p class="text-gray-300 text-xs leading-relaxed mb-6">
-                Advanced WhatsApp automation powered by intelligent commands. Expanded features, multi-device support, and helpful updates all around.
+            <h2 class="text-2xl font-bold font-serif-heading uppercase tracking-wide text-white flex items-center justify-center gap-1.5">
+                ZORO MD <i class="fas fa-check-circle text-blue-500 text-lg"></i>
+            </h2>
+            <p class="text-gray-300 text-xs leading-relaxed max-w-xs mx-auto">
+                We are here to provide you with the best services that you deserve.
             </p>
+        </section>
 
-            <div class="space-y-3 mb-8">
-                <button onclick="togglePairing()" class="btn-blue">
-                    Get pair code
-                </button>
-                <a href="https://github.com/Xion-Xer/ZORO-MD.git" target="_blank" class="btn-outline">
-                    Get the repo
-                </a>
-            </div>
-
-            <div class="glass-card p-2 overflow-hidden rounded-2xl relative cursor-pointer" onclick="toggleBannerVideo()">
-                <video id="bannerVideo" autoplay loop muted playsinline preload="auto" class="w-full h-48 rounded-xl object-cover">
-                    <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
-                </video>
-                <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
-                    <i id="bannerStatusIcon" class="fas fa-play text-[10px]"></i>
-                    <span class="text-[10px]" id="bannerStatusText">Playing</span>
+        <!-- KOLLAM WEATHER WIDGET (BUNNY XMD STYLE) -->
+        <section class="glass-card p-4 rounded-2xl border border-white/10 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="text-3xl text-yellow-400">
+                    <i class="fas fa-cloud-sun"></i>
                 </div>
+                <div>
+                    <div class="flex items-baseline gap-2">
+                        <span class="text-2xl font-bold text-white">29°</span>
+                        <span class="text-[10px] text-gray-400 uppercase tracking-widest font-semibold">KOLLAM</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-[11px] text-gray-300 mt-0.5">
+                        <span><i class="fas fa-tint text-sky-400 text-[10px]"></i> 75%</span>
+                        <span><i class="fas fa-wind text-gray-400 text-[10px]"></i> 2 km/h</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right border-l border-white/10 pl-4">
+                <div id="liveClock" class="text-xs font-mono font-bold text-sky-400">09:21:00 AM</div>
+                <div class="text-[9px] text-gray-400 uppercase tracking-widest font-semibold mt-1">LIVE TIME</div>
             </div>
         </section>
 
+        <!-- ACTION BUTTONS -->
+        <section class="space-y-3">
+            <button onclick="togglePairing()" class="btn-blue uppercase tracking-wider text-xs font-bold py-3.5">
+                CONNECT BOT <i class="fas fa-arrow-right text-xs ml-1"></i>
+            </button>
+            <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-outline uppercase tracking-wider text-xs font-bold py-3.5">
+                BOT SUPPORT <i class="fas fa-comment text-xs ml-1"></i>
+            </a>
+        </section>
+
+        <!-- PAIRING CODE SECTION -->
         <section id="pairingSection" class="hidden">
             <div class="glass-card p-6 border-blue-500/50 relative shadow-2xl space-y-4">
                 <div class="flex justify-between items-center mb-1">
@@ -318,9 +385,30 @@
             </div>
         </section>
 
-        <!-- TECH STACK GRID (INCLUDES CLOUD APIs & UI/UX) -->
+        <!-- VIDEO BANNER CARD -->
+        <section class="glass-card p-2 overflow-hidden rounded-2xl relative cursor-pointer" onclick="toggleBannerVideo()">
+            <video id="bannerVideo" autoplay loop muted playsinline preload="auto" class="w-full h-48 rounded-xl object-cover">
+                <source src="https://files.catbox.moe/n1p774.mp4" type="video/mp4">
+            </video>
+            <div class="absolute top-4 right-4 bg-black/70 backdrop-blur-md p-1.5 rounded-full border border-white/20 text-white text-xs flex items-center gap-1.5 px-3">
+                <i id="bannerStatusIcon" class="fas fa-play text-[10px]"></i>
+                <span class="text-[10px]" id="bannerStatusText">Playing</span>
+            </div>
+        </section>
+
+        <!-- FEATURES / EVERYTHING YOUR WHATSAPP NEEDS -->
+        <section class="text-center space-y-3 pt-4">
+            <h2 class="text-3xl font-normal font-serif-heading tracking-tight uppercase leading-snug">
+                EVERYTHING YOUR WHATSAPP NEEDS, <span class="italic font-bold">ONE BOT.</span>
+            </h2>
+            <p class="text-gray-300 text-xs max-w-xs mx-auto leading-relaxed">
+                Link it once and use it in chats and groups. No app to install and no coding needed.
+            </p>
+        </section>
+
+        <!-- TECH STACK GRID -->
         <section class="space-y-6 text-center">
-            <h2 class="text-2xl font-bold tracking-tight">Built with the best.</h2>
+            <h2 class="text-2xl font-bold tracking-tight font-serif-heading">Built with the best.</h2>
             <div class="grid grid-cols-2 gap-4">
                 <div class="tech-card">
                     <i class="fas fa-code text-sky-400"></i>
@@ -338,45 +426,13 @@
                     <i class="fas fa-database text-sky-400"></i>
                     <span class="text-xs font-medium">MongoDB</span>
                 </div>
-                <div class="tech-card">
-                    <i class="fab fa-react text-sky-400"></i>
-                    <span class="text-xs font-medium">React</span>
-                </div>
-                <div class="tech-card">
-                    <i class="fas fa-cube text-sky-400"></i>
-                    <span class="text-xs font-medium">Flask</span>
-                </div>
-                <div class="tech-card">
-                    <i class="fas fa-cloud text-sky-400"></i>
-                    <span class="text-xs font-medium">Cloud APIs</span>
-                </div>
-                <div class="tech-card">
-                    <i class="fas fa-paint-brush text-sky-400"></i>
-                    <span class="text-xs font-medium">UI/UX</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="space-y-6 text-center">
-            <h2 class="text-2xl font-bold tracking-tight">A new standard.</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="glass-card p-6 flex flex-col items-center justify-center">
-                    <i class="fas fa-users text-lg text-gray-300 mb-2"></i>
-                    <span class="text-2xl font-extrabold">50K+</span>
-                    <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">ACTIVE USERS</span>
-                </div>
-                <div class="glass-card p-6 flex flex-col items-center justify-center">
-                    <i class="fas fa-comment-dots text-lg text-gray-300 mb-2"></i>
-                    <span class="text-2xl font-extrabold">10M+</span>
-                    <span class="text-[10px] text-gray-400 tracking-wider mt-1 uppercase">MESSAGES SENT</span>
-                </div>
             </div>
         </section>
 
         <!-- COMMANDS SECTION -->
         <section class="space-y-6 text-center">
             <div>
-                <h2 class="text-2xl font-bold tracking-tight mb-1">Just type a command.</h2>
+                <h2 class="text-2xl font-bold tracking-tight font-serif-heading mb-1">Just type a command.</h2>
                 <p class="text-gray-300 text-xs">A familiar terminal. An entirely new feeling.</p>
             </div>
 
@@ -392,28 +448,12 @@
             </div>
         </section>
 
-        <!-- COMMUNITY SECTION -->
-        <section class="glass-card p-8 text-center space-y-4">
-            <h2 class="text-2xl font-bold tracking-tight">Join the community.</h2>
-            <p class="text-gray-300 text-xs max-w-xs mx-auto">
-                Thousands of users. One conversation.
-            </p>
-            <div class="space-y-3 pt-2">
-                <a href="https://chat.whatsapp.com/IUe14A04uicGJdIOfBuuvd" target="_blank" class="btn-blue">
-                    <i class="fas fa-comment"></i> Support group
-                </a>
-                <a href="https://whatsapp.com/channel/0029Vb7pgsF4tRrkS5CECe24" target="_blank" class="btn-outline">
-                    <i class="fas fa-broadcast-tower"></i> Join channel
-                </a>
-            </div>
-        </section>
-
         <!-- DEVELOPER SECTION -->
         <section>
             <div class="glass-card p-8 text-center">
                 <img src="https://files.catbox.moe/5tnppp.jpg" alt="Adithyan Profile" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-2 border-blue-500/50 shadow-xl">
                 <div class="text-[10px] text-gray-400 tracking-widest font-semibold mb-2 uppercase">MEET THE DEVELOPER</div>
-                <h3 class="text-2xl font-extrabold mb-3">Adithyan</h3>
+                <h3 class="text-2xl font-extrabold mb-3 font-serif-heading">Adithyan</h3>
                 <p class="text-gray-300 text-xs leading-relaxed mb-6">
                     Full Stack Developer and creator of ZORO MD. On a mission to simplify communication through advanced automation — made for everyone.
                 </p>
@@ -430,9 +470,36 @@
 
     </main>
 
-    <!-- FLOATING SUPPORT BUTTON -->
+    <!-- FLOATING AI CHAT BUTTON -->
     <div onclick="toggleAiChat()" class="floating-btn">
-        <i class="fas fa-comment-alt"></i> Chat with AI
+        <i class="fas fa-robot"></i> AI Chat
+    </div>
+
+    <!-- 🎵 INTERACTIVE MUSIC PLAYER BAR (BUNNY XMD SIDEBAR CONTROLLER) -->
+    <div class="music-widget-bar">
+        <div id="musicMenu">
+            <button class="music-btn" onclick="togglePlayPause()" title="Play/Pause">
+                <i id="playIcon" class="fas fa-play"></i>
+            </button>
+            <button class="music-btn" onclick="seekForward()" title="Forward 10s">
+                <i class="fas fa-step-forward"></i>
+            </button>
+            <button class="music-btn" onclick="seekBackward()" title="Backward 10s">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="music-btn" onclick="volumeUp()" title="Volume Up">
+                <i class="fas fa-volume-up"></i>
+            </button>
+            <button class="music-btn" onclick="volumeDown()" title="Volume Down">
+                <i class="fas fa-volume-down"></i>
+            </button>
+            <button class="music-btn" onclick="toggleMute()" title="Mute/Unmute">
+                <i id="muteIcon" class="fas fa-volume-mute"></i>
+            </button>
+        </div>
+        <button class="music-btn !w-12 !h-12 !bg-blue-600 !border-blue-400" onclick="toggleMusicMenu()" title="Music Menu">
+            <i class="fas fa-music text-lg"></i>
+        </button>
     </div>
 
     <!-- AI CHAT INTERFACE MODAL -->
@@ -466,8 +533,59 @@
         const bgAudio = document.getElementById('bgAudio');
         const bannerVideo = document.getElementById('bannerVideo');
 
+        // Clock Update
+        function updateClock() {
+            const clockEl = document.getElementById('liveClock');
+            if (clockEl) {
+                const now = new Date();
+                clockEl.innerText = now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            }
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Music Controls
+        function toggleMusicMenu() {
+            const menu = document.getElementById('musicMenu');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function togglePlayPause() {
+            const playIcon = document.getElementById('playIcon');
+            if (bgAudio.paused) {
+                bgAudio.play();
+                playIcon.className = 'fas fa-pause';
+            } else {
+                bgAudio.pause();
+                playIcon.className = 'fas fa-play';
+            }
+        }
+
+        function seekForward() {
+            bgAudio.currentTime += 10;
+        }
+
+        function seekBackward() {
+            bgAudio.currentTime -= 10;
+        }
+
+        function volumeUp() {
+            if (bgAudio.volume < 1) bgAudio.volume = Math.min(1, bgAudio.volume + 0.1);
+        }
+
+        function volumeDown() {
+            if (bgAudio.volume > 0) bgAudio.volume = Math.max(0, bgAudio.volume - 0.1);
+        }
+
+        function toggleMute() {
+            const muteIcon = document.getElementById('muteIcon');
+            bgAudio.muted = !bgAudio.muted;
+            muteIcon.className = bgAudio.muted ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+        }
+
         function triggerAudio() {
             bgAudio.play().then(() => {
+                document.getElementById('playIcon').className = 'fas fa-pause';
                 document.removeEventListener('click', triggerAudio);
                 document.removeEventListener('touchstart', triggerAudio);
                 document.removeEventListener('scroll', triggerAudio);
@@ -540,7 +658,7 @@
                 
                 const lowerText = text.toLowerCase();
                 if (lowerText.includes('pair') || lowerText.includes('code') || lowerText.includes('connect')) {
-                    botMsg.innerText = "To get your pair code, click the 'Get pair code' button at the top of the website and enter your WhatsApp phone number with the country code.";
+                    botMsg.innerText = "To get your pair code, click the 'CONNECT BOT' button at the top of the website and enter your WhatsApp phone number with the country code.";
                 } else if (lowerText.includes('command') || lowerText.includes('menu')) {
                     botMsg.innerText = "ZORO MD provides powerful commands like .menu, .alive, .song, .movie, .ai, and many more!";
                 } else if (lowerText.includes('creator') || lowerText.includes('developer') || lowerText.includes('adithyan')) {
@@ -554,7 +672,7 @@
             }, 600);
         }
 
-        // 🔗 CONNECTED TO BOT-HOSTING.NET BACKEND API
+        // CONNECTED TO BOT-HOSTING.NET BACKEND API
         async function generatePairCode() {
             const numInput = document.getElementById('phoneNum');
             const num = numInput.value.trim();
