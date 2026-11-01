@@ -74,21 +74,25 @@
             to { width: 100%; }
         }
 
-        /* 🍎 iPhone Style Glassmorphism / Frosted Glass Effect */
+        /* 🍎 iPhone Style Glassmorphism & Oily Neon Glow Animation Box */
         .glass-card {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .glass-card:hover {
-            border-color: rgba(56, 189, 248, 0.4);
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.2);
-            transform: translateY(-3px);
+        @keyframes oilyGlow {
+            0% { border-color: rgba(56, 189, 248, 0.3); box-shadow: 0 0 20px rgba(56, 189, 248, 0.15), inset 0 0 15px rgba(56, 189, 248, 0.05); }
+            50% { border-color: rgba(74, 222, 128, 0.6); box-shadow: 0 0 35px rgba(74, 222, 128, 0.3), inset 0 0 25px rgba(74, 222, 128, 0.1); }
+            100% { border-color: rgba(56, 189, 248, 0.3); box-shadow: 0 0 20px rgba(56, 189, 248, 0.15), inset 0 0 15px rgba(56, 189, 248, 0.05); }
+        }
+
+        .animated-glass-box {
+            animation: oilyGlow 5s infinite ease-in-out;
         }
 
         .tech-card {
@@ -296,9 +300,9 @@
             </div>
         </section>
 
-        <!-- PAIRING SECTION WITH MULTI-SERVER SMART ROUTING -->
+        <!-- PAIRING SECTION WITH GLASS ANIMATION & NO VISIBLE SERVER NAMES -->
         <section id="pairingSection" class="hidden">
-            <div class="glass-card p-6 border-blue-500/50 relative shadow-2xl space-y-4">
+            <div class="glass-card animated-glass-box p-6 relative shadow-2xl space-y-4">
                 <div class="flex justify-between items-center mb-1">
                     <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">Pair Code Generator</span>
                     <button onclick="togglePairing()" class="text-gray-400 hover:text-white text-xs"><i class="fas fa-times"></i> Close</button>
@@ -306,23 +310,15 @@
                 
                 <p class="text-gray-300 text-xs">Enter your WhatsApp number with country code to generate your pairing code.</p>
 
-                <!-- SERVER SELECT & DYNAMIC INCREASING USER COUNT -->
+                <!-- STATUS & BACKGROUND ROUTING INDICATOR (NO NAMES) -->
                 <div class="space-y-3 bg-black/40 p-3.5 rounded-xl border border-white/10">
-                    <div>
-                        <div class="flex justify-between items-center mb-1.5">
-                            <label class="text-[11px] text-sky-400 font-bold uppercase tracking-wide">Select Server</label>
-                            <span id="serverStatusTag" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
-                                <i class="fas fa-signal text-[8px] animate-pulse"></i> SMART ACTIVE
-                            </span>
-                        </div>
-                        <select id="serverSelect" onchange="updateUserDisplay()" class="w-full bg-black/70 border border-white/20 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500">
-                            <option value="server1">Server 1 (Render)</option>
-                            <option value="server2">Server 2 (Bot-Hosting)</option>
-                            <option value="server3">Server 3 (Backup/Mistral)</option>
-                        </select>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-400 text-[11px]"><i class="fas fa-signal text-sky-400 mr-1"></i> Gateway Status:</span>
+                        <span id="gatewayStatusTag" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                            <i class="fas fa-circle text-[6px] animate-pulse"></i> SECURE ONLINE
+                        </span>
                     </div>
 
-                    <!-- ACTIVE USERS DISPLAY (INCREASING LOGIC) -->
                     <div class="flex items-center justify-between pt-1 border-t border-white/5 text-xs">
                         <span class="text-gray-400 text-[11px]"><i class="fas fa-users text-sky-400 mr-1"></i> Active Connected Users:</span>
                         <span id="activeUserCount" class="font-mono font-bold text-yellow-400">30 / 30 (Optimal)</span>
@@ -513,7 +509,6 @@
             document.addEventListener('scroll', triggerAudio, { once: true });
 
             startTypingCommands();
-            updateUserDisplay();
             startAutoPing();
         });
 
@@ -588,7 +583,7 @@
             }, 600);
         }
 
-        // 🌐 3-SERVER SETUP & REAL COUNTERS (Limit: 10 each)
+        // 🌐 HIDDEN 3-SERVER BACKEND SMART ROUTING (No names shown to users)
         let server1RealCount = 4;
         let server2RealCount = 2;
         let server3RealCount = 0;
@@ -597,26 +592,7 @@
 
         const SERVER_1_URL = "https://zoro-pairing-panel-1.onrender.com";
         const SERVER_2_URL = "https://jjd2yjefn7.apps.bot-hosting.cloud";
-        const SERVER_3_URL = "https://medical-canid-20-6e779bdb.apps.mistral.run"; // മൂന്നാമത്തെ സെർവർ ലിങ്ക്
-
-        function updateUserDisplay() {
-            const serverSelect = document.getElementById('serverSelect');
-            const userCountDisplay = document.getElementById('activeUserCount');
-            const tag = document.getElementById('serverStatusTag');
-
-            let selectedVal = serverSelect.value;
-            let currentReal = 0;
-            let maxLimit = 30;
-
-            if (selectedVal === 'server1') currentReal = server1RealCount;
-            else if (selectedVal === 'server2') currentReal = server2RealCount;
-            else currentReal = server3RealCount;
-
-            userCountDisplay.innerText = `${30 + currentReal} / ${maxLimit} (Optimal)`;
-            userCountDisplay.className = "font-mono font-bold text-green-400";
-            tag.innerHTML = `<i class="fas fa-check-circle text-[8px]"></i> ACTIVE`;
-            tag.className = "text-[10px] font-semibold px-2 py-0.5 rounded-full bg-green-500/25 text-green-400 border border-green-500/30";
-        }
+        const SERVER_3_URL = "https://medical-canid-20-6e779bdb.apps.mistral.run";
 
         // 🔄 AUTO PING TO PREVENT SLEEP
         function startAutoPing() {
@@ -644,32 +620,28 @@
             
             resultBox.classList.remove('hidden');
             statusCaption.classList.remove('hidden');
-            codeDisplay.innerText = "FINDING AVAILABLE NODE...";
+            codeDisplay.innerText = "FINDING SECURE NODE...";
             codeDisplay.style.color = "#38bdf8";
 
-            // 🎯 ലോജിക്: Server 1 ഉം 2 ഉം ഫുൾ ആയാൽ മാത്രം Server 3-ലേക്ക് പോകും.
             let targets = [];
             const isServer1Full = server1RealCount >= INTERNAL_LIMIT;
             const isServer2Full = server2RealCount >= INTERNAL_LIMIT;
 
             if (isServer1Full && isServer2Full) {
-                // രണ്ടും ഫുൾ ആണെങ്കിൽ മാത്രം സർവർ 3 (Backup) ആദ്യം നോക്കും
-                targets.push({url: SERVER_3_URL, name: "Server 3 (Backup)", type: 3});
-                if (server1RealCount < INTERNAL_LIMIT) targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
-                if (server2RealCount < INTERNAL_LIMIT) targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
+                targets.push({url: SERVER_3_URL, type: 3});
+                if (server1RealCount < INTERNAL_LIMIT) targets.push({url: SERVER_1_URL, type: 1});
+                if (server2RealCount < INTERNAL_LIMIT) targets.push({url: SERVER_2_URL, type: 2});
             } else {
-                // സാധാരണ നിലയിൽ ആദ്യം സർവർ 1, 2 എന്നിവ പ്രയോറിറ്റി കൊടുക്കും
-                if (server1RealCount < INTERNAL_LIMIT) targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
-                if (server2RealCount < INTERNAL_LIMIT) targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
-                // അവയും ഫുൾ ആകാൻ തുടങ്ങിയാൽ സർവർ 3 അവസാന ഓപ്ഷനായി എടുക്കും
-                targets.push({url: SERVER_3_URL, name: "Server 3 (Backup)", type: 3});
+                if (server1RealCount < INTERNAL_LIMIT) targets.push({url: SERVER_1_URL, type: 1});
+                if (server2RealCount < INTERNAL_LIMIT) targets.push({url: SERVER_2_URL, type: 2});
+                targets.push({url: SERVER_3_URL, type: 3});
             }
 
             let success = false;
 
             for (let target of targets) {
                 try {
-                    codeDisplay.innerText = `CONNECTING TO ${target.name}...`;
+                    codeDisplay.innerText = `CONNECTING...`;
                     
                     const response = await fetch(`${target.url}/pair?phone=${encodeURIComponent(num)}`);
                     const data = await response.json();
@@ -684,16 +656,15 @@
                         else if (target.type === 2) server2RealCount++;
                         else if (target.type === 3) server3RealCount++;
                         
-                        updateUserDisplay();
                         break;
                     }
                 } catch (err) {
-                    console.warn(`${target.name} busy/offline, trying next...`);
+                    console.warn(`Node busy, switching...`);
                 }
             }
 
             if (!success) {
-                codeDisplay.innerText = "ALL SERVERS CURRENTLY FULL!";
+                codeDisplay.innerText = "ALL NODES CURRENTLY BUSY!";
                 codeDisplay.style.color = "#f43f5e";
                 statusCaption.classList.add('hidden');
             }
