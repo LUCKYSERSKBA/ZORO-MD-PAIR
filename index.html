@@ -300,7 +300,7 @@
             </div>
         </section>
 
-        <!-- PAIRING SECTION (ONLY SERVER 1, 2, 3) -->
+        <!-- PAIRING SECTION -->
         <section id="pairingSection" class="hidden">
             <div class="glass-card animated-glass-box p-6 relative shadow-2xl space-y-4">
                 <div class="flex justify-between items-center mb-1">
@@ -310,7 +310,7 @@
                 
                 <p class="text-gray-300 text-xs">Enter your WhatsApp number with country code to generate your pairing code.</p>
 
-                <!-- SERVER SELECT DROPDOWN (ONLY SERVER 1, 2, 3) -->
+                <!-- SERVER SELECT DROPDOWN -->
                 <div class="space-y-3 bg-black/40 p-3.5 rounded-xl border border-white/10">
                     <div>
                         <div class="flex justify-between items-center mb-1.5">
@@ -320,7 +320,7 @@
                             </span>
                         </div>
                         <select id="serverSelect" onchange="updateUserDisplay()" class="w-full bg-black/70 border border-white/20 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500">
-                            <option value="auto">Auto (Smart Free-Space)</option>
+                            <option value="auto">Auto (Smart Routing)</option>
                             <option value="server1">Server 1</option>
                             <option value="server2">Server 2</option>
                             <option value="server3">Server 3</option>
@@ -330,7 +330,7 @@
                     <!-- ACTIVE USERS DISPLAY -->
                     <div class="flex items-center justify-between pt-1 border-t border-white/5 text-xs">
                         <span class="text-gray-400 text-[11px]"><i class="fas fa-users text-sky-400 mr-1"></i> Active Connected Users:</span>
-                        <span id="activeUserCount" class="font-mono font-bold text-yellow-400">30 / 30 (Optimal)</span>
+                        <span id="activeUserCount" class="font-mono font-bold text-yellow-400">20 / 50 (Optimal)</span>
                     </div>
                 </div>
                 
@@ -593,12 +593,12 @@
             }, 600);
         }
 
-        // 🌐 3-SERVER BACKEND MAPPING (Server 1, Server 2, Server 3)
-        let server1RealCount = 4;
+        // 🌐 REAL & PROPORTIONAL FAKE COUNTERS LOGIC
+        let server1RealCount = 2; 
         let server2RealCount = 2;
         let server3RealCount = 0;
 
-        const INTERNAL_LIMIT = 10;   
+        const INTERNAL_LIMIT = 8; // 8 ആയാൽ ഫുൾ ആയി കണക്കാക്കും
 
         const SERVER_1_URL = "https://zoro-pairing-panel-1.onrender.com";
         const SERVER_2_URL = "https://jjd2yjefn7.apps.bot-hosting.cloud";
@@ -610,14 +610,26 @@
             const tag = document.getElementById('serverStatusTag');
 
             let selectedVal = serverSelect.value;
-            let currentReal = 0;
+            let displayVal = 20;
+            let maxVal = 50;
 
-            if (selectedVal === 'server1') currentReal = server1RealCount;
-            else if (selectedVal === 'server2') currentReal = server2RealCount;
-            else if (selectedVal === 'server3') currentReal = server3RealCount;
-            else currentReal = server1RealCount + server2RealCount;
+            if (selectedVal === 'server1') {
+                displayVal = Math.round(20 + (server1RealCount / INTERNAL_LIMIT) * 30);
+                if (displayVal > 50) displayVal = 50;
+                maxVal = 50;
+            } else if (selectedVal === 'server2') {
+                displayVal = Math.round(20 + (server2RealCount / INTERNAL_LIMIT) * 30);
+                if (displayVal > 50) displayVal = 50;
+                maxVal = 50;
+            } else if (selectedVal === 'server3') {
+                displayVal = 30; // സെർവർ ത്രീ എപ്പോഴും ഫിക്സഡ് 30 ആയിരിക്കും
+                maxVal = 30;
+            } else {
+                displayVal = Math.round(20 + (server1RealCount / INTERNAL_LIMIT) * 30);
+                maxVal = 50;
+            }
 
-            userCountDisplay.innerText = `${30 + currentReal} / 30 (Optimal)`;
+            userCountDisplay.innerText = `${displayVal} / ${maxVal} (Optimal)`;
             userCountDisplay.className = "font-mono font-bold text-green-400";
             tag.innerHTML = `<i class="fas fa-check-circle text-[8px]"></i> ACTIVE`;
             tag.className = "text-[10px] font-semibold px-2 py-0.5 rounded-full bg-green-500/25 text-green-400 border border-green-500/30";
@@ -633,7 +645,7 @@
             }, 5 * 60 * 1000);
         }
 
-        // 🔗 SMART DYNAMIC FREE-SPACE BALANCING & BACKUP FAILOVER
+        // 🔗 SMART STABLE ROUTING (Strict User Selection & Issue-Based Auto Switch)
         async function generatePairCode() {
             const numInput = document.getElementById('phoneNum');
             const num = numInput.value.trim();
@@ -651,28 +663,29 @@
             
             resultBox.classList.remove('hidden');
             statusCaption.classList.remove('hidden');
-            codeDisplay.innerText = "FINDING AVAILABLE NODE...";
+            codeDisplay.innerText = "GENERATING CODE...";
             codeDisplay.style.color = "#38bdf8";
 
             let targets = [];
 
+            // 1️⃣ യൂസർ നേരിട്ട് സെലക്ട് ചെയ്തിട്ടുണ്ടെങ്കിൽ ആ സെർവറിൽ മാത്രം ട്രൈ ചെയ്യും (വേറെങ്ങോട്ടും മാറില്ല)
             if (userSelected && userSelected !== 'auto') {
-                // യൂസർ നേരിട്ട് സെലക്ട് ചെയ്താൽ ആദ്യം അത് നോക്കും, പിന്നെ ബാക്കി
-                if (userSelected === 'server1') targets = [{url: SERVER_1_URL, name: "Server 1", type: 1}, {url: SERVER_2_URL, name: "Server 2", type: 2}, {url: SERVER_3_URL, name: "Server 3", type: 3}];
-                else if (userSelected === 'server2') targets = [{url: SERVER_2_URL, name: "Server 2", type: 2}, {url: SERVER_1_URL, name: "Server 1", type: 1}, {url: SERVER_3_URL, name: "Server 3", type: 3}];
-                else targets = [{url: SERVER_3_URL, name: "Server 3", type: 3}, {url: SERVER_1_URL, name: "Server 1", type: 1}, {url: SERVER_2_URL, name: "Server 2", type: 2}];
+                if (userSelected === 'server1') targets = [{url: SERVER_1_URL, name: "Server 1", type: 1}];
+                else if (userSelected === 'server2') targets = [{url: SERVER_2_URL, name: "Server 2", type: 2}];
+                else targets = [{url: SERVER_3_URL, name: "Server 3", type: 3}];
             } else {
-                // 🧠 ഡൈനാമിക് ഫ്രീ-സ്പേസ് ലോജിക്: 
-                // എവിടെയാണോ ഫ്രീ സ്പേസ് ഉള്ളത് (ഉദാ: കൗണ്ട് ലിമിറ്റിൽ താഴെ), അവിടേക്ക് ഫസ്റ്റ് പ്രയോറിറ്റി നൽകും.
-                // 1 ഉം 2 ഉം ഫുൾ ആണെങ്കിൽ മാത്രം 3-ലേക്ക് പോകും.
-                
+                // 2️⃣ ഓട്ടോമാറ്റിക് മോഡ്: ആദ്യം കുറഞ്ഞ കൗണ്ട് ഉള്ളതിൽ നോക്കും. ഇഷ്യൂ വന്നാൽ മാത്രം മറ്റേതിലേക്ക് മാറും.
                 let s1Free = server1RealCount < INTERNAL_LIMIT;
                 let s2Free = server2RealCount < INTERNAL_LIMIT;
 
                 if (s1Free && s2Free) {
-                    // രണ്ടിടത്തും ഫ്രീ സ്പേസ് ഉണ്ടെങ്കിൽ സാധാരണയായി Server 1-ന് മുൻഗണന നൽകും, അല്ലെങ്കിൽ ആദ്യം ലഭ്യമായത്
-                    targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
-                    targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
+                    if (server1RealCount <= server2RealCount) {
+                        targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
+                        targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
+                    } else {
+                        targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
+                        targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
+                    }
                 } else if (s1Free) {
                     targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
                     targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
@@ -680,13 +693,11 @@
                     targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
                     targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
                 } else {
-                    // രണ്ടും ഫുൾ ആണെങ്കിൽ മാത്രം സെർവർ 3 (Backup) എടുക്കും
+                    // രണ്ടും ഫുൾ ആണെങ്കിൽ മാത്രം സെർവർ ത്രീ (Backup)
                     targets.push({url: SERVER_3_URL, name: "Server 3", type: 3});
-                    targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
-                    targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
                 }
                 
-                // അവസാന ബാക്കപ്പായി എല്ലായ്പ്പോഴും മൂന്നാമത്തേതും ലിസ്റ്റിൽ ചേർക്കും (ഓഫ്‌ലൈൻ ഇഷ്യൂസ് വന്നാൽ മാറാൻ)
+                // സുരക്ഷയ്ക്കായി ബാക്കപ്പ് സെർവർ കൂടെ ചേർക്കും
                 if (!targets.some(t => t.type === 3)) {
                     targets.push({url: SERVER_3_URL, name: "Server 3", type: 3});
                 }
@@ -707,15 +718,19 @@
                         statusCaption.classList.add('hidden');
                         success = true;
 
-                        if (target.type === 1) server1RealCount++;
-                        else if (target.type === 2) server2RealCount++;
-                        else if (target.type === 3) server3RealCount++;
+                        if (target.type === 1) {
+                            server1RealCount++;
+                        } else if (target.type === 2) {
+                            server2RealCount++;
+                        } else if (target.type === 3) {
+                            server3RealCount++;
+                        }
                         
                         updateUserDisplay();
                         break;
                     }
                 } catch (err) {
-                    console.warn(`${target.name} is offline or busy, checking next available free space...`);
+                    console.warn(`${target.name} encountered an issue, trying alternate available space...`);
                 }
             }
 
