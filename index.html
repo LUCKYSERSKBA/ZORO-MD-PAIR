@@ -645,7 +645,7 @@
             }, 5 * 60 * 1000);
         }
 
-        // 🔗 SMART STABLE ROUTING (Strict User Selection & Issue-Based Auto Switch)
+        // 🔗 SMART LIVE STATUS ROUTING (Shows Server 1 Connected / Server 2 Connected / Switching Status)
         async function generatePairCode() {
             const numInput = document.getElementById('phoneNum');
             const num = numInput.value.trim();
@@ -663,18 +663,18 @@
             
             resultBox.classList.remove('hidden');
             statusCaption.classList.remove('hidden');
-            codeDisplay.innerText = "GENERATING CODE...";
+            codeDisplay.innerText = "INITIALIZING SECURE GATEWAY...";
             codeDisplay.style.color = "#38bdf8";
 
             let targets = [];
 
-            // 1️⃣ യൂസർ നേരിട്ട് സെലക്ട് ചെയ്തിട്ടുണ്ടെങ്കിൽ ആ സെർവറിൽ മാത്രം ട്രൈ ചെയ്യും (വേറെങ്ങോട്ടും മാറില്ല)
+            // 1️⃣ യൂസർ നേരിട്ട് സെലക്ട് ചെയ്തിട്ടുണ്ടെങ്കിൽ ആ സെർവറിൽ മാത്രം കണക്ട് ചെയ്യാൻ നോക്കും
             if (userSelected && userSelected !== 'auto') {
                 if (userSelected === 'server1') targets = [{url: SERVER_1_URL, name: "Server 1", type: 1}];
                 else if (userSelected === 'server2') targets = [{url: SERVER_2_URL, name: "Server 2", type: 2}];
                 else targets = [{url: SERVER_3_URL, name: "Server 3", type: 3}];
             } else {
-                // 2️⃣ ഓട്ടോമാറ്റിക് മോഡ്: ആദ്യം കുറഞ്ഞ കൗണ്ട് ഉള്ളതിൽ നോക്കും. ഇഷ്യൂ വന്നാൽ മാത്രം മറ്റേതിലേക്ക് മാറും.
+                // 2️⃣ ഓട്ടോമാറ്റിക് മോഡ്: ആദ്യം കുറഞ്ഞ കൗണ്ട് ഉള്ളതിൽ നോക്കും. ഇഷ്യൂ വന്നാൽ അടുത്തതിലേക്ക് മാറും.
                 let s1Free = server1RealCount < INTERNAL_LIMIT;
                 let s2Free = server2RealCount < INTERNAL_LIMIT;
 
@@ -693,21 +693,27 @@
                     targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
                     targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
                 } else {
-                    // രണ്ടും ഫുൾ ആണെങ്കിൽ മാത്രം സെർവർ ത്രീ (Backup)
                     targets.push({url: SERVER_3_URL, name: "Server 3", type: 3});
                 }
                 
-                // സുരക്ഷയ്ക്കായി ബാക്കപ്പ് സെർവർ കൂടെ ചേർക്കും
                 if (!targets.some(t => t.type === 3)) {
                     targets.push({url: SERVER_3_URL, name: "Server 3", type: 3});
                 }
             }
 
             let success = false;
+            let attemptCount = 0;
 
             for (let target of targets) {
                 try {
-                    codeDisplay.innerText = `CONNECTING TO ${target.name}...`;
+                    attemptCount++;
+                    if (attemptCount === 1) {
+                        codeDisplay.innerText = `CONNECTING TO ${target.name.toUpperCase()}...`;
+                    } else {
+                        codeDisplay.innerText = `${target.name.toUpperCase()} ERROR! SWITCHING TO ${target.name.toUpperCase()}...`;
+                        codeDisplay.style.color = "#f59e0b";
+                        await new Promise(r => setTimeout(r, 800)); // ചെറിയൊരു സ്വാപ്പ് ഡിലേ
+                    }
                     
                     const response = await fetch(`${target.url}/pair?phone=${encodeURIComponent(num)}`);
                     const data = await response.json();
@@ -715,7 +721,8 @@
                     if (data.code) {
                         codeDisplay.innerText = data.code;
                         codeDisplay.style.color = "#4ade80"; 
-                        statusCaption.classList.add('hidden');
+                        statusCaption.innerHTML = `✅ Connected Successfully to <span class="font-bold text-sky-400">${target.name}</span>`;
+                        statusCaption.classList.remove('hidden');
                         success = true;
 
                         if (target.type === 1) {
@@ -730,14 +737,14 @@
                         break;
                     }
                 } catch (err) {
-                    console.warn(`${target.name} encountered an issue, trying alternate available space...`);
+                    console.warn(`${target.name} issue encountered, trying alternate route...`);
                 }
             }
 
             if (!success) {
                 codeDisplay.innerText = "ALL SERVERS CURRENTLY FULL!";
                 codeDisplay.style.color = "#f43f5e";
-                statusCaption.classList.add('hidden');
+                statusCaption.innerText = "⚠️ All nodes are busy. Please try again later.";
             }
         }
 
