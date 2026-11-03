@@ -186,31 +186,33 @@
             transition: all 0.3s ease;
         }
 
-        /* 🍎 Apple Dynamic Island Popup Styles */
+        /* 🍎 True iPhone Dynamic Island Compact Capsule Style */
         #dynamicIslandPopup {
             position: fixed;
-            top: 20px;
+            top: 14px;
             left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            transform: translateX(-50%) translateY(-60px);
+            background: rgba(10, 14, 20, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             color: #ffffff;
-            padding: 10px 20px;
+            padding: 7px 16px;
             border-radius: 9999px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             z-index: 10000;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            display: flex;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            white-space: nowrap;
             opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease;
             pointer-events: none;
-            max-width: 90vw;
-            text-align: center;
+            max-width: 92vw;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         #dynamicIslandPopup.show {
@@ -276,10 +278,10 @@
 </head>
 <body>
 
-    <!-- APPLE DYNAMIC ISLAND POPUP NOTIFICATION -->
+    <!-- APPLE DYNAMIC ISLAND COMPACT CAPSULE -->
     <div id="dynamicIslandPopup">
-        <i id="islandIcon" class="fas fa-info-circle text-sky-400"></i>
-        <span id="islandText">Notification message here...</span>
+        <i id="islandIcon" class="fas fa-info-circle text-sky-400 text-[10px]"></i>
+        <span id="islandText">Notification...</span>
     </div>
 
     <div class="bg-video-container">
@@ -639,20 +641,20 @@
             }, 600);
         }
 
-        // 🍎 Apple Dynamic Island Popup Queue Helper (1-2s Interval per popup)
-        function showDynamicIsland(text, iconClass = "fas fa-info-circle", duration = 2000) {
+        // 🍎 iPhone Compact Dynamic Island Capsule Queue
+        function showDynamicIsland(text, iconClass = "fas fa-info-circle", duration = 1800) {
             return new Promise((resolve) => {
                 const popup = document.getElementById('dynamicIslandPopup');
                 const islandText = document.getElementById('islandText');
                 const islandIcon = document.getElementById('islandIcon');
 
                 islandText.innerText = text;
-                islandIcon.className = iconClass;
+                islandIcon.className = iconClass + " text-[10px]";
                 popup.classList.add('show');
 
                 setTimeout(() => {
                     popup.classList.remove('show');
-                    setTimeout(resolve, 400); // Wait for transition fade out
+                    setTimeout(resolve, 350); // Wait for smooth capsule retraction
                 }, duration);
             });
         }
@@ -709,7 +711,7 @@
             }, 5 * 60 * 1000);
         }
 
-        // 🔗 SMART LIVE STATUS ROUTING & FAILOVER WITH MULTI-STEP DYNAMIC ISLAND QUEUE
+        // 🔗 SMART LIVE STATUS ROUTING & FAILOVER WITH COMPACT DYNAMIC ISLAND QUEUE
         async function generatePairCode() {
             const numInput = document.getElementById('phoneNum');
             const num = numInput.value.trim();
@@ -730,7 +732,6 @@
             codeDisplay.innerText = "INITIALIZING SECURE GATEWAY...";
             codeDisplay.style.color = "#38bdf8";
 
-            // Determine active target type
             let chosenType = 1;
             if (userSelected === 'server2') chosenType = 2;
             else if (userSelected === 'server3') chosenType = 3;
@@ -738,16 +739,16 @@
                 chosenType = (server1RealCount <= server2RealCount) ? 1 : 2;
             }
 
-            // 🚀 WORD BY WORD / SENTENCE BY SENTENCE DYNAMIC ISLAND POPUP SEQUENCE
+            // 🚀 COMPACT CAPSULE SEQUENTIAL NOTIFICATIONS
             if (chosenType === 1) {
-                await showDynamicIsland("⚠️ The server is a bit slow due to cluster limitations.", "fas fa-exclamation-triangle text-amber-400", 1800);
-                await showDynamicIsland("🔄 Please do not log out; bot might experience slight delay.", "fas fa-clock text-sky-400", 1800);
-                await showDynamicIsland("✨ But it will work perfectly!", "fas fa-check-circle text-green-400", 1600);
+                await showDynamicIsland("⚠️ Server is slow due to cluster limits", "fas fa-exclamation-triangle text-amber-400", 1600);
+                await showDynamicIsland("🔄 Please do not log out", "fas fa-clock text-sky-400", 1500);
+                await showDynamicIsland("✨ Bot will work perfectly!", "fas fa-check-circle text-green-400", 1400);
             } else if (chosenType === 2) {
-                await showDynamicIsland("⚡ This server may occasionally restart on high overload.", "fas fa-bolt text-yellow-400", 1800);
-                await showDynamicIsland("🛡️ But your connection and session will never be lost!", "fas fa-shield-alt text-green-400", 1800);
+                await showDynamicIsland("⚡ Server may occasionally restart on high load", "fas fa-bolt text-yellow-400", 1600);
+                await showDynamicIsland("🛡️ Connection & session will never be lost", "fas fa-shield-alt text-green-400", 1600);
             } else {
-                await showDynamicIsland("🟢 Currently it's good and running smoothly!", "fas fa-check-circle text-green-400", 1800);
+                await showDynamicIsland("🟢 Currently good & running smoothly", "fas fa-check-circle text-green-400", 1600);
             }
 
             let targets = [];
@@ -807,13 +808,13 @@
                         statusCaption.classList.remove('hidden');
                         success = true;
 
-                        // 🎯 SERVER SPECIFIC SUCCESS CONFIRMATION POPUP IN DYNAMIC ISLAND
+                        // 🎯 SERVER SPECIFIC SUCCESS CONFIRMATION CAPSULE
                         if (target.type === 1) {
-                            await showDynamicIsland("✨ Server 1: Pair code generated & linked successfully!", "fas fa-check-circle text-green-400", 2500);
+                            await showDynamicIsland("✨ Server 1: Code generated & linked!", "fas fa-check-circle text-green-400", 2200);
                         } else if (target.type === 2) {
-                            await showDynamicIsland("✨ Server 2: Pair code generated & linked successfully!", "fas fa-check-circle text-green-400", 2500);
+                            await showDynamicIsland("✨ Server 2: Code generated & linked!", "fas fa-check-circle text-green-400", 2200);
                         } else {
-                            await showDynamicIsland("✨ Server 3: Pair code generated & linked successfully!", "fas fa-check-circle text-green-400", 2500);
+                            await showDynamicIsland("✨ Server 3: Code generated & linked!", "fas fa-check-circle text-green-400", 2200);
                         }
 
                         if (target.type === 1) {
@@ -836,7 +837,7 @@
                 codeDisplay.innerText = "ALL SERVERS CURRENTLY FULL!";
                 codeDisplay.style.color = "#f43f5e";
                 statusCaption.innerText = "⚠️ All nodes are busy. Please try again later.";
-                await showDynamicIsland("❌ Failed to generate code. All servers busy.", "fas fa-times-circle text-red-400", 2500);
+                await showDynamicIsland("❌ All servers are busy right now.", "fas fa-times-circle text-red-400", 2000);
             }
         }
 
