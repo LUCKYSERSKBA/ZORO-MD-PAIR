@@ -186,6 +186,38 @@
             transition: all 0.3s ease;
         }
 
+        /* 🍎 Apple Dynamic Island Popup Styles */
+        #dynamicIslandPopup {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 500;
+            z-index: 10000;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            pointer-events: none;
+            max-width: 90vw;
+            text-align: center;
+        }
+
+        #dynamicIslandPopup.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
         #aiChatModal {
             position: fixed;
             bottom: 90px;
@@ -243,6 +275,12 @@
     </style>
 </head>
 <body>
+
+    <!-- APPLE DYNAMIC ISLAND POPUP NOTIFICATION -->
+    <div id="dynamicIslandPopup">
+        <i id="islandIcon" class="fas fa-info-circle text-sky-400"></i>
+        <span id="islandText">Notification message here...</span>
+    </div>
 
     <div class="bg-video-container">
         <video autoplay loop muted playsinline class="bg-video">
@@ -601,12 +639,30 @@
             }, 600);
         }
 
+        // 🍎 Apple Dynamic Island Popup Queue Helper (1-2s Interval per popup)
+        function showDynamicIsland(text, iconClass = "fas fa-info-circle", duration = 2000) {
+            return new Promise((resolve) => {
+                const popup = document.getElementById('dynamicIslandPopup');
+                const islandText = document.getElementById('islandText');
+                const islandIcon = document.getElementById('islandIcon');
+
+                islandText.innerText = text;
+                islandIcon.className = iconClass;
+                popup.classList.add('show');
+
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                    setTimeout(resolve, 400); // Wait for transition fade out
+                }, duration);
+            });
+        }
+
         // 🌐 3-SERVER BACKEND MAPPING & BALANCED ROUTING (Updated Server 1 Link)
         let server1RealCount = 2; 
         let server2RealCount = 2;
         let server3RealCount = 0;
 
-        const INTERNAL_LIMIT = 8; // 8 ആയാൽ ഫുൾ ആയി കണക്കാക്കും
+        const INTERNAL_LIMIT = 8; 
 
         const SERVER_1_URL = "https://zoro-pairing-panel-posx.onrender.com";
         const SERVER_2_URL = "https://jjd2yjefn7.apps.bot-hosting.cloud";
@@ -630,7 +686,7 @@
                 if (displayVal > 50) displayVal = 50;
                 maxVal = 50;
             } else if (selectedVal === 'server3') {
-                displayVal = 30; // സെർവർ ത്രീ എപ്പോഴും ഫിക്സഡ് 30 ആയിരിക്കും
+                displayVal = 30; 
                 maxVal = 30;
             } else {
                 displayVal = Math.round(20 + (server1RealCount / INTERNAL_LIMIT) * 30);
@@ -653,7 +709,7 @@
             }, 5 * 60 * 1000);
         }
 
-        // 🔗 SMART LIVE STATUS ROUTING & FAILOVER
+        // 🔗 SMART LIVE STATUS ROUTING & FAILOVER WITH MULTI-STEP DYNAMIC ISLAND QUEUE
         async function generatePairCode() {
             const numInput = document.getElementById('phoneNum');
             const num = numInput.value.trim();
@@ -674,15 +730,33 @@
             codeDisplay.innerText = "INITIALIZING SECURE GATEWAY...";
             codeDisplay.style.color = "#38bdf8";
 
+            // Determine active target type
+            let chosenType = 1;
+            if (userSelected === 'server2') chosenType = 2;
+            else if (userSelected === 'server3') chosenType = 3;
+            else if (userSelected === 'auto') {
+                chosenType = (server1RealCount <= server2RealCount) ? 1 : 2;
+            }
+
+            // 🚀 WORD BY WORD / SENTENCE BY SENTENCE DYNAMIC ISLAND POPUP SEQUENCE
+            if (chosenType === 1) {
+                await showDynamicIsland("⚠️ The server is a bit slow due to cluster limitations.", "fas fa-exclamation-triangle text-amber-400", 1800);
+                await showDynamicIsland("🔄 Please do not log out; bot might experience slight delay.", "fas fa-clock text-sky-400", 1800);
+                await showDynamicIsland("✨ But it will work perfectly!", "fas fa-check-circle text-green-400", 1600);
+            } else if (chosenType === 2) {
+                await showDynamicIsland("⚡ This server may occasionally restart on high overload.", "fas fa-bolt text-yellow-400", 1800);
+                await showDynamicIsland("🛡️ But your connection and session will never be lost!", "fas fa-shield-alt text-green-400", 1800);
+            } else {
+                await showDynamicIsland("🟢 Currently it's good and running smoothly!", "fas fa-check-circle text-green-400", 1800);
+            }
+
             let targets = [];
 
-            // 1️⃣ യൂസർ നേരിട്ട് സെലക്ട് ചെയ്തിട്ടുണ്ടെങ്കിൽ ആ സെർവറിൽ മാത്രം കണക്ട് ചെയ്യാൻ നോക്കും
             if (userSelected && userSelected !== 'auto') {
                 if (userSelected === 'server1') targets = [{url: SERVER_1_URL, name: "Server 1", type: 1}];
                 else if (userSelected === 'server2') targets = [{url: SERVER_2_URL, name: "Server 2", type: 2}];
                 else targets = [{url: SERVER_3_URL, name: "Server 3", type: 3}];
             } else {
-                // 2️⃣ ഓട്ടോമാറ്റിക് മോഡ്: ആദ്യം കുറഞ്ഞ കൗണ്ട് ഉള്ളതിൽ നോക്കും. ഇഷ്യൂ വന്നാൽ അടുത്തതിലേക്ക് മാറും.
                 let s1Free = server1RealCount < INTERNAL_LIMIT;
                 let s2Free = server2RealCount < INTERNAL_LIMIT;
 
@@ -718,7 +792,7 @@
                     if (attemptCount === 1) {
                         codeDisplay.innerText = `CONNECTING TO ${target.name.toUpperCase()}...`;
                     } else {
-                        codeDisplay.innerText = `${target.name.toUpperCase()} ERROR! SWITCHING TO ${target.name.toUpperCase()}...`;
+                        codeDisplay.innerText = `${target.name.toUpperCase()} ERROR! SWITCHING ROUTE...`;
                         codeDisplay.style.color = "#f59e0b";
                         await new Promise(r => setTimeout(r, 800));
                     }
@@ -729,9 +803,18 @@
                     if (data.code) {
                         codeDisplay.innerText = data.code;
                         codeDisplay.style.color = "#4ade80"; 
-                        statusCaption.innerHTML = `✅ Connected Successfully to <span class="font-bold text-sky-400">${target.name}</span>`;
+                        statusCaption.innerHTML = `✅ Connected Successfully to <span class="font-bold text-sky-400">${target.name}</span> & Linked with WhatsApp!`;
                         statusCaption.classList.remove('hidden');
                         success = true;
+
+                        // 🎯 SERVER SPECIFIC SUCCESS CONFIRMATION POPUP IN DYNAMIC ISLAND
+                        if (target.type === 1) {
+                            await showDynamicIsland("✨ Server 1: Pair code generated & linked successfully!", "fas fa-check-circle text-green-400", 2500);
+                        } else if (target.type === 2) {
+                            await showDynamicIsland("✨ Server 2: Pair code generated & linked successfully!", "fas fa-check-circle text-green-400", 2500);
+                        } else {
+                            await showDynamicIsland("✨ Server 3: Pair code generated & linked successfully!", "fas fa-check-circle text-green-400", 2500);
+                        }
 
                         if (target.type === 1) {
                             server1RealCount++;
@@ -753,6 +836,7 @@
                 codeDisplay.innerText = "ALL SERVERS CURRENTLY FULL!";
                 codeDisplay.style.color = "#f43f5e";
                 statusCaption.innerText = "⚠️ All nodes are busy. Please try again later.";
+                await showDynamicIsland("❌ Failed to generate code. All servers busy.", "fas fa-times-circle text-red-400", 2500);
             }
         }
 
