@@ -186,7 +186,7 @@
             transition: all 0.3s ease;
         }
 
-        /* 🍎 True iPhone Dynamic Island Compact Capsule Style */
+        /* 🍎 iPhone Dynamic Island Compact Capsule Style */
         #dynamicIslandPopup {
             position: fixed;
             top: 14px;
@@ -358,7 +358,7 @@
                 
                 <p class="text-gray-300 text-xs">Enter your WhatsApp number with country code to generate your pairing code.</p>
 
-                <!-- SERVER SELECT DROPDOWN -->
+                <!-- SERVER SELECT DROPDOWN (1, 2, 4, 3) -->
                 <div class="space-y-3 bg-black/30 p-3.5 rounded-xl border border-white/10 backdrop-blur-md">
                     <div>
                         <div class="flex justify-between items-center mb-1.5">
@@ -371,7 +371,8 @@
                             <option value="auto">Auto (Smart Routing)</option>
                             <option value="server1">Server 1</option>
                             <option value="server2">Server 2</option>
-                            <option value="server3">Server 3</option>
+                            <option value="server4">Server 4</option>
+                            <option value="server3">Server 3 (Master)</option>
                         </select>
                     </div>
 
@@ -654,20 +655,22 @@
 
                 setTimeout(() => {
                     popup.classList.remove('show');
-                    setTimeout(resolve, 350); // Wait for smooth capsule retraction
+                    setTimeout(resolve, 350); 
                 }, duration);
             });
         }
 
-        // 🌐 3-SERVER BACKEND MAPPING & BALANCED ROUTING (Updated Server 1 Link)
+        // 🌐 4-SERVER BACKEND MAPPING (1, 2, 4 Load Balanced ➔ 3 Master Backup)
         let server1RealCount = 2; 
         let server2RealCount = 2;
+        let server4RealCount = 1;
         let server3RealCount = 0;
 
         const INTERNAL_LIMIT = 8; 
 
         const SERVER_1_URL = "https://zoro-pairing-panel-posx.onrender.com";
         const SERVER_2_URL = "https://jjd2yjefn7.apps.bot-hosting.cloud";
+        const SERVER_4_URL = "https://zoro-pairing-panel-1-b251.onrender.com";
         const SERVER_3_URL = "https://medical-canid-20-6e779bdb.apps.mistral.run";
 
         function updateUserDisplay() {
@@ -681,19 +684,20 @@
 
             if (selectedVal === 'server1') {
                 displayVal = Math.round(20 + (server1RealCount / INTERNAL_LIMIT) * 30);
-                if (displayVal > 50) displayVal = 50;
-                maxVal = 50;
             } else if (selectedVal === 'server2') {
                 displayVal = Math.round(20 + (server2RealCount / INTERNAL_LIMIT) * 30);
-                if (displayVal > 50) displayVal = 50;
-                maxVal = 50;
+            } else if (selectedVal === 'server4') {
+                displayVal = Math.round(20 + (server4RealCount / INTERNAL_LIMIT) * 30);
             } else if (selectedVal === 'server3') {
                 displayVal = 30; 
                 maxVal = 30;
             } else {
-                displayVal = Math.round(20 + (server1RealCount / INTERNAL_LIMIT) * 30);
-                maxVal = 50;
+                // Auto mode - shows least loaded among 1, 2, 4
+                let minCount = Math.min(server1RealCount, server2RealCount, server4RealCount);
+                displayVal = Math.round(20 + (minCount / INTERNAL_LIMIT) * 30);
             }
+
+            if (displayVal > 50 && selectedVal !== 'server3') displayVal = 50;
 
             userCountDisplay.innerText = `${displayVal} / ${maxVal} (Optimal)`;
             userCountDisplay.className = "font-mono font-bold text-green-400";
@@ -703,7 +707,7 @@
 
         // 🔄 AUTO PING TO PREVENT SLEEP
         function startAutoPing() {
-            const servers = [SERVER_1_URL, SERVER_2_URL, SERVER_3_URL];
+            const servers = [SERVER_1_URL, SERVER_2_URL, SERVER_4_URL, SERVER_3_URL];
             setInterval(() => {
                 servers.forEach(url => {
                     fetch(url, { method: 'GET', mode: 'no-cors' }).catch(() => {});
@@ -711,7 +715,7 @@
             }, 5 * 60 * 1000);
         }
 
-        // 🔗 SMART LIVE STATUS ROUTING & FAILOVER WITH COMPACT DYNAMIC ISLAND QUEUE
+        // 🔗 SMART LIVE STATUS ROUTING (1 ➔ 2 ➔ 4 ➔ 3 Master)
         async function generatePairCode() {
             const numInput = document.getElementById('phoneNum');
             const num = numInput.value.trim();
@@ -734,21 +738,28 @@
 
             let chosenType = 1;
             if (userSelected === 'server2') chosenType = 2;
+            else if (userSelected === 'server4') chosenType = 4;
             else if (userSelected === 'server3') chosenType = 3;
             else if (userSelected === 'auto') {
-                chosenType = (server1RealCount <= server2RealCount) ? 1 : 2;
+                // Pick lowest count among 1, 2, 4
+                let counts = [{t: 1, c: server1RealCount}, {t: 2, c: server2RealCount}, {t: 4, c: server4RealCount}];
+                counts.sort((a, b) => a.c - b.c);
+                chosenType = counts[0].t;
             }
 
-            // 🚀 COMPACT CAPSULE SEQUENTIAL NOTIFICATIONS
+            // 🚀 DYNAMIC ISLAND SEQUENTIAL NOTIFICATIONS ACCORDING TO SERVER
             if (chosenType === 1) {
-                await showDynamicIsland("⚠️ Server is slow due to cluster limits", "fas fa-exclamation-triangle text-amber-400", 1600);
+                await showDynamicIsland("⚠️ Server 1 is slow due to cluster limits", "fas fa-exclamation-triangle text-amber-400", 1600);
                 await showDynamicIsland("🔄 Please do not log out", "fas fa-clock text-sky-400", 1500);
                 await showDynamicIsland("✨ Bot will work perfectly!", "fas fa-check-circle text-green-400", 1400);
             } else if (chosenType === 2) {
-                await showDynamicIsland("⚡ Server may occasionally restart on high load", "fas fa-bolt text-yellow-400", 1600);
+                await showDynamicIsland("⚡ Server 2 may occasionally restart on high load", "fas fa-bolt text-yellow-400", 1600);
                 await showDynamicIsland("🛡️ Connection & session will never be lost", "fas fa-shield-alt text-green-400", 1600);
+            } else if (chosenType === 4) {
+                await showDynamicIsland("🚀 Server 4 Render Node active", "fas fa-server text-sky-400", 1600);
+                await showDynamicIsland("⚡ High-speed pairing enabled", "fas fa-bolt text-yellow-400", 1500);
             } else {
-                await showDynamicIsland("🟢 Currently good & running smoothly", "fas fa-check-circle text-green-400", 1600);
+                await showDynamicIsland("🟢 Master Server 3: Running smoothly!", "fas fa-check-circle text-green-400", 1600);
             }
 
             let targets = [];
@@ -756,32 +767,28 @@
             if (userSelected && userSelected !== 'auto') {
                 if (userSelected === 'server1') targets = [{url: SERVER_1_URL, name: "Server 1", type: 1}];
                 else if (userSelected === 'server2') targets = [{url: SERVER_2_URL, name: "Server 2", type: 2}];
-                else targets = [{url: SERVER_3_URL, name: "Server 3", type: 3}];
+                else if (userSelected === 'server4') targets = [{url: SERVER_4_URL, name: "Server 4", type: 4}];
+                else targets = [{url: SERVER_3_URL, name: "Server 3 (Master)", type: 3}];
             } else {
-                let s1Free = server1RealCount < INTERNAL_LIMIT;
-                let s2Free = server2RealCount < INTERNAL_LIMIT;
+                // AUTO ROUTING LOGIC: 1, 2, 4 Balanced ➔ 3 Master Backup
+                let serverList = [
+                    {url: SERVER_1_URL, name: "Server 1", type: 1, count: server1RealCount},
+                    {url: SERVER_2_URL, name: "Server 2", type: 2, count: server2RealCount},
+                    {url: SERVER_4_URL, name: "Server 4", type: 4, count: server4RealCount}
+                ];
 
-                if (s1Free && s2Free) {
-                    if (server1RealCount <= server2RealCount) {
-                        targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
-                        targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
-                    } else {
-                        targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
-                        targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
-                    }
-                } else if (s1Free) {
-                    targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
-                    targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
-                } else if (s2Free) {
-                    targets.push({url: SERVER_2_URL, name: "Server 2", type: 2});
-                    targets.push({url: SERVER_1_URL, name: "Server 1", type: 1});
-                } else {
-                    targets.push({url: SERVER_3_URL, name: "Server 3", type: 3});
-                }
-                
-                if (!targets.some(t => t.type === 3)) {
-                    targets.push({url: SERVER_3_URL, name: "Server 3", type: 3});
-                }
+                // Filter available (less than internal limit) and sort by count
+                let available = serverList.filter(s => s.count < INTERNAL_LIMIT);
+                available.sort((a, b) => a.count - b.count);
+
+                targets = available;
+
+                // Add full servers as fallback
+                let busy = serverList.filter(s => s.count >= INTERNAL_LIMIT);
+                targets = targets.concat(busy);
+
+                // Always add Server 3 Master as the final backup
+                targets.push({url: SERVER_3_URL, name: "Server 3 (Master)", type: 3});
             }
 
             let success = false;
@@ -793,7 +800,7 @@
                     if (attemptCount === 1) {
                         codeDisplay.innerText = `CONNECTING TO ${target.name.toUpperCase()}...`;
                     } else {
-                        codeDisplay.innerText = `${target.name.toUpperCase()} ERROR! SWITCHING ROUTE...`;
+                        codeDisplay.innerText = `${target.name.toUpperCase()} BUSY/ERROR! SWITCHING ROUTE...`;
                         codeDisplay.style.color = "#f59e0b";
                         await new Promise(r => setTimeout(r, 800));
                     }
@@ -808,22 +815,13 @@
                         statusCaption.classList.remove('hidden');
                         success = true;
 
-                        // 🎯 SERVER SPECIFIC SUCCESS CONFIRMATION CAPSULE
-                        if (target.type === 1) {
-                            await showDynamicIsland("✨ Server 1: Code generated & linked!", "fas fa-check-circle text-green-400", 2200);
-                        } else if (target.type === 2) {
-                            await showDynamicIsland("✨ Server 2: Code generated & linked!", "fas fa-check-circle text-green-400", 2200);
-                        } else {
-                            await showDynamicIsland("✨ Server 3: Code generated & linked!", "fas fa-check-circle text-green-400", 2200);
-                        }
+                        // SUCCESS CAPSULE NOTIFICATION
+                        await showDynamicIsland(`✨ ${target.name}: Code generated & linked!`, "fas fa-check-circle text-green-400", 2200);
 
-                        if (target.type === 1) {
-                            server1RealCount++;
-                        } else if (target.type === 2) {
-                            server2RealCount++;
-                        } else if (target.type === 3) {
-                            server3RealCount++;
-                        }
+                        if (target.type === 1) server1RealCount++;
+                        else if (target.type === 2) server2RealCount++;
+                        else if (target.type === 4) server4RealCount++;
+                        else if (target.type === 3) server3RealCount++;
                         
                         updateUserDisplay();
                         break;
