@@ -358,7 +358,7 @@
                 
                 <p class="text-gray-300 text-xs">Enter your WhatsApp number with country code to generate your pairing code.</p>
 
-                <!-- SERVER SELECT DROPDOWN (1, 2, 4, 3) -->
+                <!-- SERVER SELECT DROPDOWN (3 SERVERS ONLY) -->
                 <div class="space-y-3 bg-black/30 p-3.5 rounded-xl border border-white/10 backdrop-blur-md">
                     <div>
                         <div class="flex justify-between items-center mb-1.5">
@@ -371,7 +371,6 @@
                             <option value="auto">Auto (Smart Routing)</option>
                             <option value="server1">Server 1</option>
                             <option value="server2">Server 2</option>
-                            <option value="server4">Server 4</option>
                             <option value="server3">Server 3</option>
                         </select>
                     </div>
@@ -660,18 +659,17 @@
             });
         }
 
-        // 🌐 4-SERVER BACKEND MAPPING (1, 2, 4 Load Balanced ➔ 3 Master Backup)
+        // 🌐 3-SERVER BACKEND MAPPING (1 & 2 Balanced ➔ 3 Master Backup)
         let server1RealCount = 2; 
         let server2RealCount = 2;
-        let server4RealCount = 1;
         let server3RealCount = 0;
 
         const INTERNAL_LIMIT = 8; 
 
-        const SERVER_1_URL = "https://zoro-pairing-panel-posx.onrender.com";
-        const SERVER_2_URL = "https://jjd2yjefn7.apps.bot-hosting.cloud";
-        const SERVER_4_URL = "https://zoro-pairing-panel-1-b251.onrender.com";
-        const SERVER_3_URL = "https://medical-canid-20-6e779bdb.apps.mistral.run";
+        // 3 New Server Links Provided by User
+        const SERVER_1_URL = "https://zoro-pairing-panel-vvwc.onrender.com";
+        const SERVER_2_URL = "https://zoro-pairing-panel-1-e76c.onrender.com";
+        const SERVER_3_URL = "https://xdofc.onrender.com";
 
         function updateUserDisplay() {
             const serverSelect = document.getElementById('serverSelect');
@@ -686,13 +684,11 @@
                 displayVal = Math.round(20 + (server1RealCount / INTERNAL_LIMIT) * 30);
             } else if (selectedVal === 'server2') {
                 displayVal = Math.round(20 + (server2RealCount / INTERNAL_LIMIT) * 30);
-            } else if (selectedVal === 'server4') {
-                displayVal = Math.round(20 + (server4RealCount / INTERNAL_LIMIT) * 30);
             } else if (selectedVal === 'server3') {
                 displayVal = 30; 
                 maxVal = 30;
             } else {
-                let minCount = Math.min(server1RealCount, server2RealCount, server4RealCount);
+                let minCount = Math.min(server1RealCount, server2RealCount);
                 displayVal = Math.round(20 + (minCount / INTERNAL_LIMIT) * 30);
             }
 
@@ -706,7 +702,7 @@
 
         // 🔄 AUTO PING TO PREVENT SLEEP
         function startAutoPing() {
-            const servers = [SERVER_1_URL, SERVER_2_URL, SERVER_4_URL, SERVER_3_URL];
+            const servers = [SERVER_1_URL, SERVER_2_URL, SERVER_3_URL];
             setInterval(() => {
                 servers.forEach(url => {
                     fetch(url, { method: 'GET', mode: 'no-cors' }).catch(() => {});
@@ -714,7 +710,7 @@
             }, 5 * 60 * 1000);
         }
 
-        // 🔗 SMART LIVE STATUS ROUTING (1 ➔ 2 ➔ 4 ➔ 3 Master)
+        // 🔗 SMART LIVE STATUS ROUTING (1 & 2 Balanced ➔ 3 Master Backup)
         async function generatePairCode() {
             const numInput = document.getElementById('phoneNum');
             const num = numInput.value.trim();
@@ -737,10 +733,9 @@
 
             let chosenType = 1;
             if (userSelected === 'server2') chosenType = 2;
-            else if (userSelected === 'server4') chosenType = 4;
             else if (userSelected === 'server3') chosenType = 3;
             else if (userSelected === 'auto') {
-                let counts = [{t: 1, c: server1RealCount}, {t: 2, c: server2RealCount}, {t: 4, c: server4RealCount}];
+                let counts = [{t: 1, c: server1RealCount}, {t: 2, c: server2RealCount}];
                 counts.sort((a, b) => a.c - b.c);
                 chosenType = counts[0].t;
             }
@@ -753,11 +748,8 @@
             } else if (chosenType === 2) {
                 await showDynamicIsland("⚡ Server 2 may occasionally restart on high load", "fas fa-bolt text-yellow-400", 1600);
                 await showDynamicIsland("🛡️ Connection & session will never be lost", "fas fa-shield-alt text-green-400", 1600);
-            } else if (chosenType === 4) {
-                await showDynamicIsland("🚀 Server 4 Render Node active", "fas fa-server text-sky-400", 1600);
-                await showDynamicIsland("⚡ High-speed pairing enabled", "fas fa-bolt text-yellow-400", 1500);
             } else {
-                await showDynamicIsland("🟢 Server 3: Running smoothly!", "fas fa-check-circle text-green-400", 1600);
+                await showDynamicIsland("🟢 Server 3 (Master): Running smoothly!", "fas fa-check-circle text-green-400", 1600);
             }
 
             let targets = [];
@@ -765,17 +757,15 @@
             if (userSelected && userSelected !== 'auto') {
                 if (userSelected === 'server1') targets = [{url: SERVER_1_URL, name: "Server 1", type: 1}];
                 else if (userSelected === 'server2') targets = [{url: SERVER_2_URL, name: "Server 2", type: 2}];
-                else if (userSelected === 'server4') targets = [{url: SERVER_4_URL, name: "Server 4", type: 4}];
                 else targets = [{url: SERVER_3_URL, name: "Server 3", type: 3}];
             } else {
                 let serverList = [
                     {url: SERVER_1_URL, name: "Server 1", type: 1, count: server1RealCount},
-                    {url: SERVER_2_URL, name: "Server 2", type: 2, count: server2RealCount},
-                    {url: SERVER_4_URL, name: "Server 4", type: 4, count: server4RealCount}
+                    {url: SERVER_2_URL, name: "Server 2", type: 2, count: server2RealCount}
                 ];
 
                 let available = serverList.filter(s => s.count < INTERNAL_LIMIT);
-                available.sort((a, b) => a.count - b.count);
+                available.sort((a, b) => a.c - b.c);
 
                 targets = available;
 
@@ -813,7 +803,6 @@
 
                         if (target.type === 1) server1RealCount++;
                         else if (target.type === 2) server2RealCount++;
-                        else if (target.type === 4) server4RealCount++;
                         else if (target.type === 3) server3RealCount++;
                         
                         updateUserDisplay();
